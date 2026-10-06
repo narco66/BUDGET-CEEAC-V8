@@ -1,0 +1,122 @@
+/* Socle typographique et éléments natifs. */
+html {
+    -webkit-text-size-adjust: 100%;
+    scroll-padding-top: calc(var(--topbar-h) + 16px);
+}
+
+body {
+    margin: 0;
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-sans);
+    font-size: var(--text-base);
+    line-height: var(--leading-normal);
+    font-feature-settings: "cv11", "ss01";
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4 {
+    color: var(--color-text-strong);
+    line-height: var(--leading-tight);
+    margin: 0;
+}
+
+h1 { font-size: var(--text-3xl); }
+h2 { font-size: var(--text-md); font-weight: 700; }
+h3 { font-size: var(--text-base); font-weight: 700; }
+h4 { font-size: var(--text-sm); font-weight: 700; }
+
+p { margin: 0; }
+
+a {
+    color: var(--green-600);
+    text-decoration: none;
+    text-underline-offset: 2px;
+}
+
+a:hover { text-decoration: underline; }
+
+strong, b { font-weight: 650; }
+
+small { font-size: var(--text-xs); }
+
+ul, ol { margin: 0; padding: 0; list-style: none; }
+
+hr {
+    border: 0;
+    border-top: 1px solid var(--color-divider);
+    margin: var(--space-3) 0;
+}
+
+::selection { background: var(--navy-100); color: var(--navy-900); }
+
+:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+    border-radius: var(--radius-xs);
+}
+
+/* Contrôles natifs non stylés : même apparence que .inp, sans spécificité. */
+:where(input:not([type=checkbox]):not([type=radio]):not([type=file]):not([type=hidden]):not([type=range]):not([type=color]), select, textarea) {
+    width: 100%;
+    min-height: var(--control-h-md);
+    padding: 0 12px;
+    border: 1px solid var(--color-border-strong);
+    border-radius: var(--radius-sm);
+    background: var(--color-surface);
+    color: var(--color-text);
+    font: 400 var(--text-base) var(--font-sans);
+    box-sizing: border-box;
+    transition: border-color var(--duration) var(--ease), box-shadow var(--duration) var(--ease);
+}
+
+:where(textarea) { padding: 10px 12px; min-height: 92px; resize: vertical; line-height: var(--leading-normal); }
+
+:where(input[type=checkbox], input[type=radio]) {
+    width: 16px;
+    height: 16px;
+    margin: 0;
+    accent-color: var(--green-600);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+:where(input[type=file]) { font: inherit; font-size: var(--text-sm); }
+
+/* Utilitaires typographiques historiques, conservés et harmonisés. */
+.serif { font-family: var(--font-serif); font-weight: 400; letter-spacing: -0.015em; }
+.mono { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.num { font-variant-numeric: tabular-nums; }
+.muted { color: var(--color-text-muted); }
+.subtle { color: var(--color-text-subtle); font-size: var(--text-xs); }
+.strong { color: var(--color-text-strong); font-weight: 650; }
+.lbl {
+    font-size: var(--text-2xs);
+    font-weight: 650;
+    color: var(--color-text-muted);
+    text-transform: uppercase;
+    letter-spacing: .07em;
+}
+.r { text-align: right; }
+.c { text-align: center; }
+.nowrap { white-space: nowrap; }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.text-danger { color: var(--danger-fg); }
+.text-warning { color: var(--orange-fg); }
+.text-success { color: var(--success-fg); }
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Barres de défilement discrètes */
+* { scrollbar-width: thin; scrollbar-color: var(--slate-300) transparent; }

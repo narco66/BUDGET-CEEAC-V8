@@ -1,0 +1,470 @@
+
+
+===== PAGE 1 =====
+COMMISSION DE LA CEEAC | RÉFÉRENTIEL ORGANISATIONNEL
+COMMISSION DE LA CEEAC
+Communauté Économique des États de l’Afrique Centrale
+Unité - Intégration - Développement durable
+RÉFÉRENTIEL ORGANISATIONNEL
+CONSOLIDÉ
+Commission de la CEEAC
+Document de référence applicative pour BUDGET-DEPENSE
+Version 1.0
+Date Juin 2026
+Statut Document de travail consolidé - à valider
+Destination BUDGET-DEPENSE et applications institutionnelles
+Confidentialité Interne - Commission de la CEEAC
+Les codes proposés sont des codes applicatifs. Ils doivent être validés avant toute consécration officielle.
+Libreville, République Gabonaise
+Commission de la CEEAC - Document de travail consolidé - 1
+
+===== PAGE 2 =====
+COMMISSION DE LA CEEAC | RÉFÉRENTIEL ORGANISATIONNEL
+Contrôle du document
+Élément Valeur
+Version 1.0
+Date Juin 2026
+Statut Document de travail consolidé - à valider
+Destination BUDGET-DEPENSE et applications institutionnelles
+Confidentialité Interne - Commission de la CEEAC
+Avertissement institutionnel
+Le présent document constitue une consolidation fonctionnelle et applicative. Toute modification de
+l’organisation officielle doit être appuyée par un acte, une décision ou une validation formelle de l’autorité
+compétente.
+Sommaire
+1. Objet et portée
+2. Principes de structuration
+3. Architecture organisationnelle consolidée
+4. Codification de premier niveau
+5. Présidence de la Commission
+6. Vice-Présidence
+7. Secrétariat Général
+8. Département Affaires politiques, Paix et Sécurité
+9. Département Marché commun, Affaires économiques, monétaires et financières
+10. Département Environnement, Ressources naturelles, Agriculture et Développement rural
+11. Département Aménagement du territoire et Infrastructures
+12. Département Promotion du genre, Développement humain et social
+13. Structures extensibles
+14. Hiérarchie des niveaux
+15. Postes et fonctions de responsabilité
+16. Données obligatoires d’une structure
+17. Modèle de données recommandé
+18. Règles de gestion organisationnelles
+19. Responsabilités dans BUDGET-DEPENSE
+20. Fonctions du module organisationnel
+21. États PDF à générer
+22. Synthèse de la version consolidée
+Commission de la CEEAC - Document de travail consolidé - 2
+
+===== PAGE 3 =====
+COMMISSION DE LA CEEAC | RÉFÉRENTIEL ORGANISATIONNEL
+1. Objet et portée
+Le présent référentiel consolide l’architecture organisationnelle de la Commission de la CEEAC telle qu’elle ressort
+des derniers échanges, du cahier des charges de BUDGET-DEPENSE et des ajustements organisationnels retenus. Il
+intègre notamment le remplacement du Secrétariat Administratif par le Secrétariat Général ainsi que le
+rattachement du Bureau du Conseiller Juridique au Cabinet du Président, avec maintien de ses services internes.
+Il constitue la source organisationnelle unique destinée à alimenter les modules institutionnels, budgétaires, PAP,
+chaîne de la dépense, suivi, reporting, GED, workflow, audit et sécurité.
+Statut du référentiel
+Version fonctionnelle consolidée destinée à l’implémentation. Les codes et rattachements doivent être validés
+avant leur adoption officielle.
+2. Principes de structuration
+• Une structure possède un identifiant permanent et un code unique.
+• Une structure ne peut avoir qu’un parent organisationnel principal à une date donnée.
+• Les rattachements fonctionnels secondaires sont gérés séparément.
+• Les cycles hiérarchiques sont interdits.
+• Aucune structure utilisée dans une opération ne doit être supprimée physiquement.
+• Toute réorganisation crée une nouvelle version.
+• Les postes sont séparés des personnes qui les occupent.
+• Les affectations, intérims, délégations et suppléances sont datés.
+• Les structures temporaires, projets et programmes sont pris en charge sans modifier l’organigramme
+permanent.
+• Le référentiel constitue la source unique de toutes les applications de la Commission.
+3. Architecture organisationnelle consolidée
+COMMUNAUTÉ ÉCONOMIQUE DES ÉTATS DE L’AFRIQUE CENTRALE
+└── COMMISSION DE LA CEEAC
+├── PRÉSIDENCE DE LA COMMISSION
+│ ├── Cabinet du Président
+│ │ ├── Direction du Cabinet
+│ │ ├── Conseillers du Président
+│ │ ├── Service Courrier
+│ │ └── Bureau du Conseiller Juridique
+│ │ ├── Service Conventions, Accords et Documents solennels
+│ │ └── Service Affaires réglementaires et contentieuses
+│ ├── Agence Comptable Centrale
+│ ├── Audit Interne
+│ ├── Contrôle Financier Central
+│ └── Bureaux de Liaison
+├── VICE-PRÉSIDENCE
+│ └── Cabinet du Vice-Président
+├── SECRÉTARIAT GÉNÉRAL
+│ ├── Direction Communication, Relations publiques et Protocole
+│ ├── Direction Coopération et Mobilisation des ressources
+│ ├── Direction Planification, Programmes et Budget
+│ ├── Direction Ressources humaines et Moyens généraux
+│ └── Direction des Systèmes d’information
+├── DÉPARTEMENT AFFAIRES POLITIQUES, PAIX ET SÉCURITÉ
+├── DÉPARTEMENT MARCHÉ COMMUN, AFFAIRES ÉCONOMIQUES, MONÉTAIRES ET FINANCIÈRES
+├── DÉPARTEMENT ENVIRONNEMENT, RESSOURCES NATURELLES, AGRICULTURE ET DÉVELOPPEMENT RURAL
+├── DÉPARTEMENT AMÉNAGEMENT DU TERRITOIRE ET INFRASTRUCTURES
+Commission de la CEEAC - Document de travail consolidé - 3
+
+===== PAGE 4 =====
+COMMISSION DE LA CEEAC | RÉFÉRENTIEL ORGANISATIONNEL
+└── DÉPARTEMENT PROMOTION DU GENRE, DÉVELOPPEMENT HUMAIN ET SOCIAL
+4. Codification de premier niveau
+Code Structure Type
+CEEAC Communauté Économique des États de l’Afrique Centrale Communauté
+COM-CEEAC Commission de la CEEAC Commission
+DPRES Présidence de la Commission Département institutionnel
+DVPRES Vice-Présidence Département institutionnel
+DSG Secrétariat Général Département d’appui et de
+soutien
+DAPPS Département Affaires politiques, Paix et Sécurité Département technique
+DMCAEMF Département Marché commun, Affaires économiques, monétaires et Département technique
+financières
+DENRADR Département Environnement, Ressources naturelles, Agriculture et Département technique
+Développement rural
+DATI Département Aménagement du territoire et Infrastructures Département technique
+DPGDHS Département Promotion du genre, Développement humain et social Département technique
+5. Présidence de la Commission
+Le Bureau du Conseiller Juridique est rattaché au Cabinet du Président. L’Agence Comptable Centrale, l’Audit
+Interne et le Contrôle Financier Central sont des structures spécialisées rattachées à la Présidence, tout en
+conservant leur indépendance fonctionnelle dans l’exercice de leurs missions.
+Code proposé Structure
+DPRES-CAB Cabinet du Président
+DPRES-CAB-DIRCAB Direction du Cabinet
+DPRES-CAB-CONS Conseillers du Président
+DPRES-CAB-SCOUR Service Courrier
+DPRES-CAB-BCJ Bureau du Conseiller Juridique
+DPRES-BCJ-SCADS Service Conventions, Accords et Documents solennels
+DPRES-BCJ-SARC Service Affaires réglementaires et contentieuses
+DPRES-ACC Agence Comptable Centrale
+DPRES-ACC-SCPT Service Comptabilité
+DPRES-ACC-SCPP Service Comptabilité des projets et programmes
+DPRES-ACC-SRT Service Recouvrement et Trésorerie
+Commission de la CEEAC - Document de travail consolidé - 4
+
+===== PAGE 5 =====
+COMMISSION DE LA CEEAC | RÉFÉRENTIEL ORGANISATIONNEL
+Code proposé Structure
+DPRES-AI Audit Interne
+DPRES-AI-SAI Service Audit Interne
+DPRES-AI-SAPP Service Audit des projets et programmes
+DPRES-CFC Contrôle Financier Central
+DPRES-CFC-SCF Service Contrôle Financier
+DPRES-CFC-SCFPP Service Contrôle financier des programmes et projets
+DPRES-BL Ensemble des Bureaux de Liaison
+DPRES-BL-{PAYS} Bureau de Liaison auprès d’un État membre
+DPRES-BL-{INST} Bureau de Liaison auprès d’une institution partenaire
+6. Vice-Présidence
+La Vice-Présidence assiste la Présidence, assure les missions déléguées et participe à l’arbitrage et à la
+coordination institutionnelle.
+Code proposé Structure
+DVPRES Vice-Présidence
+DVPRES-CAB Cabinet du Vice-Président
+DVPRES-CAB-CHCAB Chef de Cabinet
+DVPRES-CAB-CE Chargés d’études
+7. Secrétariat Général
+Le Secrétariat Général remplace le Secrétariat Administratif et coordonne les fonctions administratives,
+budgétaires, humaines, logistiques, documentaires, technologiques, de communication et de coopération.
+Code proposé Structure
+DSG-DCRPP Direction Communication, Relations publiques et Protocole
+DSG-DCRPP-SCRP Service Communication et Relations publiques
+DSG-DCRPP-CDA Centre de Documentation et des Archives
+DSG-DCRPP-SPC Service Protocole et Cérémonial
+DSG-DCRPP-STI Service Traduction et Interprétariat
+DSG-DCMR Direction Coopération et Mobilisation des ressources
+DSG-DCMR-SCOOP Service Coopération
+DSG-DCMR-SMR Service Mobilisation des ressources
+DSG-DPPB Direction Planification, Programmes et Budget
+Commission de la CEEAC - Document de travail consolidé - 5
+
+===== PAGE 6 =====
+COMMISSION DE LA CEEAC | RÉFÉRENTIEL ORGANISATIONNEL
+Code proposé Structure
+DSG-DPPB-SPSE Service Planification et Suivi-évaluation
+DSG-DPPB-SPP Service Programmes et Projets
+DSG-DPPB-SB Service Budget
+DSG-DRHMG Direction Ressources humaines et Moyens généraux
+DSG-DRHMG-SARH Service Administration des ressources humaines
+DSG-DRHMG-SDRH Service Développement des ressources humaines
+DSG-DRHMG-SMG Service Moyens généraux
+DSG-DSI Direction des Systèmes d’information
+DSG-DSI-SED Service Études et Développement
+DSG-DSI-SEM Service Exploitation et Maintenance
+8. Département Affaires politiques, Paix et Sécurité
+Code proposé Structure
+DAPPS-DAP Direction des Affaires politiques
+DAPPS-DAP-SEGDH Service Élections, Gouvernance démocratique et Droits humains
+DAPPS-DAP-SMDP Service Médiation et Diplomatie préventive
+DAPPS-DMARAC Direction MARAC et Sécurité
+DAPPS-DMARAC-SOBD Service Observation et Banque de données
+DAPPS-DMARAC-SEA Service Évaluation et Analyses
+DAPPS-DMARAC-SSEC Service Sécurité
+DAPPS-EMR État-Major Régional
+DAPPS-EMR-CMIL Composante militaire
+DAPPS-EMR-CPG Composante Police/Gendarmerie
+DAPPS-EMR-CCIV Composante civile
+DAPPS-EMR-CAS Composante Appui et Soutien
+9. Département Marché commun, Affaires économiques, monétaires
+et financières
+Code proposé Structure
+DMCAEMF-DAEM Direction des Affaires économiques et monétaires
+DMCAEMF-DAEM-SPEMF Service Politiques économiques, monétaires et fiscales
+Commission de la CEEAC - Document de travail consolidé - 6
+
+===== PAGE 7 =====
+COMMISSION DE LA CEEAC | RÉFÉRENTIEL ORGANISATIONNEL
+Code proposé Structure
+DMCAEMF-DAEM-SIPSP Service Industrie et Promotion du secteur privé
+DMCAEMF-DPES Direction des Prévisions économiques et des Statistiques
+DMCAEMF-DPES-SAPE Service Analyses et Prévisions économiques
+DMCAEMF-DPES-SGBD Service Gestion des bases de données
+DMCAEMF-DMC Direction du Marché commun
+DMCAEMF-DMC-SADFE Service Affaires douanières et Facilitation des échanges
+DMCAEMF-DMC-SPCCPI Service Politique commerciale, Concurrence et Promotion des investissements
+DMCAEMF-DMC-SLCD Service Libre circulation et Droits d’établissement
+10. Département Environnement, Ressources naturelles, Agriculture
+et Développement rural
+Code proposé Structure
+DENRADR-DERN Direction Environnement et Ressources naturelles
+DENRADR-DERN-SGRN Service Gestion des ressources naturelles
+DENRADR-DERN-SEB Service Environnement et Biodiversité
+DENRADR-DERN-SGRC Service Gestion des risques et catastrophes
+DENRADR-DADR Direction Agriculture et Développement rural
+DENRADR-DADR-SAAN Service Agriculture, Alimentation et Nutrition
+DENRADR-DADR-SEP Service Élevage et Pêche
+DENRADR-DADR-SDR Service Développement rural
+DENRADR-CRCGRE Centre régional de coordination et de gestion des ressources en eau
+DENRADR-CRCGRE-SGSIE Service Gestion du système d’information sur l’eau
+DENRADR-CRCGRE-SPRD Service Politiques, Recherche et Développement
+11. Département Aménagement du territoire et Infrastructures
+Code proposé Structure
+DATI-DATT Direction Aménagement du territoire et Transports
+DATI-DATT-SAT Service Aménagement du territoire
+DATI-DATT-STRFF Service Transport routier, ferroviaire et fluvial
+DATI-DATT-STAM Service Transport aérien et maritime
+DATI-DPTEN Direction Postes, Télécommunications et Économie numérique
+Commission de la CEEAC - Document de travail consolidé - 7
+
+===== PAGE 8 =====
+COMMISSION DE LA CEEAC | RÉFÉRENTIEL ORGANISATIONNEL
+Code proposé Structure
+DATI-DPTEN-SPT Service Postes et Télécommunications
+DATI-DPTEN-SEN Service Économie numérique
+DATI-DENER Direction de l’Énergie
+DATI-DENER-SRS Service Réglementation et Statistiques
+DATI-DENER-SENR Service Énergies nouvelles et renouvelables
+12. Département Promotion du genre, Développement humain et
+social
+Code proposé Structure
+DPGDHS-DGPF Direction Genre et Promotion de la femme
+DPGDHS-DGPF-SGRC Service Genre et Renforcement des capacités
+DPGDHS-DGPF-SPF Service Promotion de la femme
+DPGDHS-DSAS Direction Santé et Affaires sociales
+DPGDHS-DSAS-SS Service Santé
+DPGDHS-DSAS-SAS Service Affaires sociales
+DPGDHS-DJSE Direction Jeunesse, Sports et Emploi
+DPGDHS-DJSE-SJS Service Jeunesse et Sports
+DPGDHS-DJSE-SE Service Emploi
+DPGDHS-DECDT Direction Éducation, Culture et Développement technologique
+DPGDHS-DECDT-SEDT Service Éducation et Développement technologique
+DPGDHS-DECDT-SC Service Culture
+13. Structures extensibles
+Type Exemple de code
+Programme PRG-{CODE}
+Projet PRJ-{CODE}
+Unité de gestion de projet UGP-{CODE}
+Cellule CELL-{CODE}
+Unité technique UNIT-{CODE}
+Comité permanent COM-P-{CODE}
+Comité ad hoc COM-AH-{CODE}
+Commission de la CEEAC - Document de travail consolidé - 8
+
+===== PAGE 9 =====
+COMMISSION DE LA CEEAC | RÉFÉRENTIEL ORGANISATIONNEL
+Type Exemple de code
+Commission technique CT-{CODE}
+Groupe de travail GT-{CODE}
+Institution spécialisée IS-{CODE}
+Structure déconcentrée SD-{CODE}
+Chaque structure temporaire doit comporter une date de début, une date de fin, un texte de création, un
+responsable, une structure de tutelle et un statut de clôture.
+14. Hiérarchie des niveaux
+Niveau Catégorie
+0 Communauté
+1 Commission
+2 Présidence, Vice-Présidence, Secrétariat Général, Département technique
+3 Cabinet, Direction, structure rattachée, État-Major, Centre régional
+4 Bureau, Service, Composante
+5 Cellule, Unité, Projet, Programme, Comité
+6 Équipe, antenne, point focal ou subdivision opérationnelle
+Le niveau hiérarchique ne doit pas être confondu avec le rang administratif de son responsable.
+15. Postes et fonctions de responsabilité
+Fonction / poste Fonction / poste
+Président de la Commission Vice-Président de la Commission
+Commissaire, Chef de Département Secrétaire Général
+Directeur de Cabinet Chef de Cabinet
+Conseiller Conseiller Juridique
+Directeur Chef d’État-Major Régional
+Agent Comptable Central Auditeur Interne
+Contrôleur Financier Central Chef de Bureau de Liaison
+Chef de Service Chef de Composante
+Chef de Centre Coordonnateur de programme ou projet
+Chef de cellule Expert
+Chargé d’études Point focal
+Commission de la CEEAC - Document de travail consolidé - 9
+
+===== PAGE 10 =====
+COMMISSION DE LA CEEAC | RÉFÉRENTIEL ORGANISATIONNEL
+Fonction / poste Fonction / poste
+Suppléant Intérimaire
+Une fonction doit exister indépendamment de son titulaire. Le changement de titulaire ne doit jamais altérer
+l’historique des opérations validées.
+16. Données obligatoires d’une structure
+Domaine Attributs
+Identification Identifiant UUID, code institutionnel, code court, libellé officiel, sigle
+Classification Type, catégorie, niveau, caractère permanent ou temporaire
+Hiérarchie Structure parente, rattachement fonctionnel, structure de tutelle
+Validité Date de création, date d’effet, date de fin, statut
+Gouvernance Fonction responsable, responsable titulaire, intérimaire, suppléant
+Finances Centre de coût, unité budgétaire, ordonnateur, source de financement par défaut
+Workflow Circuit applicable, niveau d’autorisation, plafond de validation
+Localisation Pays, ville, adresse, téléphone, courriel
+Documentation Texte de création, décision de modification, pièces GED
+Audit Auteur, date de création, motif, version, journal des modifications
+17. Modèle de données recommandé
+organization_versions
+organization_units
+organization_unit_types
+organization_unit_links
+positions
+position_types
+persons
+position_assignments
+acting_assignments
+delegations
+substitutions
+cost_centers
+validation_scopes
+organization_text_references
+organization_documents
+organization_change_requests
+organization_change_logs
+Relations principales :
+organization_versions 1 ─── N organization_units
+organization_units N ─── 1 organization_units : parent_id
+organization_units 1 ─── N positions
+positions 1 ─── N position_assignments
+persons 1 ─── N position_assignments
+organization_units 1 ─── N delegations
+organization_units N ─── N cost_centers
+Commission de la CEEAC - Document de travail consolidé - 10
+
+===== PAGE 11 =====
+COMMISSION DE LA CEEAC | RÉFÉRENTIEL ORGANISATIONNEL
+organization_units 1 ─── N organization_documents
+18. Règles de gestion organisationnelles
+Règle Description
+ORG-001 — Unicité Le code d’une structure doit être unique dans une version organisationnelle.
+ORG-002 — Absence de cycle Une structure ne peut être son propre parent, directement ou indirectement.
+ORG-003 — Historisation Toute modification de rattachement, de libellé officiel ou de niveau hiérarchique doit être
+historisée.
+ORG-004 — Non-suppression Une structure déjà utilisée dans un PAP, un budget, un engagement ou une opération financière
+ne peut pas être supprimée physiquement.
+ORG-005 — Structure active Une opération ne peut être créée que pour une structure active à la date de l’opération.
+ORG-006 — Responsable unique Une fonction de responsabilité principale ne doit avoir qu’un titulaire actif pour une même
+période, sauf collégialité explicitement définie.
+ORG-007 — Affectations datées Toute affectation, délégation, suppléance ou intérim possède une date de début et une date de
+fin.
+ORG-008 — Réorganisation Le transfert, la fusion, la scission ou le changement de rattachement doit conserver les
+opérations historiques dans leur structure d’origine.
+ORG-009 — Périmètre financier Une structure ne peut imputer une dépense que sur les centres de coût, budgets et sources de
+financement autorisés.
+ORG-010 — Séparation des La DSI, l’Audit interne, le Contrôle financier, l’Agence comptable et les structures initiatrices
+fonctions disposent de permissions distinctes.
+19. Responsabilités dans BUDGET-DEPENSE
+Structure ou acteur Responsabilité principale
+Directions et services Expression et justification des besoins
+Directeur Contrôle et validation au niveau de la direction
+Commissaire Validation sectorielle de son département
+Secrétaire Général Coordination et validation des directions d’appui
+DPPB PAP, Budget, imputation et contrôle de disponibilité des crédits
+Bureau du Conseiller Juridique Contrôle et avis juridiques sur les actes et contrats
+Contrôle Financier Central Contrôle de régularité et visa financier
+Ordonnateur ou délégataire Autorisation et ordonnancement
+Agence Comptable Centrale Prise en charge, paiement, comptabilisation et rapprochement
+Audit Interne Vérification indépendante et suivi des recommandations
+DSI Administration technique, sécurité, disponibilité et support
+Commission de la CEEAC - Document de travail consolidé - 11
+
+===== PAGE 12 =====
+COMMISSION DE LA CEEAC | RÉFÉRENTIEL ORGANISATIONNEL
+Principe de séparation des fonctions
+La même personne ne doit pas initier, contrôler, approuver, certifier et payer seule une même opération. Les
+cumuls doivent rester exceptionnels, formalisés et compensés par des contrôles renforcés.
+20. Fonctions du module organisationnel
+• création et activation d’une structure
+• modification contrôlée
+• désactivation
+• transfert vers une autre structure
+• fusion et scission
+• réorganisation avec date d’effet
+• changement de responsable
+• gestion des intérims
+• gestion des délégations et suppléances
+• consultation par date ou par exercice
+• comparaison entre deux versions
+• affichage graphique de l’organigramme
+• recherche multicritère
+• export PDF, Excel et CSV
+• impression
+• synchronisation par API
+• consultation des historiques
+• restauration logique d’une version antérieure
+• liaison avec la GED
+21. États PDF à générer
+1. organigramme institutionnel complet
+2. organigramme administratif
+3. organigramme par département
+4. organigramme du Secrétariat Général
+5. état des structures rattachées
+6. état des départements
+7. état des directions
+8. état des services
+9. annuaire institutionnel
+10. état des responsables
+11. état des postes vacants
+12. état des intérims
+13. état des délégations
+14. état des suppléances
+15. état des centres de coût par structure
+16. état des structures actives et inactives
+17. historique des réorganisations
+18. fiche détaillée d’une structure
+19. fiche de fonction
+20. fiche d’affectation d’un responsable
+Commission de la CEEAC - Document de travail consolidé - 12
+
+===== PAGE 13 =====
+COMMISSION DE LA CEEAC | RÉFÉRENTIEL ORGANISATIONNEL
+22. Synthèse de la version consolidée
+• La Commission comprend la Présidence, la Vice-Présidence, le Secrétariat Général et cinq départements
+techniques.
+• Le Secrétariat Général remplace le Secrétariat Administratif.
+• Le Bureau du Conseiller Juridique est rattaché au Cabinet du Président.
+• Ses deux services juridiques sont maintenus.
+• L’Agence Comptable Centrale, l’Audit Interne et le Contrôle Financier Central sont rattachés à la Présidence.
+• Les cinq directions d’appui relèvent du Secrétaire Général.
+• Chaque département technique est placé sous l’autorité d’un Commissaire.
+• Chaque direction est placée sous l’autorité d’un Directeur.
+• Chaque service est placé sous l’autorité d’un Chef de service.
+• Le référentiel doit être unique, versionné, historisé et utilisé par tous les modules de BUDGET-DEPENSE.
+Sources documentaires
+• Cahier_des_charges_BUDGET-DEPENSE_CEEAC(1).docx
+• CEEAC_Plan_Annuel_de_Performance_2026(3).md
+• CEEAC_Budget_2026(3).md
+• NOMENCLATURE_BUDGETAIRE_PAR_NATURE_ECONOMIQUE_ET_PLAN_COMPTABLE_GENERAL(2).md
+• Consolidation des échanges récents relatifs au cadre organique de la Commission de la CEEAC.
+Commission de la CEEAC - Document de travail consolidé - 13

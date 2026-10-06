@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Signature de l’Ordre de Paiement</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0;background:#F0F4FA;color:#1E2A42;-webkit-font-smoothing:antialiased}
+a{color:#1A6B3A;text-decoration:none}a:hover{color:#0F5028}
+.mono{font-family:'JetBrains Mono',monospace;letter-spacing:-0.01em}
+.serif{font-family:'DM Serif Display',Georgia,serif;font-weight:400;letter-spacing:-0.02em}
+.lbl{font-size:11px;font-weight:600;color:#5C6B8C;text-transform:uppercase;letter-spacing:0.06em}
+.card{background:#FFFFFF;border:1px solid #E2E8F0;border-radius:10px}
+.btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:6px;font:600 13px Inter,system-ui,sans-serif;cursor:pointer;border:1px solid transparent;white-space:nowrap;box-sizing:border-box;text-decoration:none}
+.btn-p{background:#1A6B3A;color:#FFFFFF;border-color:#1A6B3A}
+.btn-n{background:#0B1C3E;color:#FFFFFF;border-color:#0B1C3E}
+.btn-o{background:#FFFFFF;color:#1E2A42;border-color:#CBD5E1}
+.btn-w{background:#FFFFFF;color:#9A3412;border-color:#FDBA74}
+.btn-d{background:#FFFFFF;color:#B91C1C;border-color:#FCA5A5}
+.btn-g{background:transparent;color:#5C6B8C;border-color:transparent}
+.inp{width:100%;box-sizing:border-box;height:38px;padding:0 12px;border:1px solid #CBD5E1;border-radius:6px;font:400 13.5px Inter,system-ui,sans-serif;color:#1E2A42;background:#FFFFFF;outline:none}
+.inp:focus{border-color:#1A6B3A;box-shadow:0 0 0 3px rgba(26,107,58,.12)}
+.ro{background:#F8FAFC;border:1px dashed #CBD5E1;border-radius:6px;padding:8px 10px;font-size:13px;color:#1E2A42;min-height:18px}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{text-align:left;font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:#5C6B8C;padding:10px 14px;background:#F8FAFC;border-bottom:1px solid #E2E8F0;white-space:nowrap}
+.tbl td{padding:11px 14px;font-size:13px;color:#1E2A42;border-bottom:1px solid #F1F5F9;vertical-align:middle}
+.tbl .r{text-align:right}
+.si{display:flex;align-items:center;gap:10px;padding:7px 12px;border-radius:6px;font-size:13px;font-weight:500;color:rgba(209,224,246,.78);text-decoration:none}
+.si:hover{background:rgba(255,255,255,.09);color:#FFFFFF}
+.si.on{background:rgba(26,107,58,.9);color:#FFFFFF}
+.ss{display:flex;align-items:center;padding:6px 12px 6px 36px;border-radius:6px;font-size:12.5px;color:rgba(209,224,246,.66);text-decoration:none}
+.ss:hover{color:#FFFFFF;background:rgba(255,255,255,.07)}
+.ss.on{background:rgba(26,107,58,.75);color:#FFFFFF;font-weight:600}
+.cat{padding:14px 16px 4px;font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.38)}
+</style>
+
+</head>
+<body>
+
+<div style="width: 760px; height: 960px; box-sizing: border-box; padding: 36px; background: rgba(11,28,62,.55); display: flex; align-items: flex-start; justify-content: center; font-family: Inter, system-ui, sans-serif; color: #1E2A42">
+<div role="dialog" aria-modal="true" aria-labelledby="s-title" style="width: 100%; background: #FFFFFF; border-radius: 12px; box-shadow: 0 24px 48px rgba(5,15,32,.28); overflow: hidden; display: flex; flex-direction: column">
+<div style="padding: 18px 22px; border-bottom: 1px solid #E2E8F0; display: flex; align-items: flex-start; gap: 12px">
+<span style="width: 38px; height: 38px; border-radius: 8px; background: #DCF5E7; color: #1A6B3A; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg></span>
+<div style="display: flex; flex-direction: column; gap: 3px; flex-grow: 1"><h2 id="s-title" style="margin: 0; font-size: 17px; font-weight: 700; color: #0B1C3E">Signature de l’Ordre de Paiement</h2><span style="font-size: 12.5px; color: #5C6B8C">Action formelle, horodatée et irréversible</span></div>
+<a href="2-decision-ordonnateur-tablette.html" class="btn btn-g" aria-label="Fermer" style="padding: 0 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><path d="M18 6 6 18M6 6l12 12"/></svg></a></div>
+<div style="padding: 16px 22px; display: flex; flex-direction: column; gap: 14px">
+<div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 12px; padding: 8px 0; border-bottom: 1px solid #F1F5F9; font-size: 13px"><span style="color: #5C6B8C">Référence</span><span class="mono" style="font-weight: 600; color: #1E2A42">ORD-2026-000181 · OP-2026-000181</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 12px; padding: 8px 0; border-bottom: 1px solid #F1F5F9; font-size: 13px"><span style="color: #5C6B8C">Bénéficiaire</span><span style="font-weight: 600; color: #1E2A42">CONSULT’AFRIC · compte •••• 7730</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 12px; padding: 8px 0; border-bottom: 1px solid #F1F5F9; font-size: 13px"><span style="color: #5C6B8C">Objet</span><span style="font-weight: 600; color: #1E2A42">Étude sur l’harmonisation des tarifs douaniers — tranche 2 sur 3</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 12px; padding: 8px 0; border-bottom: 1px solid #F1F5F9; font-size: 13px"><span style="color: #5C6B8C">Imputation</span><span class="mono" style="font-weight: 600; color: #1E2A42">410189 (65 %) · 410195 (35 %)</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 12px; padding: 8px 0; border-bottom: 1px solid #F1F5F9; font-size: 13px"><span style="color: #5C6B8C">Liquidation</span><span class="mono" style="font-weight: 600; color: #1E2A42">LIQ/2026/000139 · visée le 28/10/2026</span></div>
+<div style="display: grid; grid-template-columns: 150px minmax(0, 1fr); gap: 12px; padding: 8px 0; border-bottom: 1px solid #F1F5F9; font-size: 13px"><span style="color: #5C6B8C">Ordonnateur</span><span style="font-weight: 600; color: #1E2A42">Président de la Commission · Ordonnateur principal</span></div>
+</div>
+<div style="padding: 14px 16px; border-radius: 10px; background: #0B1C3E; color: #FFFFFF; display: flex; justify-content: space-between; align-items: center"><div style="display: flex; flex-direction: column; gap: 3px"><span style="font-size: 11px; font-weight: 700; letter-spacing: .08em; color: #B8CFF0">NET À PAYER</span><i style="font-size: 12px; color: #D9E4F5">Neuf millions quatre cent cinquante-deux mille francs CFA</i></div><span class="mono" style="font-size: 24px; font-weight: 700">9 452 000</span></div>
+<label style="display: flex; gap: 12px; align-items: center; padding: 14px; border-radius: 8px; border: 2px solid #1A6B3A; background: #F0FDF6; cursor: pointer"><input type="checkbox" style="width: 20px; height: 20px; accent-color: #1A6B3A"><span style="font-size: 14px; font-weight: 700; color: #0F5028">Je confirme l’ordonnancement de cette dépense.</span></label>
+<div style="padding: 14px; border-radius: 8px; border: 1px solid #B8CFF0; background: #EDF2FB; display: flex; flex-direction: column; gap: 10px">
+<div style="display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: #1B3269"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>Signature électronique interne · authentification renforcée</div>
+<div style="display: flex; gap: 8px"><label style="display: contents"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden">Chiffre 1</span><input class="inp mono" type="text" inputmode="numeric" style="width: 48px; height: 52px; text-align: center; font-size: 20px; font-weight: 700"></label><label style="display: contents"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden">Chiffre 2</span><input class="inp mono" type="text" inputmode="numeric" style="width: 48px; height: 52px; text-align: center; font-size: 20px; font-weight: 700"></label><label style="display: contents"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden">Chiffre 3</span><input class="inp mono" type="text" inputmode="numeric" style="width: 48px; height: 52px; text-align: center; font-size: 20px; font-weight: 700"></label><label style="display: contents"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden">Chiffre 4</span><input class="inp mono" type="text" inputmode="numeric" style="width: 48px; height: 52px; text-align: center; font-size: 20px; font-weight: 700"></label><label style="display: contents"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden">Chiffre 5</span><input class="inp mono" type="text" inputmode="numeric" style="width: 48px; height: 52px; text-align: center; font-size: 20px; font-weight: 700"></label><label style="display: contents"><span style="position: absolute; width: 1px; height: 1px; overflow: hidden">Chiffre 6</span><input class="inp mono" type="text" inputmode="numeric" style="width: 48px; height: 52px; text-align: center; font-size: 20px; font-weight: 700"></label></div>
+<span style="font-size: 11.5px; color: #334155">Seront enregistrés : signataire, fonction, date et heure, référence de signature, contexte technique, empreinte du document et version signée.</span>
+</div>
+<div style="display: flex; flex-direction: column; gap: 8px"><span class="lbl">Déclenché automatiquement après signature</span><ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 5px"><li style="display: flex; gap: 8px; font-size: 12.5px; color: #334155"><span class="mono" style="width: 16px; font-size: 11px; color: #3730A3; font-weight: 700">1</span>Ordonnancement verrouillé</li><li style="display: flex; gap: 8px; font-size: 12.5px; color: #334155"><span class="mono" style="width: 16px; font-size: 11px; color: #3730A3; font-weight: 700">2</span>PDF officiel figé : version, horodatage, empreinte, signature</li><li style="display: flex; gap: 8px; font-size: 12.5px; color: #334155"><span class="mono" style="width: 16px; font-size: 11px; color: #3730A3; font-weight: 700">3</span>Archivage dans la GED</li><li style="display: flex; gap: 8px; font-size: 12.5px; color: #334155"><span class="mono" style="width: 16px; font-size: 11px; color: #3730A3; font-weight: 700">4</span>Dossier de Paiement créé</li><li style="display: flex; gap: 8px; font-size: 12.5px; color: #334155"><span class="mono" style="width: 16px; font-size: 11px; color: #3730A3; font-weight: 700">5</span>Transmission automatique à l’Agence Comptable</li><li style="display: flex; gap: 8px; font-size: 12.5px; color: #334155"><span class="mono" style="width: 16px; font-size: 11px; color: #3730A3; font-weight: 700">6</span>Notification des agents concernés</li></ol></div>
+</div>
+<div style="padding: 14px 22px; border-top: 1px solid #E2E8F0; display: flex; justify-content: flex-end; gap: 8px; background: #F8FAFC">
+<a href="2-decision-ordonnateur-tablette.html" class="btn btn-o" style="height: 44px">Annuler</a>
+<button class="btn btn-p" style="height: 44px; padding: 0 22px"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>Signer l’Ordre de Paiement</button>
+</div></div></div>
+
+</body>
+</html>

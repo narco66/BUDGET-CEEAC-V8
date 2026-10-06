@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Doublon de facture détecté</title>
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Inter:wght@400;500;600;700&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0;background:#F0F4FA;color:#1E2A42;-webkit-font-smoothing:antialiased}
+a{color:#1A6B3A;text-decoration:none}a:hover{color:#0F5028}
+.mono{font-family:'JetBrains Mono',monospace;letter-spacing:-0.01em}
+.serif{font-family:'DM Serif Display',Georgia,serif;font-weight:400;letter-spacing:-0.02em}
+.lbl{font-size:11px;font-weight:600;color:#5C6B8C;text-transform:uppercase;letter-spacing:0.06em}
+.card{background:#FFFFFF;border:1px solid #E2E8F0;border-radius:10px}
+.btn{display:inline-flex;align-items:center;gap:6px;height:36px;padding:0 14px;border-radius:6px;font:600 13px Inter,system-ui,sans-serif;cursor:pointer;border:1px solid transparent;white-space:nowrap;box-sizing:border-box;text-decoration:none}
+.btn-p{background:#1A6B3A;color:#FFFFFF;border-color:#1A6B3A}
+.btn-n{background:#0B1C3E;color:#FFFFFF;border-color:#0B1C3E}
+.btn-o{background:#FFFFFF;color:#1E2A42;border-color:#CBD5E1}
+.btn-w{background:#FFFFFF;color:#9A3412;border-color:#FDBA74}
+.btn-d{background:#FFFFFF;color:#B91C1C;border-color:#FCA5A5}
+.btn-g{background:transparent;color:#5C6B8C;border-color:transparent}
+.inp{width:100%;box-sizing:border-box;height:38px;padding:0 12px;border:1px solid #CBD5E1;border-radius:6px;font:400 13.5px Inter,system-ui,sans-serif;color:#1E2A42;background:#FFFFFF;outline:none}
+.inp:focus{border-color:#1A6B3A;box-shadow:0 0 0 3px rgba(26,107,58,.12)}
+.ro{background:#F8FAFC;border:1px dashed #CBD5E1;border-radius:6px;padding:8px 10px;font-size:13px;color:#1E2A42;min-height:18px}
+.tbl{width:100%;border-collapse:collapse}
+.tbl th{text-align:left;font-size:10.5px;font-weight:600;text-transform:uppercase;letter-spacing:0.06em;color:#5C6B8C;padding:10px 14px;background:#F8FAFC;border-bottom:1px solid #E2E8F0;white-space:nowrap}
+.tbl td{padding:11px 14px;font-size:13px;color:#1E2A42;border-bottom:1px solid #F1F5F9;vertical-align:middle}
+.tbl .r{text-align:right}
+.si{display:flex;align-items:center;gap:10px;padding:7px 12px;border-radius:6px;font-size:13px;font-weight:500;color:rgba(209,224,246,.78);text-decoration:none}
+.si:hover{background:rgba(255,255,255,.09);color:#FFFFFF}
+.si.on{background:rgba(26,107,58,.9);color:#FFFFFF}
+.ss{display:flex;align-items:center;padding:6px 12px 6px 36px;border-radius:6px;font-size:12.5px;color:rgba(209,224,246,.66);text-decoration:none}
+.ss:hover{color:#FFFFFF;background:rgba(255,255,255,.07)}
+.ss.on{background:rgba(26,107,58,.75);color:#FFFFFF;font-weight:600}
+.cat{padding:14px 16px 4px;font-size:9px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.38)}
+</style>
+
+</head>
+<body>
+
+<div style="width: 760px; height: 860px; box-sizing: border-box; padding: 40px; background: rgba(11,28,62,.55); display: flex; align-items: flex-start; justify-content: center; font-family: Inter, system-ui, sans-serif; color: #1E2A42">
+<div role="alertdialog" aria-modal="true" aria-labelledby="d-title" style="width: 100%; background: #FFFFFF; border-radius: 12px; box-shadow: 0 24px 48px rgba(5,15,32,.28); overflow: hidden; display: flex; flex-direction: column">
+<div style="padding: 18px 22px; border-bottom: 1px solid #FECACA; background: #FEF2F2; display: flex; align-items: flex-start; gap: 12px">
+<span style="width: 36px; height: 36px; flex-shrink: 0; border-radius: 8px; background: #DC2626; color: #FFFFFF; display: flex; align-items: center; justify-content: center"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg></span>
+<div style="display: flex; flex-direction: column; gap: 3px; flex-grow: 1"><h2 id="d-title" style="margin: 0; font-size: 17px; font-weight: 700; color: #991B1B">Attention : cette facture semble avoir déjà été enregistrée dans une Liquidation</h2><span style="font-size: 12.5px; color: #7F1D1D">Soumission de <span class="mono">LIQ/2026/000122</span> bloquée</span></div>
+<a href="1-liste-liquidations.html" class="btn btn-g" aria-label="Fermer" style="padding: 0 8px"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><path d="M18 6 6 18M6 6l12 12"/></svg></a></div>
+<div style="padding: 20px 22px; display: flex; flex-direction: column; gap: 16px">
+<p style="margin: 0; font-size: 13px; line-height: 1.55; color: #334155">Fournisseur, numéro, date et montant sont identiques à ceux d’une facture déjà liquidée dans <a href="#" class="mono" style="font-weight: 700">LIQ/2026/000109</a>. Payer à nouveau cette facture constituerait un double paiement.</p>
+<table class="tbl" style="border: 1px solid #E2E8F0"><thead><tr><th>Critère</th><th>Dossier en cours · LIQ/2026/000122</th><th>Déjà liquidé · LIQ/2026/000109</th><th>Comparaison</th></tr></thead><tbody><tr style="background: #FEF2F2"><td style="font-weight: 600">Fournisseur</td><td class="mono">PAPETERIE MODERNE</td><td class="mono">PAPETERIE MODERNE</td><td><span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 99px; background: #FEE2E2; color: #991B1B; font-size: 10px; font-weight: 600; white-space: nowrap">Identique</span></td></tr><tr style="background: #FEF2F2"><td style="font-weight: 600">Numéro de facture</td><td class="mono">FM-2026-0561</td><td class="mono">FM-2026-0561</td><td><span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 99px; background: #FEE2E2; color: #991B1B; font-size: 10px; font-weight: 600; white-space: nowrap">Identique</span></td></tr><tr style="background: #FEF2F2"><td style="font-weight: 600">Date</td><td class="mono">15/09/2026</td><td class="mono">15/09/2026</td><td><span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 99px; background: #FEE2E2; color: #991B1B; font-size: 10px; font-weight: 600; white-space: nowrap">Identique</span></td></tr><tr style="background: #FEF2F2"><td style="font-weight: 600">Montant TTC</td><td class="mono">3 250 000</td><td class="mono">3 250 000</td><td><span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 99px; background: #FEE2E2; color: #991B1B; font-size: 10px; font-weight: 600; white-space: nowrap">Identique</span></td></tr><tr style=""><td style="font-weight: 600">Engagement</td><td class="mono">ENG-2026-000371</td><td class="mono">ENG-2026-000350</td><td><span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 99px; background: #F1F5F9; color: #475569; font-size: 10px; font-weight: 600; white-space: nowrap">Différent</span></td></tr><tr style=""><td style="font-weight: 600">État</td><td class="mono">En préparation</td><td class="mono">Visée · payée le 02/10</td><td><span style="display: inline-flex; align-items: center; gap: 4px; padding: 2px 8px; border-radius: 99px; background: #F1F5F9; color: #475569; font-size: 10px; font-weight: 600; white-space: nowrap">Différent</span></td></tr></tbody></table>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+<div style="padding: 14px; border-radius: 10px; border: 1px solid #0B1C3E; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; font-weight: 700; color: #0B1C3E">Retirer la facture</span><span style="font-size: 12px; color: #5C6B8C; line-height: 1.5">Cas le plus fréquent : mauvaise pièce jointe. Joignez la bonne facture du fournisseur.</span></div>
+<div style="padding: 14px; border-radius: 10px; border: 1px solid #E2E8F0; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; font-weight: 700; color: #0B1C3E">Demander une autorisation</span><span style="font-size: 12px; color: #5C6B8C; line-height: 1.5">Si la facture couvre réellement une autre prestation. Motif obligatoire, décision tracée au journal d’audit.</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 6px"><label for="d-motif" class="lbl">Motif de la demande d’autorisation</label>
+<textarea id="d-motif" class="inp" placeholder="Expliquez pourquoi cette facture n’est pas un doublon…" style="height: 72px; padding: 10px 12px; resize: none"></textarea></div>
+</div>
+<div style="padding: 14px 22px; border-top: 1px solid #E2E8F0; display: flex; justify-content: flex-end; gap: 8px; background: #F8FAFC">
+<button class="btn btn-o">Demander une autorisation</button>
+<button class="btn btn-n"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex-shrink: 0"><path d="M3 6h18M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>Retirer cette facture</button>
+</div></div></div>
+
+</body>
+</html>

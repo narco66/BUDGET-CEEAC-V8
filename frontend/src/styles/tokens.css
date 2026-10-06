@@ -1,0 +1,160 @@
+/*
+ * Design System BUDGET-CEEAC · GESBUDEP — jetons de conception.
+ * Toute couleur, taille, ombre ou rayon utilisé par l’interface est défini ici.
+ */
+:root {
+    /* Identité institutionnelle */
+    --navy-950: #061128;
+    --navy-900: #0B1C3E;
+    --navy-800: #13295A;
+    --navy-700: #1B3269;
+    --navy-600: #2A4A8A;
+    --navy-200: #C9D6EE;
+    --navy-100: #E6ECF7;
+    --navy-50: #F3F6FB;
+
+    --green-800: #0F5028;
+    --green-700: #145A31;
+    --green-600: #1A6B3A;
+    --green-500: #23874A;
+    --green-200: #B4E3C6;
+    --green-100: #DCF5E7;
+    --green-50: #F0FAF4;
+
+    --gold-600: #A8841C;
+    --gold-500: #C9A227;
+    --gold-100: #FBF3D9;
+
+    /* Neutres */
+    --slate-900: #0F172A;
+    --slate-800: #1E2A42;
+    --slate-700: #334155;
+    --slate-600: #475569;
+    --slate-500: #5C6B8C;
+    --slate-400: #94A3B8;
+    --slate-300: #CBD5E1;
+    --slate-200: #E2E8F0;
+    --slate-150: #EAEFF5;
+    --slate-100: #F1F5F9;
+    --slate-50: #F8FAFC;
+
+    /* Rôles sémantiques */
+    --color-bg: #F3F5F9;
+    --color-surface: #FFFFFF;
+    --color-surface-muted: var(--slate-50);
+    --color-surface-sunken: var(--slate-100);
+    --color-border: var(--slate-200);
+    --color-border-strong: var(--slate-300);
+    --color-divider: #EEF2F7;
+    --color-text: var(--slate-800);
+    --color-text-strong: var(--navy-900);
+    --color-text-muted: var(--slate-500);
+    --color-text-subtle: #64748B;
+    --color-primary: var(--green-600);
+    --color-primary-hover: var(--green-700);
+    --color-primary-soft: var(--green-100);
+    --color-brand: var(--navy-900);
+    --color-brand-hover: var(--navy-800);
+    --color-accent: var(--gold-500);
+    --color-focus: #2563EB;
+    --color-on-solid: #FFFFFF;
+
+    /* États (fond · texte · trait) */
+    --success-bg: #DCFCE7;
+    --success-fg: #166534;
+    --success-solid: #16A34A;
+    --success-border: #86EFAC;
+    --warning-bg: #FEF3C7;
+    --warning-fg: #92400E;
+    --warning-solid: #D97706;
+    --warning-border: #F3CF78;
+    --danger-bg: #FEE2E2;
+    --danger-fg: #991B1B;
+    --danger-solid: #DC2626;
+    --danger-border: #FCA5A5;
+    --info-bg: #DBEAFE;
+    --info-fg: #1D4ED8;
+    --info-solid: #2563EB;
+    --info-border: #93C5FD;
+    --orange-bg: #FFEDD5;
+    --orange-fg: #9A3412;
+    --orange-solid: #EA580C;
+    --violet-bg: #F3E8FF;
+    --violet-fg: #6B21A8;
+    --indigo-bg: #E0E7FF;
+    --indigo-fg: #3730A3;
+    --sky-bg: #E0F2FE;
+    --sky-fg: #075985;
+    --neutral-bg: var(--slate-100);
+    --neutral-fg: var(--slate-600);
+
+    /* Typographie */
+    --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --font-serif: "DM Serif Display", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", monospace;
+    --text-2xs: 10.5px;
+    --text-xs: 11.5px;
+    --text-sm: 12.5px;
+    --text-base: 13.5px;
+    --text-md: 15px;
+    --text-lg: 17px;
+    --text-xl: 20px;
+    --text-2xl: 24px;
+    --text-3xl: 30px;
+    --leading-tight: 1.25;
+    --leading-normal: 1.5;
+
+    /* Espacements (base 4 px) */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-10: 40px;
+
+    /* Rayons */
+    --radius-xs: 4px;
+    --radius-sm: 6px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+    --radius-xl: 16px;
+    --radius-full: 999px;
+
+    /* Ombres (teintées marine, discrètes) */
+    --shadow-xs: 0 1px 2px rgba(11, 28, 62, .05);
+    --shadow-sm: 0 1px 3px rgba(11, 28, 62, .06), 0 1px 2px rgba(11, 28, 62, .04);
+    --shadow-md: 0 4px 12px rgba(11, 28, 62, .08), 0 2px 4px rgba(11, 28, 62, .04);
+    --shadow-lg: 0 16px 40px rgba(11, 28, 62, .16), 0 4px 12px rgba(11, 28, 62, .06);
+    --shadow-focus: 0 0 0 3px rgba(37, 99, 235, .28);
+    --shadow-focus-primary: 0 0 0 3px rgba(26, 107, 58, .18);
+    --shadow-focus-danger: 0 0 0 3px rgba(220, 38, 38, .16);
+
+    /* Dimensions des contrôles */
+    --control-h-sm: 32px;
+    --control-h-md: 38px;
+    --control-h-lg: 44px;
+
+    /* Mise en page */
+    --sidebar-w: 268px;
+    --sidebar-w-collapsed: 72px;
+    --topbar-h: 64px;
+    --content-max: 1560px;
+
+    --ease: cubic-bezier(.2, .7, .2, 1);
+    --duration: 160ms;
+    --z-sticky: 20;
+    --z-overlay: 40;
+    --z-modal: 50;
+    --z-toast: 60;
+}
+
+@theme {
+    --color-brand: #0B1C3E;
+    --color-primary: #1A6B3A;
+    --color-accent: #C9A227;
+    --font-sans: "Inter", system-ui, sans-serif;
+    --font-serif: "DM Serif Display", Georgia, serif;
+    --font-mono: "JetBrains Mono", ui-monospace, monospace;
+}

@@ -1,0 +1,3026 @@
+{
+  "report": {
+    "records": 545,
+    "leaves": 376,
+    "depenses": 2881662781297468616,
+    "pap": 4136354337449000,
+    "programme": 1525000000,
+    "depense": 2877526425435019616,
+    "recettes": 29115913847,
+    "attendu_depenses": 40305795803,
+    "attendu_pap": 22365281000,
+    "attendu_recettes": 40305795803
+  },
+  "expenses": [
+    {
+      "code": "629",
+      "label": "Habitat,Autres IS. Consortium PTF AGRA CDC Afrique FAO CARD AUTRES Projet/ Réalisations PTF - FONCTIONNEMENT Depenses des biens et services D'INVESTISSEMENT Remboursement du capital de la dette - performance -Programmes et projets des PTF programmes",
+      "montant": 20000,
+      "ceeac": 0,
+      "ptf": 115000000,
+      "famille": "depense"
+    },
+    {
+      "code": "330",
+      "label": "service - - provisions Titre Chap Art Parag. Code Libellé Budget Budget Réalisations CEEAC PTF Titre CHARGES FINANCIERES",
+      "montant": 639350590,
+      "ceeac": 330000000,
+      "ptf": 309350590,
+      "famille": "depense"
+    },
+    {
+      "code": "6711",
+      "label": "MICOPAX-RCA (arriérés)",
+      "montant": 67111,
+      "ceeac": 0,
+      "ptf": 5000000,
+      "famille": "depense"
+    },
+    {
+      "code": "6712",
+      "label": "Frais bancaires - Titre DEPENSES DE PERSONNEL",
+      "montant": 67112,
+      "ceeac": 0,
+      "ptf": 5000000,
+      "famille": "depense"
+    },
+    {
+      "code": "66101",
+      "label": "Salaire de base des fonctionnaires",
+      "montant": 5377302285,
+      "ceeac": 5377302285,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "66102",
+      "label": "Salaire de base des Agents",
+      "montant": 619931518619931518,
+      "ceeac": 619931518619931518,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "66103",
+      "label": "Salaires autres personnels (temporaires)",
+      "montant": 352487103352487103,
+      "ceeac": 352487103282616190,
+      "ptf": 69870913,
+      "famille": "depense"
+    },
+    {
+      "code": "66105",
+      "label": "Solde de tout compte",
+      "montant": 300000000,
+      "ceeac": 0,
+      "ptf": 300000000,
+      "famille": "depense"
+    },
+    {
+      "code": "6611",
+      "label": "Provision pour recrutement et divers",
+      "montant": 800000000,
+      "ceeac": 0,
+      "ptf": 800000000,
+      "famille": "depense"
+    },
+    {
+      "code": "66104",
+      "label": "Recrutement",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "66107",
+      "label": "Provision pour nouvelle équipe dirigeante Allocations, indemnités, et avantages",
+      "montant": 500000000,
+      "ceeac": 0,
+      "ptf": 500000000,
+      "famille": "depense"
+    },
+    {
+      "code": "66311",
+      "label": "Prime d'habillement",
+      "montant": 8400000,
+      "ceeac": 8400000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "66312",
+      "label": "Prime de recrutement",
+      "montant": 10000000,
+      "ceeac": 10000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "66313",
+      "label": "Prime de Caisse Heures Supplémentaires",
+      "montant": 7800000,
+      "ceeac": 7800000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "66316",
+      "label": "Prime de stage",
+      "montant": 10500000,
+      "ceeac": 10500000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "66321",
+      "label": "Allocations familliale",
+      "montant": 150000000,
+      "ceeac": 10000000,
+      "ptf": 140000000,
+      "famille": "depense"
+    },
+    {
+      "code": "66322",
+      "label": "Allocations enfant handicapé",
+      "montant": 1200000,
+      "ceeac": 1200000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "66323",
+      "label": "Allocations prénatale",
+      "montant": 1950000,
+      "ceeac": 1950000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "66324",
+      "label": "Allocations pour conjoints à charge",
+      "montant": 220000000,
+      "ceeac": 20000000,
+      "ptf": 200000000,
+      "famille": "depense"
+    },
+    {
+      "code": "66325",
+      "label": "Allocation pour frais de scolarité",
+      "montant": 177660000,
+      "ceeac": 0,
+      "ptf": 300000000,
+      "famille": "depense"
+    },
+    {
+      "code": "66331",
+      "label": "Indemnités de fonction",
+      "montant": 429059136429059136,
+      "ceeac": 429059136429059136,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "66332",
+      "label": "Indemnités de sujetion",
+      "montant": 204493254204493254,
+      "ceeac": 204493254204493254,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "66333",
+      "label": "Indemnité de représentation",
+      "montant": 70201440,
+      "ceeac": 70201440,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "66334",
+      "label": "Indemnités de logement",
+      "montant": 875100000,
+      "ceeac": 0,
+      "ptf": 902194998751850000,
+      "famille": "depense"
+    },
+    {
+      "code": "66335",
+      "label": "Indemnités de transport",
+      "montant": 376882459376882459,
+      "ceeac": 376882459376882459,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "66336",
+      "label": "Indemnités intérim",
+      "montant": 54559296,
+      "ceeac": 54559296,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "66337",
+      "label": "indemnités d'ajustement de poste",
+      "montant": 5765376,
+      "ceeac": 5765376,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "66338",
+      "label": "Indemnité d’éloignement",
+      "montant": 200000000,
+      "ceeac": 0,
+      "ptf": 183579549175555619,
+      "famille": "depense"
+    },
+    {
+      "code": "66339",
+      "label": "indemnité d'équipement et installation",
+      "montant": 700000000,
+      "ceeac": 700000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "66411",
+      "label": "employés et % employeur)",
+      "montant": 793496808793496808,
+      "ceeac": 793496808793496808,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "66421",
+      "label": "Prévoyance CNSS",
+      "montant": 101176128101176128,
+      "ceeac": 101176128059555230,
+      "ptf": 41620898,
+      "famille": "depense"
+    },
+    {
+      "code": "66422",
+      "label": "Prévoyance CNAMGS",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "66511",
+      "label": "Avantage en nature",
+      "montant": 333300000,
+      "ceeac": 0,
+      "ptf": 337200000,
+      "famille": "depense"
+    },
+    {
+      "code": "66611",
+      "label": "Assurances",
+      "montant": 320000000,
+      "ceeac": 0,
+      "ptf": 326916033251954765,
+      "famille": "depense"
+    },
+    {
+      "code": "66612",
+      "label": "Frais d'obsèques et d'inhumation Titre DEPENSES DE BIENS ET SERVICES ACHAT DE BIENS",
+      "montant": 25000000,
+      "ceeac": 25000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "60111",
+      "label": "Fourniture de bureau",
+      "montant": 50000000,
+      "ceeac": 50000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "60112",
+      "label": "Consommables informatiques",
+      "montant": 50000000,
+      "ceeac": 50000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "60113",
+      "label": "Carburant et lubrifiant Eau, electricité, Gaz et autres sources",
+      "montant": 20000000,
+      "ceeac": 20000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "60511",
+      "label": "Eau et Electricité",
+      "montant": 80000000,
+      "ceeac": 0,
+      "ptf": 100000000,
+      "famille": "depense"
+    },
+    {
+      "code": "60513",
+      "label": "Gaz et autres sources d'énergie ACQUISITION DE SERVICES",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61111",
+      "label": "Voyages et déplacements",
+      "montant": 250000000,
+      "ceeac": 0,
+      "ptf": 290000000,
+      "famille": "depense"
+    },
+    {
+      "code": "61112",
+      "label": "Frais de transports déménagement",
+      "montant": 150000000,
+      "ceeac": 0,
+      "ptf": 260000000,
+      "famille": "depense"
+    },
+    {
+      "code": "61113",
+      "label": "Frais de transports congés",
+      "montant": 200000000,
+      "ceeac": 200000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61114",
+      "label": "Frais de location voitures",
+      "montant": 20000000,
+      "ceeac": 20000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61121",
+      "label": "Frais de mission",
+      "montant": 450000000,
+      "ceeac": 0,
+      "ptf": 500000000,
+      "famille": "depense"
+    },
+    {
+      "code": "61211",
+      "label": "Habitations",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61212",
+      "label": "Immeubles à usage de bureaux",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61221",
+      "label": "Frais de gardiennage",
+      "montant": 98000000,
+      "ceeac": 0,
+      "ptf": 108000000,
+      "famille": "depense"
+    },
+    {
+      "code": "61311",
+      "label": "Commissaires aux comptes Honoraires et Etudes et prestations de",
+      "montant": 20000000,
+      "ceeac": 20000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61312",
+      "label": "services",
+      "montant": 50000000,
+      "ceeac": 50000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61313",
+      "label": "Frais d'actes et de contentieux",
+      "montant": 4000000,
+      "ceeac": 4000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61314",
+      "label": "Frais de recrutement",
+      "montant": 55000000,
+      "ceeac": 55000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61315",
+      "label": "Frais de formation du personnel",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61321",
+      "label": "Commissions budgétaires",
+      "montant": 50000000,
+      "ceeac": 50000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61322",
+      "label": "Comité de trésorérie",
+      "montant": 30000000,
+      "ceeac": 30000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61323",
+      "label": "Prime de bilan",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61411",
+      "label": "Frais entretien immeubles siège",
+      "montant": 100000000,
+      "ceeac": 100000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61412",
+      "label": "Frais entretien residences Entretien et réparation de matériels et",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61421",
+      "label": "Frais entretien matériel",
+      "montant": 6500000,
+      "ceeac": 6500000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61422",
+      "label": "Frais entretien véhicules",
+      "montant": 10000000,
+      "ceeac": 10000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61423",
+      "label": "Frais entretien climatisation",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61424",
+      "label": "Contrats entretien services annexes",
+      "montant": 30000000,
+      "ceeac": 30000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61431",
+      "label": "Maintenance informatique",
+      "montant": 5000000,
+      "ceeac": 5000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61432",
+      "label": "Réparation véhicules",
+      "montant": 2500000,
+      "ceeac": 2500000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61433",
+      "label": "Réparation matériel",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61434",
+      "label": "Réparation mobilier",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61511",
+      "label": "Assurance véhicules",
+      "montant": 1000000,
+      "ceeac": 1000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61512",
+      "label": "Assurance bâtiments Frais de relations publiques et",
+      "montant": 5000000,
+      "ceeac": 5000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61711",
+      "label": "Frais de réception et de représentation",
+      "montant": 10000000,
+      "ceeac": 0,
+      "ptf": 10000000,
+      "famille": "depense"
+    },
+    {
+      "code": "61712",
+      "label": "Annonces, insertions et publications Catalogues, imprimés publicitaires et",
+      "montant": 2000000,
+      "ceeac": 0,
+      "ptf": 10000000,
+      "famille": "depense"
+    },
+    {
+      "code": "61713",
+      "label": "traductions",
+      "montant": 750000,
+      "ceeac": 0,
+      "ptf": 5000000,
+      "famille": "depense"
+    },
+    {
+      "code": "61714",
+      "label": "Frais de séminaires et ateliers",
+      "montant": 5000000,
+      "ceeac": 0,
+      "ptf": 5000000,
+      "famille": "depense"
+    },
+    {
+      "code": "61715",
+      "label": "Fêtes et cérémonies",
+      "montant": 5000000,
+      "ceeac": 0,
+      "ptf": 5000000,
+      "famille": "depense"
+    },
+    {
+      "code": "61716",
+      "label": "Frais de documentation et de bibliothèque",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "61811",
+      "label": "Frais de téléphone",
+      "montant": 1000000,
+      "ceeac": 0,
+      "ptf": 2500000,
+      "famille": "depense"
+    },
+    {
+      "code": "61812",
+      "label": "Frais de connexion internet et site web",
+      "montant": 60000000,
+      "ceeac": 0,
+      "ptf": 120000000,
+      "famille": "depense"
+    },
+    {
+      "code": "61813",
+      "label": "Frais de Poste et télécommunication",
+      "montant": 500000,
+      "ceeac": 0,
+      "ptf": 1000000,
+      "famille": "depense"
+    },
+    {
+      "code": "61814",
+      "label": "Frais de courrier express Frais édition et publication JO et",
+      "montant": 25000000,
+      "ceeac": 0,
+      "ptf": 25000000,
+      "famille": "depense"
+    },
+    {
+      "code": "61815",
+      "label": "Communication de Presse FONCTIONNEMENT",
+      "montant": 25000000,
+      "ceeac": 25000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "64111",
+      "label": "Parlement de la Communauté",
+      "montant": 150000000,
+      "ceeac": 0,
+      "ptf": 150000000,
+      "famille": "depense"
+    },
+    {
+      "code": "64112",
+      "label": "Cour de Justice de la Communauté",
+      "montant": 150000000,
+      "ceeac": 0,
+      "ptf": 150000000,
+      "famille": "depense"
+    },
+    {
+      "code": "64113",
+      "label": "Cour des comptes de la Communauté",
+      "montant": 150000000,
+      "ceeac": 0,
+      "ptf": 150000000,
+      "famille": "depense"
+    },
+    {
+      "code": "64411",
+      "label": "Bureau liaison RCA",
+      "montant": 30000000,
+      "ceeac": 0,
+      "ptf": 100000000,
+      "famille": "depense"
+    },
+    {
+      "code": "64412",
+      "label": "Bureau liason RDC",
+      "montant": 30000000,
+      "ceeac": 0,
+      "ptf": 100000000,
+      "famille": "depense"
+    },
+    {
+      "code": "64413",
+      "label": "Bureau liaison auprès de l'UA",
+      "montant": 30000000,
+      "ceeac": 30000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "64414",
+      "label": "Bureau liaison BURUNDI / CIRGL",
+      "montant": 30000000,
+      "ceeac": 30000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "64415",
+      "label": "Bureau liaison CONGO",
+      "montant": 30000000,
+      "ceeac": 30000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "64416",
+      "label": "Bureau liaison TCHAD",
+      "montant": 30000000,
+      "ceeac": 30000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "64417",
+      "label": "Bureau liaison GUINEE EQUATORIALE",
+      "montant": 30000000,
+      "ceeac": 30000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "64418",
+      "label": "Bureau liaison RWANDA PTF Remboursement du capital de la dette",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "15011",
+      "label": "MICOPAX",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "15012",
+      "label": "PACEBCO",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "15013",
+      "label": "PAPS II",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "15014",
+      "label": "Dettes sociales",
+      "montant": 300000000,
+      "ceeac": 0,
+      "ptf": 300000000,
+      "famille": "depense"
+    },
+    {
+      "code": "15015",
+      "label": "Dettes envers les tiers Budget Budget Réalisations Réalisations",
+      "montant": 200000000,
+      "ceeac": 0,
+      "ptf": 200000000,
+      "famille": "depense"
+    },
+    {
+      "code": "20111",
+      "label": "Fonctionnement du Comité des Sages Mise en place et Opérationalisation des mécanismes communautaires de médiation",
+      "montant": 150000000,
+      "ceeac": 150000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201121",
+      "label": "sur la médiation",
+      "montant": 135000000,
+      "ceeac": 135000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201122",
+      "label": "Mise en place de la plateforme organique de médiation",
+      "montant": 120000000,
+      "ceeac": 120000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201131",
+      "label": "gouvernance et la lutte contre la corruption Mise en œuvre du mémorandum d'entente de la CEEAC avec le",
+      "montant": 50000000,
+      "ceeac": 50000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201132",
+      "label": "Mécanisme Africain de Vérification par les Pairs (MAEP) Institutionalisation du Comité Technique Spécialisé (CTS) sur la",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201133",
+      "label": "gouvernance politique Mise en place et opérationnalisation des Mécanismes communautaires de",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201141",
+      "label": "l'état de droit et les droits de l'Homme Elaboration et adoption du Protocole sur la promotion de la Démocratie",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201142",
+      "label": "eOt bdseesr véaleticotnio énlsectorale dans les Etats membres : (i) déploiement des",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201143",
+      "label": "missions d'observation électorales dans les Etats membres ; (ii) Mise en place et opérationnalisation des mécanismes communautaires de",
+      "montant": 200000000,
+      "ceeac": 200000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201151",
+      "label": "et le droit d'établissement",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201161",
+      "label": "contre les discours de haine et d'incitation à la violence en Afrique Centrale et son plan de mise en œuvre MAINTENIR, RETABLIR ET CONSOLIDER LA PAIX EN AFRIQUE",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201211",
+      "label": "Multinationalede l'Afrique Centrale (FOMAC) Elaboration, adoption et mise en œuvre des procédures opérationnelles",
+      "montant": 60000000,
+      "ceeac": 60000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201212",
+      "label": "Elaboration, adoption et mise en œuvre de la politique régionale de défense Mise en œuvre de la Strategie régionale de prévention et de lutte contre le",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201213",
+      "label": "Elaboration et adoption de l'étude sur le repositionnement de l'Etat-Major Régional de la FOMAC au sein de la Commission de la CEEAC Constitution du Catologue des capacités de la FOMAC : (i) signature du mémorandum global sur le catalogue des capacités de",
+      "montant": 50000000,
+      "ceeac": 50000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201214",
+      "label": "Signature des mémoranda bilatéraux sur le catalogue ; (iii) Auto- vérification des capacités ; (iv) Mise en œuvre du Catalogue Constitution, adoption, certification et mise en œuvre de la Capacité de",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201215",
+      "label": "Déploiement Rapide (CDR) de la FOMAC Determination des attributions et Opérationalisation du Centre",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201216",
+      "label": "Opérationnel (CO) ; (i) Armement des cellules du CO ; (ii) Acquisition des équipements du CO ; (iii) Renforcement des capacités du personnel Determination des attributions et Opérationalisation du Centre Régional de Coordination de Mouvements (CRCM) ; (i)",
+      "montant": 60000000,
+      "ceeac": 60000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201217",
+      "label": "(ii) Acquisition des équipements du CRCM ; (iii) Renforcement des capacités du personnel Mise en place du Dépôt Logistique Régional (DLR) : (i) identification du Site du DLR ; (ii) Partage des expériences et des bonnes pratiques ; (iii)",
+      "montant": 10000000,
+      "ceeac": 10000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201218",
+      "label": "Signature de l'Accord de siège ; (iv) Construction du DLR ; (v) Armement du DLR ; (vi) Stockage des matériels : (vii) Renforcement des capacités des personnels Organisation de deux exercices communautaires : (i) Exécution de la",
+      "montant": 20000000,
+      "ceeac": 20000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201219",
+      "label": "phase de planification et de montage des exercices ; (ii) jeux des exercices ; (iii) Exécution des phases de retour d'expériences Mise en place de plans de formation et d'entrainement : (i) Elabortion et",
+      "montant": 190000000,
+      "ceeac": 190000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201210",
+      "label": "adoption des plans de formation et d'entrainement de la FOMAC ; (ii) Mise en application des plans",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201221",
+      "label": "œuvre de la Stratégie régionale de prévention et de lutte contre le terrorisme en Afrique Centrale sont mise en œuvre Mise en œuvre de la Convention de Kinshasa : (i) Appui aux Etats",
+      "montant": 15000000,
+      "ceeac": 15000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201222",
+      "label": "membres dans l'établissement des Commision Nationales ALPC ; (ii) EMliasbeo erant ipolnac de' uenff Gecutiidvee dréug Cioennatlr ed 'Rhaérgmioisnaatli odne dPersé vléegnitsiolant ieotn ds en ationales Coordination de la Lutte contre le Terrorisme : (i) Cr",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201223",
+      "label": "Régional de Prévention et de Coordination de la lutte contre le",
+      "montant": 55000000,
+      "ceeac": 55000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201231",
+      "label": "autour de la gestion concertée des frontières",
+      "montant": 120000000,
+      "ceeac": 120000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201241",
+      "label": "délimités/démarqués",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201242",
+      "label": "Désenclavement des zones frontalières",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201243",
+      "label": "Dynamisation des échanges transfrontaliers",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201244",
+      "label": "Sécurisation des espaces frontaliers",
+      "montant": 40000000,
+      "ceeac": 40000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201245",
+      "label": "Amélioration du vivre-ensemble et de la gouvernance locale",
+      "montant": 20000000,
+      "ceeac": 20000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201246",
+      "label": "Elaboration, adoption et mise en œuvre du Protocole régional sur le pastoralisme et la transhumance transfrontalière Mise en œuvre de la Politique integrée des Mers et des eaux continentales de la",
+      "montant": 15000000,
+      "ceeac": 15000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201251",
+      "label": "elaboration, adoption et mise en œuvre du Protocole régional de collecte, partage et validation des données maritimes Consolidation du Cadre légal du Centre Régional de Sécurité Maritime en Afrique Centrale (CRESMAC) et des Centres Multinationaux de",
+      "montant": 80000000,
+      "ceeac": 80000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201252",
+      "label": "coordination (CMC) : (i) endossement des textes de base des centres de l'architecture régionale de Yaoundé ; (ii) clarification du lien de rattachement du CRESMAC à la Commission ; (iii) Définition du lien CMC-CRESMAC et le statut des COM dans l'architect",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201253",
+      "label": "(i) Elaboration, adoption et mise en œuvre du Manuel commun d'opérations maritimes régionales ; (ii) création et opérationnalisation d'une Académie régionale de sécurité maritime Renforcement de la surveillance maritime et dans les eaux continentales",
+      "montant": 15000000,
+      "ceeac": 15000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201254",
+      "label": "partagées : (i) appui logistique aux patrouilles conjointes entre Etats côtiers et riverains ; (ii) renforcement des capacités de surveillance (AIS, radars côtiers, satellites) du CRESMAC, des CMC et des Centres des Opérations Maritimes (COM) Mise en œuvr",
+      "montant": 20000000,
+      "ceeac": 20000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201255",
+      "label": "éditions de la Conférence maritime annuelle (COMAR et ) ; (ii) Tenue des réunions statutaires du CIC",
+      "montant": 4115000000,
+      "ceeac": 4115000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201311",
+      "label": "du MARAC (Règlement intérieur, catalogue des produits du MARAC, Manuel des procédures opérationnelles) Production des rapports d'alerte rapide (Monitoring quotidien, Synthèse bi-hebdomadaire, Rapport mensuel, Rapport de situation, Revue",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201312",
+      "label": "géopolitique, Note de conjoncture) et présentation des Rapports aux Instances de la Communauté et aux Partenaires, Mise en oeuvre des Opérationnalisation de la Salle de veille du MARAC : (i) Armement de la salle de veille du MARAC ; (ii) Acquisition des é",
+      "montant": 10000000,
+      "ceeac": 10000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201313",
+      "label": "Renforcement des capacités des personnels ; (iv) Echange des expériences et des bonnes pratiques",
+      "montant": 90000000,
+      "ceeac": 90000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201321",
+      "label": "Redynamisation du Reseau des Points focaux nationaux du MARAC Mise en place et opértionnalisation des Bureaux Nationaux du MARAC : (i) Mise en place des Bureaux Nationaux du MARAC dans les Etats",
+      "montant": 65000000,
+      "ceeac": 65000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201322",
+      "label": "membres pilotes ; (ii) Armement des Bureaux Nationaux ; (iii) Renforcement des capacités des Organisations de la Société civile de la région en matière de prévention, de gestion et de résolution des conflits",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "201323",
+      "label": "(i) identification des Organisations de la Société civile de la région oeuvrant dans le domaine de la prévention, la gestion et la résolution des conflits ; (ii) formation multidisciplinaire en faveur des OSC Réalisations",
+      "montant": 45000000,
+      "ceeac": 45000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202111",
+      "label": "Opérationnalisation de la zone de libre-échange de la CEEAC Opérationnalisation du mécanisme d'administration des mesures de",
+      "montant": 100000000,
+      "ceeac": 100000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202112",
+      "label": "défense commerciale Mise en œuvre effective du Tarif Extérieur Commun et du Code des",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202113",
+      "label": "Douanes harmonisés CEEAC - CEMAC",
+      "montant": 155000000,
+      "ceeac": 155000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202121",
+      "label": "Opérationnalisation du mécanisme d’élimination des BNT",
+      "montant": 60000000,
+      "ceeac": 60000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202122",
+      "label": "Facilitation du commerce transfrontalier des marchandises",
+      "montant": 140000000,
+      "ceeac": 140000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202131",
+      "label": "Libéralisation du commerce des services au niveau de la CEEAC Opérationalisation de la Politique régionale du commerce numérique en",
+      "montant": 280000000,
+      "ceeac": 50000000,
+      "ptf": 230000000,
+      "famille": "pap"
+    },
+    {
+      "code": "202132",
+      "label": "Afrique centrale Insertion harmonieuse des Etats membres de la CEEAC dans le commerce",
+      "montant": 55000000,
+      "ceeac": 20000000,
+      "ptf": 35000000,
+      "famille": "pap"
+    },
+    {
+      "code": "202141",
+      "label": "multilatéraux pertinents Mise en œuvre de l’accord sur la Zone de Libre-Echange Continentale",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202142",
+      "label": "Africaine (ZLECAf) et des autres instruments continentaux pertinents Opérationnalisation de la libre-circulation des personnes et le droit d'établissement",
+      "montant": 100000000,
+      "ceeac": 50000000,
+      "ptf": 50000000,
+      "famille": "pap"
+    },
+    {
+      "code": "202151",
+      "label": "des personnes et le droit d'établissement en Afrique Centrale",
+      "montant": 50000000,
+      "ceeac": 50000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202152",
+      "label": "Elaboration et mise en oeuvre de la politique migratoire de la CEEAC AMELIORER LA GOUVERNANCE ECONOMIQUE ET",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202211",
+      "label": "l’amélioration de l’environnement des affaires dans les Etats membres Harmonisation et modernisation des cadres de promotion économique de",
+      "montant": 110000000,
+      "ceeac": 110000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202212",
+      "label": "la communauté",
+      "montant": 50000000,
+      "ceeac": 50000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202221",
+      "label": "Appui à l'amélioration de la gouvernance économique Opérationnalisation des cadres et instruments de coopération économique",
+      "montant": 115000000,
+      "ceeac": 115000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202231",
+      "label": "l’Afrique centrale Mise en place du cadre de convergence macro-économique et des",
+      "montant": 80000000,
+      "ceeac": 80000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202232",
+      "label": "instititutions financières et monétaires de la Communauté RENFORCER LES CAPACITES PRODUCTIVES ET D'INNOVATION ET",
+      "montant": 15000000,
+      "ceeac": 15000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202311",
+      "label": "autour des chaines de valeur prioritaires Promotion d'initiatives collaboratives, de réseaux et de clusters au sein",
+      "montant": 200000000,
+      "ceeac": 200000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202312",
+      "label": "des CVP",
+      "montant": 100000000,
+      "ceeac": 100000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202321",
+      "label": "entreprises dans les CVP Opérationnalisation du Centre régional de développement industriel et",
+      "montant": 200000000,
+      "ceeac": 200000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202322",
+      "label": "technologique",
+      "montant": 105000000,
+      "ceeac": 75000000,
+      "ptf": 30000000,
+      "famille": "pap"
+    },
+    {
+      "code": "202331",
+      "label": "l'infrastructure qualité, des politiques et des normes Harmonisation et intégration régionales dans les fonctions liées aux",
+      "montant": 415000000,
+      "ceeac": 65000000,
+      "ptf": 350000000,
+      "famille": "pap"
+    },
+    {
+      "code": "202332",
+      "label": "mesures SPS et aux normes Renforcement des capacités des institutions de l'IQ (au niveau",
+      "montant": 60000000,
+      "ceeac": 10000000,
+      "ptf": 50000000,
+      "famille": "pap"
+    },
+    {
+      "code": "202333",
+      "label": "national/régional)",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202341",
+      "label": "Assistance technique et renforcement des capacités",
+      "montant": 50000000,
+      "ceeac": 50000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202342",
+      "label": "Etablissement de normes et politiques nationales et régionales Renforcement de la coopération avec les Institutionsd'appui et les organisations",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202351",
+      "label": "d'intégration régionale Appuis aux initiatives de promotion économique et commerciale",
+      "montant": 110000000,
+      "ceeac": 60000000,
+      "ptf": 50000000,
+      "famille": "pap"
+    },
+    {
+      "code": "202352",
+      "label": "(FECIAC, SAIEF label Made in central Africa) OPERATIONALISER LE SYSTÈME STATISTIQUE DE LA",
+      "montant": 250000000,
+      "ceeac": 250000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202411",
+      "label": "CEEAC, incluant les INS, banques centrales, observatoires sectoriels et partenaires techniques",
+      "montant": 65000000,
+      "ceeac": 65000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202412",
+      "label": "Actualisation de la stratégie regionale de developpement de la statistique Renforcement des capacités des INS et administrations sectorielles en",
+      "montant": 90000000,
+      "ceeac": 30000000,
+      "ptf": 60000000,
+      "famille": "pap"
+    },
+    {
+      "code": "202413",
+      "label": "gouvernance statistique, gestion de la qualité, normalisation et assurance qualité",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202414",
+      "label": "Suivi du projet régional des statitiques de migration avec statistic sweden",
+      "montant": 40000000,
+      "ceeac": 0,
+      "ptf": 40000000,
+      "famille": "pap"
+    },
+    {
+      "code": "202421",
+      "label": "statistiques régionales, notamment les comptes nationaux, commerce, prix, finances publiques, secteur réel et données sociales. Développement d'un modèle régional de prévisions économiques et",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202422",
+      "label": "financières, en collaboration avec les banques centrales et institutions régionales. Mise en œuvre un programme régional annuel de production statistique",
+      "montant": 20000000,
+      "ceeac": 20000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202423",
+      "label": "incluant des données sur les marchés, la convergence macroéconomique et les analyses sectorielles. Renforcement des capacités techniques en modélisation économique",
+      "montant": 50000000,
+      "ceeac": 50000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202424",
+      "label": "prévisions, analyses multisectorielles et statistiques du commerce intra- régional. Opérationnalisation des mécanismes de publication, diffusion et valorisation des",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202431",
+      "label": "avec visualisation dynamique, tableaux de bord, métadonnées et téléchargements. Publication des Bulletins Statistiques Régionaux, y compris les rapports",
+      "montant": 25000000,
+      "ceeac": 25000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202432",
+      "label": "économiques trimestriels et annuels, et les notes de conjoncture régionales. Standardisation des formats de diffusion statistique (calendrier de",
+      "montant": 15000000,
+      "ceeac": 15000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202433",
+      "label": "diffusion, protocoles ouverts, normes SHaSA, SDMX). Organisation des ateliers régionaux de dissémination pour vulgariser les",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202434",
+      "label": "données auprès des décideurs, journalistes, chercheurs, et secteur privé. Promotion de l’usage des statistiques pour la décision publique, à travers",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202435",
+      "label": "des outils analytiques, des formations et des produits statistiques thématiques (ex : commerce, démographie, agriculture)",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202441",
+      "label": "alignement avec l’Indice d’Intégration Régionale Africaine de l’Union Africaine (ASRI). Collecte et harmonisation des données nécessaires au suivi de",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202442",
+      "label": "l’intégration régionale, Publication d'un Rapport Annuel sur l’État de l’Intégration Régionale",
+      "montant": 30000000,
+      "ceeac": 30000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202443",
+      "label": "dans la CEEAC, incluant analyse comparative, progrès par pays et recommandations. Renforcement de la coordination entre la CEEAC, l’Union Africaine, la",
+      "montant": 10000000,
+      "ceeac": 10000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202444",
+      "label": "CEMAC et les organisations spécialisées pour garantir la cohérence des indicateurs continentaux. Développement d'un tableau de bord dynamique de suivi de l’intégration",
+      "montant": 75000000,
+      "ceeac": 75000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "202445",
+      "label": "régionale, intégré au Système d’Information Statistique de la Commission. Réalisations AMENAGEMENT DU TERRITOIRE, DEVELOPPEMENT DES",
+      "montant": 20000000,
+      "ceeac": 20000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "203111",
+      "label": "territoire communautaire (PATC) Adoption et opérationnalisation d'un schéma directeur de développement",
+      "montant": 50000000,
+      "ceeac": 50000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "203112",
+      "label": "de l’espace régional (SDER) à long terme Renforcement des infrastructures transnationales de transport (routier, ferroviaire",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "203121",
+      "label": "ferroviaire et fluvial)",
+      "montant": 4136332105000000,
+      "ceeac": 4136332105000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "203122",
+      "label": "Elaboration et révision du disppositif institutionnel",
+      "montant": 100000000,
+      "ceeac": 100000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "203131",
+      "label": "Amélioration de la connectivité des voies aériennes",
+      "montant": 2622204000,
+      "ceeac": 15000000,
+      "ptf": 2607204000,
+      "famille": "pap"
+    },
+    {
+      "code": "203132",
+      "label": "Renforcement de la connectivité des voies maritimes ACCELERER LA MISE EN PLACE D'UN MARCHE REGIONAL DE",
+      "montant": 20000000,
+      "ceeac": 20000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "203211",
+      "label": "secteur de l'Energie et particulièrement les energies renouvelables, l’efficacité énergétique et les hydrocarbures. Mise en place du dispositif juridique régional harmonisé pour renforcer la",
+      "montant": 760150000,
+      "ceeac": 760150000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "203212",
+      "label": "coopération énergétique et la régulation de l'électricité en Afrique centrale. Renforcement de la Gouvernance et des capacités institutionnelles des",
+      "montant": 485375000,
+      "ceeac": 485375000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "203213",
+      "label": "institutions spécialisées avec un système d’information énergétique Interconnexion régionale, électrification transfrontalière et accès équitable à",
+      "montant": 1617000000,
+      "ceeac": 220000000,
+      "ptf": 1397000000,
+      "famille": "pap"
+    },
+    {
+      "code": "203221",
+      "label": "énergies renouvelables Mise à niveau des projets énergétiques transnationaux afin qu'ils intègrent",
+      "montant": 10000000,
+      "ceeac": 10000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "203222",
+      "label": "systématiquement des mesures environnementales et le changement climatiques Mise en place d'un dispositif intégré de financement, de coordination régionale",
+      "montant": 25000000,
+      "ceeac": 25000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "203231",
+      "label": "investissements privés et les solutions innovantes Mise en place d'un système de suivi et de coordination régionale des",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "203232",
+      "label": "projets énergétiques et synchronisation des actions entre les acteurs concernés",
+      "montant": 245000000,
+      "ceeac": 245000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "203311",
+      "label": "Elaboration des politiques et stratégies régionales du secteur des TIC",
+      "montant": 610000000,
+      "ceeac": 60000000,
+      "ptf": 550000000,
+      "famille": "pap"
+    },
+    {
+      "code": "203312",
+      "label": "Harmonisation des législations et les règlementations nationales des TIC",
+      "montant": 251000000,
+      "ceeac": 65000000,
+      "ptf": 186000000,
+      "famille": "pap"
+    },
+    {
+      "code": "203321",
+      "label": "Déploiement des infrastructures numériques Mise en place d'un cadre de gouvernance des projets d’infrastructures",
+      "montant": 165000000,
+      "ceeac": 10000000,
+      "ptf": 155000000,
+      "famille": "pap"
+    },
+    {
+      "code": "203322",
+      "label": "numériques",
+      "montant": 15000000,
+      "ceeac": 15000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "203331",
+      "label": "Soutien aux interconnexions transfrontalières des EM Facilitation de l'accès aux services des TIC dans les zones rurales et",
+      "montant": 15000000,
+      "ceeac": 15000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "203332",
+      "label": "sensibles au genre",
+      "montant": 45000000,
+      "ceeac": 45000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "203341",
+      "label": "Signature des Accords de partenariat avec des organisations partenaires Harmonisation des points de vue de l’Afrique centrale dans le secteur des",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "203342",
+      "label": "TIC dans les réunions continentales et internationales",
+      "montant": 5000000,
+      "ceeac": 5000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "203343",
+      "label": "Participation de la CEEAC aux réunions internationales Réalisations PTF INTEGRATION ENVIRONNEMENTALE, AGRICULTURE",
+      "montant": 20000000,
+      "ceeac": 20000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "204111",
+      "label": "Elaboration et adoption de la PAC",
+      "montant": 50000000,
+      "ceeac": 50000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "204112",
+      "label": "Elaboration et adoption de la PRIA",
+      "montant": 110000000,
+      "ceeac": 60000000,
+      "ptf": 50000000,
+      "famille": "pap"
+    },
+    {
+      "code": "204113",
+      "label": "Elaboration et adoption des PNIA des Etats membres au niveau national Elaboration et adoption de la Stratégie Régionale de Sécurité Alimentaire",
+      "montant": 430000000,
+      "ceeac": 185000000,
+      "ptf": 245000000,
+      "famille": "pap"
+    },
+    {
+      "code": "204114",
+      "label": "et Nutritionnelle de l'Afrique centrale (SRSAN-AC) Elaboration et adoption de la Stratégie Régionale de Développement de",
+      "montant": 85000000,
+      "ceeac": 0,
+      "ptf": 85000000,
+      "famille": "pap"
+    },
+    {
+      "code": "204115",
+      "label": "la Riziculrure de l'Afrique Centrale (SRDR-AC) Elaboration et adoption de la Stratégie Régionale d'Eradication de la",
+      "montant": 25000000,
+      "ceeac": 0,
+      "ptf": 25000000,
+      "famille": "pap"
+    },
+    {
+      "code": "204116",
+      "label": "Peste de Petit Ruminant en Afrique Centrale (SRE/PPR-AC) Elaboration et adoption de la Stratégie Régionale de Développement de",
+      "montant": 25000000,
+      "ceeac": 0,
+      "ptf": 25000000,
+      "famille": "pap"
+    },
+    {
+      "code": "204117",
+      "label": "la Pêche et de l'Aquaculture en Afrique Centrale (SRDPA-AC) Renforcement de la coordinnation des politiques, stratégies, programmes et projets",
+      "montant": 25000000,
+      "ceeac": 0,
+      "ptf": 25000000,
+      "famille": "pap"
+    },
+    {
+      "code": "204121",
+      "label": "Opérationnalisation du DERNADR et ses Instances de décisions",
+      "montant": 35000000,
+      "ceeac": 20000000,
+      "ptf": 15000000,
+      "famille": "pap"
+    },
+    {
+      "code": "204122",
+      "label": "Opérationnalisation du dispositif de Suivi-Evaluation du DERNADR",
+      "montant": 45020000,
+      "ceeac": 25000000,
+      "ptf": 20020000,
+      "famille": "pap"
+    },
+    {
+      "code": "204211",
+      "label": "Elaboration et adoption de la PEC",
+      "montant": 140000000,
+      "ceeac": 90000000,
+      "ptf": 50000000,
+      "famille": "pap"
+    },
+    {
+      "code": "204212",
+      "label": "Le PFR est élaborée, validée et adoptée Elaboration et adoption de la Stratégie Régionale de Gestion des Risques",
+      "montant": 90000000,
+      "ceeac": 0,
+      "ptf": 90000000,
+      "famille": "pap"
+    },
+    {
+      "code": "204213",
+      "label": "de Catastrophes et adaptation au Changement Climatique (SRGRC-ACC) Harmonisation des politiques et stratégies nationales des Etats membres",
+      "montant": 75000000,
+      "ceeac": 20000000,
+      "ptf": 55000000,
+      "famille": "pap"
+    },
+    {
+      "code": "204214",
+      "label": "avec la PEC et la PFR Renforcement des capacités de préparation et de réponse aux urgences",
+      "montant": 105000000,
+      "ceeac": 50000000,
+      "ptf": 55000000,
+      "famille": "pap"
+    },
+    {
+      "code": "204215",
+      "label": "(EP&R) de la CEEAC et de ses États membres",
+      "montant": 240000000,
+      "ceeac": 240000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "204216",
+      "label": "Elaboration et adoption de la PRE revisee Renforcement de la coordination des politiques et la supervision technique des",
+      "montant": 25000000,
+      "ceeac": 25000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "204221",
+      "label": "des stratégies, programmes et projets régionaux de gestion Elaboration de la feuille de route pour le PARGIRE et intégration du",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "204222",
+      "label": "GIREE dans les politiques, stratégies et programmes Renforceent du cadre institutionnel de coordination pour la gestion des",
+      "montant": 50000000,
+      "ceeac": 50000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "204223",
+      "label": "ressources en eaux Mise à niveau du secteur agrosylvopastoral et halieutique par rapport aux effets du",
+      "montant": 35000000,
+      "ceeac": 35000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "204231",
+      "label": "La résilience des exploitations agricoles et des écosystèmes est ameliorée Réduction de % des pertes post-récolte et des émissions",
+      "montant": 125000000,
+      "ceeac": 10000000,
+      "ptf": 115000000,
+      "famille": "pap"
+    },
+    {
+      "code": "204232",
+      "label": "agrosylvopastorales et halieutiques Déploiement d’un cadre régional AIC opérationnel et fonctionnel dans",
+      "montant": 115000000,
+      "ceeac": 114989000,
+      "ptf": 11000,
+      "famille": "pap"
+    },
+    {
+      "code": "204233",
+      "label": "États membres Renforcement de la résillence des systèmes écologiques économiques et sociaux",
+      "montant": 150000000,
+      "ceeac": 150000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "204241",
+      "label": "suivi de leurs politiques climatiques dans les EM ; Appuis aux États membres pour la mise en place d'un mécanisme de",
+      "montant": 487100000,
+      "ceeac": 10000000,
+      "ptf": 477100000,
+      "famille": "pap"
+    },
+    {
+      "code": "204242",
+      "label": "financement innovant pour la mise en œuvre et le suivi de leurs politiques climatiques ; Appui à la mise en place des dispositifs de Recherche, Innovation, Digitalisation et",
+      "montant": 215000000,
+      "ceeac": 20000000,
+      "ptf": 195000000,
+      "famille": "pap"
+    },
+    {
+      "code": "204251",
+      "label": "environnementaux, climatologiques et météorologiques et diffusion rapide de l’information Digitalisation du Potentiel Solaire et Eolien dans les Etats Membres de la",
+      "montant": 100000000,
+      "ceeac": 100000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "204252",
+      "label": "CEEAC Digitalisation la dynamique de la désertification et la dégradation de la",
+      "montant": 50000000,
+      "ceeac": 50000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "204253",
+      "label": "biodiversité et de sols dans l'espace CEEAC Renforcement des connaissances à des fins de valorisation socio",
+      "montant": 50000000,
+      "ceeac": 50000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "204254",
+      "label": "économique des ressources en eaux Réalisations PTF",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205111",
+      "label": "Région Elaboration des documents de politique et de stratégie régionale de la",
+      "montant": 126000000,
+      "ceeac": 126000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205112",
+      "label": "santé",
+      "montant": 200800000,
+      "ceeac": 200800000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205113",
+      "label": "Opérationnalisation de l’Organisation de la Santé en Afrique Centrale Promotion du concept une seule santé au niveau regional et dans tous les",
+      "montant": 135000000,
+      "ceeac": 135000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205114",
+      "label": "états de la CEEAC Opérationnalisation d'un mécanisme régional pour la coordination de la",
+      "montant": 35000000,
+      "ceeac": 35000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205115",
+      "label": "recherche dans le domaine de la pharmacopée traditionnelle Harmonisation des mécanismes de préparation, de surveillance et de riposte aux",
+      "montant": 36800000,
+      "ceeac": 0,
+      "ptf": 36800000,
+      "famille": "pap"
+    },
+    {
+      "code": "205121",
+      "label": "urgences sanitaires en Afrique centrale Opérationnalisation d'un mécanisme régional pour la collaboration et la",
+      "montant": 25000000,
+      "ceeac": 25000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205122",
+      "label": "coopération inter pays en matière de lutte contre les maladies à potentiel épidémique en la Région d’Afrique Centrale Mise en place d'un dispositif régional d’appui technique pour le",
+      "montant": 30000000,
+      "ceeac": 30000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205123",
+      "label": "renforcement des capacités des Ressources humaines en matière de surveillance Opérationnalisation d'un réseautage des laboratoires de biologie humaine",
+      "montant": 135000000,
+      "ceeac": 135000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205124",
+      "label": "et animale de référence au niveau régional",
+      "montant": 41000000,
+      "ceeac": 0,
+      "ptf": 41000000,
+      "famille": "pap"
+    },
+    {
+      "code": "205131",
+      "label": "décès maternel et contribution à la réduction des mortalités maternelle, nMéiosnea etanl ep leatc ien dfa'unnto m-juécvaénniisleme régional de collaboration interprofessionnelle publique-privée/communautaire pour les",
+      "montant": 5000000,
+      "ceeac": 5000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205132",
+      "label": "équipements hospitaliers et dans le domaine de la SRMNIA (Santé Reproductive, Maternelle, Néonatale, Infantile et des Adolescents) Amélioration de la régulation et la facilitation des approvisionnements en",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205141",
+      "label": "approvisionnements en médicaments et intrants de laboratoires dans la sous-région Amélioration du dispositif régional pour faciliter la production et les",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205142",
+      "label": "approvisionnements en médicaments essentiels et intrants de laboratoires dans la sous-région",
+      "montant": 65000000,
+      "ceeac": 65000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205151",
+      "label": "Protection Sociale (PS) et Activités Génératrices de revenus (AGR) pour les populations rurales et travailleurs infrmelle",
+      "montant": 50000000,
+      "ceeac": 50000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205152",
+      "label": "Promotion et protection des Droits de l’Enfant en Afrique centrale Appui à la Société Civile et renforcement des partenariats et la cohesion",
+      "montant": 40000000,
+      "ceeac": 40000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205153",
+      "label": "communautaire FACILITER L'INCLUSION SOCIO-ECONOMIQUE DES JEUNES ET AXE : PROMOUVOIR LES POLITIQUES COMMUNAUTAIRES EN MATIERE DE",
+      "montant": 35000000,
+      "ceeac": 35000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205211",
+      "label": "Mise en place d'un cadre régional de certification",
+      "montant": 75000000,
+      "ceeac": 75000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205212",
+      "label": "Mise en place d'un Institut communautaire des sports",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205213",
+      "label": "Amélioration de l'accès des jeunes à des emplois décents Dynamisation et mise en œuvre le programme des jeunes volontaires de",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205214",
+      "label": "la CEEAC FACILITER L'INTEGRATION SYSTEMATIQUE DU GENRE DANS LES AXE POLITIQUES COMMUNAUTAIRES ET L'AUTONOMISATION DES",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205311",
+      "label": "publiques Participation des femmes à la vie publique, à la gestion et à la résolution",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205312",
+      "label": "des conflits et mise en œuvre du Plan d'action regional de R1325",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205321",
+      "label": "Promotion des réseaux de femmes entrepreneures Renforcement des mécanismes contre les violences basées sur le genre",
+      "montant": 35000000,
+      "ceeac": 35000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205322",
+      "label": "(VBG) TRANSFORMER LES SYSTEMES EDUCATIFS, SCIENTIFIQUES, AXES 000",
+      "montant": 75000000,
+      "ceeac": 75000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205411",
+      "label": "régionale en Éducation, Formation, Sciences, Technologie et Innovation Elaboration et adoption des cadres sectoriels intégrés de gouvernance",
+      "montant": 175000000,
+      "ceeac": 175000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205412",
+      "label": "régionale pour la préservation et le développement culturel en Afrique centrale. Renforcement des capacités de recherche, de production scientifique, innovation et",
+      "montant": 100000000,
+      "ceeac": 100000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205421",
+      "label": "référence dotés d'infrastructures modernes de recherche et d’innovation Renforcement des capacités de recherche, production scientifique et",
+      "montant": 25000000,
+      "ceeac": 25000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205422",
+      "label": "innovation Renforcement des capacités de recherche, de création et de production",
+      "montant": 80000000,
+      "ceeac": 80000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205423",
+      "label": "dans les domaines de la culture, du patrimoine et des arts. Renforcement de la contribution de l’éducation, de la science et de la technologie à",
+      "montant": 35000000,
+      "ceeac": 35000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205431",
+      "label": "innovation. Etablissement des partenariats régionaux multi-acteurs génèrateurs des",
+      "montant": 45000000,
+      "ceeac": 45000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205432",
+      "label": "projets conjoints d’innovation, des compétences employables et de la valeur économique. Opérationnalisation des mécanismes régionaux de coopération",
+      "montant": 30000000,
+      "ceeac": 30000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205433",
+      "label": "scientifique et éducative et facilitant l’échange de connaissances et la mobilité académique. Lancement des programmes régionaux d’échanges académiques et",
+      "montant": 30000000,
+      "ceeac": 30000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205434",
+      "label": "scientifiques qui facilitent le partage des connaissances et l’intégration régionale. RENFORCER LES CADRES DE GESTION DES MIGRATIONS, DE AXE",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205511",
+      "label": "institutionnels régionaux relatifs à la migration, à la mobilité de la main- d’œuvre et aux déplacements forcés Renforcement et harmonisation des cadres politiques, juridiques et",
+      "montant": 65000000,
+      "ceeac": 65000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205512",
+      "label": "institutionnels régionaux relatifs à la migration, à la mobilité de la main- d’œuvre et aux déplacements forcés Mise en place des Systèmes nationaux de gestion des migrations, de",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205513",
+      "label": "l’asile et de la protection mis en place ou renforcés conformément aux standards régionaux et internationaux. Mise en place d'un cadre régional formalisé de concertation",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205514",
+      "label": "interinstitutionnelle sur la migration et les déplacements forcés Élaboration et diffusion d'un rapport régional périodique sur les",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205515",
+      "label": "dynamiques migratoires. Mise en place et opérationnalisation des mécanismes régionaux",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205516",
+      "label": "d’échange d’informations, d’alerte précoce et de suivi des mouvements migratoires et des déplacements de populations Organisation de consultations régionales régulières entre les États",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205517",
+      "label": "membres sur les questions de migration, de mobilité de la main-d’œuvre et de déplacements forcés Renforcement de la coordination entre la CEEAC, les autorités locales",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205518",
+      "label": "les partenaires sociaux, les agences humanitaires et les partenaires techniques et financiers Promotion des approches régionales communes en matière de protection",
+      "montant": 10000000,
+      "ceeac": 10000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205519",
+      "label": "des migrants et des populations déplacées, en particulier dans les zones frontalières et les couloirs de mobilité. Amélioration de l'accès à la protection, aux droits et aux services de base des",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205521",
+      "label": "d’identification, d’enregistrement et de documentation des migrants et dReesn pfoorpcuelmateionnt sd edsé pmlaéccéaensis.mes de protection des groupes à besoins",
+      "montant": 50000000,
+      "ceeac": 50000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205522",
+      "label": "spécifiques, en particulier les femmes, les enfants, les personnes handicapées et les personnes à risque d’apatridie Soutien au développement de programmes de protection communautaire",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205523",
+      "label": "de prévention des tensions et de promotion de la cohésion sociale dans les zones d’accueil et de forte mobilité Intégration des dimensions genre, protection et droits humain de manière",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205524",
+      "label": "transversale dans les politiques et programmes relatifs à la migration et aux déplacements forcés. Renforcement de l'inclusion socio-économique, mobilité de la main-d’œuvre et",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205531",
+      "label": "migrants, des personnes déplacées et des communautés hôtes Elaboration de stratégies nationales et régionales de solutions durables",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205532",
+      "label": "alignées sur les politiques migratoires et de développement, et mises en Promotion des solutions durables aux déplacements forcés et à la migration",
+      "montant": 25000000,
+      "ceeac": 25000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "205541",
+      "label": "le retour volontaire, sûr et digne des populations déplacées et migrantes Réalisations PTF POURSUITE DE LA REFORME ET RENFORCEMENT DE LA",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206111",
+      "label": "fondamentaux Révision des Textes d'application conformément aux Textes",
+      "montant": 10000000,
+      "ceeac": 10000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206112",
+      "label": "fondamentaux Adoption et vulgarisation du manuel de procédures administratives",
+      "montant": 40000000,
+      "ceeac": 40000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206113",
+      "label": "comptables et financières Finalisation du processus juridique de création de certaines structures et",
+      "montant": 15000000,
+      "ceeac": 15000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206114",
+      "label": "mécanismes existants AMELIORER LES CAPACITES OPERATIONNELLES (HUMAINES",
+      "montant": 70000000,
+      "ceeac": 70000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206211",
+      "label": "Humaines",
+      "montant": 75000000,
+      "ceeac": 75000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206212",
+      "label": "Amélioration de la Gestion du Personnel Renforcement des capacités de mobilisation des ressources financières pour",
+      "montant": 10000000,
+      "ceeac": 10000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206221",
+      "label": "Mise en œuvre et suivi du mécanisme de la CCI dans les États membres",
+      "montant": 115000000,
+      "ceeac": 115000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206222",
+      "label": "Amélioration de la gestion comptable des ressources Mise en place des mécanismes de financement innovants de la",
+      "montant": 105000000,
+      "ceeac": 105000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206223",
+      "label": "Communauté",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206231",
+      "label": "mobilier Amélioration du système de gestion de la sécurité des ressources",
+      "montant": 40000000,
+      "ceeac": 40000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206232",
+      "label": "humaines Mise en place au sen de l'institution d'une infrastructure des systèmes",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206233",
+      "label": "d'information conforme aux standards internationaux Réduction des incidents et amélioration des supports et la qualité de",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206234",
+      "label": "service Mise en place d'un cadre de gouvernance des Systèmes d’Information",
+      "montant": 12000000,
+      "ceeac": 12000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206235",
+      "label": "structuré RENFORCER LES MECANISMES DE COMMUNICATION, DE",
+      "montant": 5000000,
+      "ceeac": 5000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206311",
+      "label": "Adoption de la politique et la stratégie de communication Fourniture des services de traduction et d'interprétariat dans toutes les",
+      "montant": 17000000,
+      "ceeac": 17000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "2063012",
+      "label": "langues de la communauté",
+      "montant": 55000000,
+      "ceeac": 55000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206313",
+      "label": "Modernisation de la gestion documentaire",
+      "montant": 110000000,
+      "ceeac": 110000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206321",
+      "label": "la budgétisation",
+      "montant": 185000000,
+      "ceeac": 185000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206322",
+      "label": "Amélioration de la coordinnation des programmes et projets",
+      "montant": 95000000,
+      "ceeac": 95000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206323",
+      "label": "Mise en place des mécanismes de suivi-évaluation",
+      "montant": 120000000,
+      "ceeac": 120000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206341",
+      "label": "Amélioration du système de reddition des comptes",
+      "montant": 60000000,
+      "ceeac": 60000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206342",
+      "label": "Mise en place du Comité d’Audit Mise en place d'un contrôle financier apprécié en termes d'efficacité et d'efficience",
+      "montant": 30000000,
+      "ceeac": 30000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206351",
+      "label": "Renforcement des capacités organisationnelles et humaines du CFC Accompagnement de l’Ordonnateur dans le cadre de l’exécution du",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206352",
+      "label": "Budget en vue de concourir à la soutenabilité budgétaire ASSURER LE COORDINATION ET LE RENFORCEMENT DES CADRES",
+      "montant": 120000000,
+      "ceeac": 120000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206411",
+      "label": "coordination Accélération du processus de rationalisation des CERs opérant dans le",
+      "montant": 20000000,
+      "ceeac": 20000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206412",
+      "label": "domaine de l’intégration régionale en Afrique Centrale Mise en place et renforcement des mécanismes de mobilisation des",
+      "montant": 11000000,
+      "ceeac": 11000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206413",
+      "label": "ressources extraordinaires Mise en place et opérationnalisation des institutions et des mécanismes",
+      "montant": 50000000,
+      "ceeac": 50000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "206414",
+      "label": "communautaires",
+      "montant": 115000000,
+      "ceeac": 115000000,
+      "ptf": 0,
+      "famille": "pap"
+    },
+    {
+      "code": "20911",
+      "label": "Conférence des Chefs d'Etats et de Gouvernement",
+      "montant": 400000000,
+      "ceeac": 100000000,
+      "ptf": 300000000,
+      "famille": "programme"
+    },
+    {
+      "code": "20912",
+      "label": "Conseil des Ministres",
+      "montant": 200000000,
+      "ceeac": 100000000,
+      "ptf": 100000000,
+      "famille": "programme"
+    },
+    {
+      "code": "20913",
+      "label": "Comité des Représentants Permanents (COREP)",
+      "montant": 25000000,
+      "ceeac": 25000000,
+      "ptf": 0,
+      "famille": "programme"
+    },
+    {
+      "code": "20914",
+      "label": "Comités Inter Etats",
+      "montant": 50000000,
+      "ceeac": 50000000,
+      "ptf": 0,
+      "famille": "programme"
+    },
+    {
+      "code": "20915",
+      "label": "Comité Technique Spécialisé",
+      "montant": 150000000,
+      "ceeac": 0,
+      "ptf": 250000000,
+      "famille": "programme"
+    },
+    {
+      "code": "20921",
+      "label": "Autres programmes CEEAC Mise en œuvre des recommandations des",
+      "montant": 200000000,
+      "ceeac": 200000000,
+      "ptf": 0,
+      "famille": "programme"
+    },
+    {
+      "code": "20931",
+      "label": "financement durable de la CEEAC Missions et autres activités de médiation pour",
+      "montant": 300000000,
+      "ceeac": 300000000,
+      "ptf": 0,
+      "famille": "programme"
+    },
+    {
+      "code": "20932",
+      "label": "la gestion des crises sécuritaires DOTATIONS SPECIALES",
+      "montant": 200000000,
+      "ceeac": 0,
+      "ptf": 250000000,
+      "famille": "programme"
+    },
+    {
+      "code": "63111",
+      "label": "(PEAC)",
+      "montant": 25000000,
+      "ceeac": 25000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "63112",
+      "label": "Commission des Forêts de l'AC (COMIFAC) Commission Régionale des Pêches du Golfe",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "63113",
+      "label": "de Guinée (COREP) Centre d'Application des Prévisions",
+      "montant": 25000000,
+      "ceeac": 25000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "63114",
+      "label": "climatologiques d'Afrique Centrale (CAPC- AC)",
+      "montant": 25000000,
+      "ceeac": 0,
+      "ptf": 187500000,
+      "famille": "depense"
+    },
+    {
+      "code": "63115",
+      "label": "Centre International de Coordination (CIC) Centre Multinational de Coordination-Zone",
+      "montant": 636000000,
+      "ceeac": 0,
+      "ptf": 636000000,
+      "famille": "depense"
+    },
+    {
+      "code": "63116",
+      "label": "D Centre Régional de la Sécurité Maritime de",
+      "montant": 50000000,
+      "ceeac": 50000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "63117",
+      "label": "l’Afrique Centrale (CRESMAC) Collèges des Hautes Etudes des Stratégie et",
+      "montant": 700000000,
+      "ceeac": 0,
+      "ptf": 700000000,
+      "famille": "depense"
+    },
+    {
+      "code": "63118",
+      "label": "de Défense (CHESD) Centre pour Les Energies Renouvelables et",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "63119",
+      "label": "Efficacité Energétique de l'Afrique Centrale (CEREE-AC) Organisation pour la Conservation de la",
+      "montant": 361000000,
+      "ceeac": 0,
+      "ptf": 361000000,
+      "famille": "depense"
+    },
+    {
+      "code": "63120",
+      "label": "Faune Sauvage en Afrique (OCFSA) Forum International sur les Peuples",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "63121",
+      "label": "Autochtones d'Afrique Centrale (FIPAC) Conference des Ecosystemes Forestiers",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "63122",
+      "label": "Denses et Humides d'Afrique Centrale Centre Multinational de Coordination-Zone",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "63123",
+      "label": "A",
+      "montant": 25000000,
+      "ceeac": 25000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "63911",
+      "label": "COPILCER-AC Dépenses Equipements Dépenses d'Equipements - Equipements",
+      "montant": 150000000,
+      "ceeac": 0,
+      "ptf": 150000000,
+      "famille": "depense"
+    },
+    {
+      "code": "21321",
+      "label": "licences Acquisition des équipements locaux",
+      "montant": 100000000,
+      "ceeac": 0,
+      "ptf": 100000000,
+      "famille": "depense"
+    },
+    {
+      "code": "21322",
+      "label": "techniques (serveurs et équipements de protection…) Modernisation et sécurisation de",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "21323",
+      "label": "l'infrastructure système et réseau de la Commission",
+      "montant": 100000000,
+      "ceeac": 0,
+      "ptf": 100000000,
+      "famille": "depense"
+    },
+    {
+      "code": "21324",
+      "label": "Acquisition ERP",
+      "montant": 100000000,
+      "ceeac": 0,
+      "ptf": 250000000,
+      "famille": "depense"
+    },
+    {
+      "code": "21325",
+      "label": "Acquisition des autres sectoriels",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "21331",
+      "label": "Maaintenance Evolutive du Site web",
+      "montant": 10000000,
+      "ceeac": 10000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "21332",
+      "label": "Solution intranet Système gestion documentaire et archivage",
+      "montant": 5000000,
+      "ceeac": 5000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "21333",
+      "label": "electronique Mise en place du ou des outils de type ESB",
+      "montant": 50000000,
+      "ceeac": 50000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "21334",
+      "label": "(Entreprise Service Bus)",
+      "montant": 10000000,
+      "ceeac": 10000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "21335",
+      "label": "Mise en place CEEAC Web TV Acquisition des équipements de production",
+      "montant": 1000000,
+      "ceeac": 1000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "21336",
+      "label": "audio visuelle Acquisition d'unité de production et",
+      "montant": 5000000,
+      "ceeac": 5000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "21337",
+      "label": "impression numérique d'immobilisation",
+      "montant": 10000000,
+      "ceeac": 10000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "23111",
+      "label": "bâtiments siège Refection, Maintenance et travaux d'entretien",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "23112",
+      "label": "bâtiments Annexes",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "23113",
+      "label": "Réparation Plomberie, Electricité",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "23114",
+      "label": "Equipements sécurité incendie",
+      "montant": 10000000,
+      "ceeac": 10000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "23115",
+      "label": "Aménagements sîte du nouveau Siège",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "23116",
+      "label": "Amenagement anciens bâtiments Reseaux informatiques et système",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "23611",
+      "label": "éléctrique ondulé",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "23612",
+      "label": "Aménagement de la salle des serveurs NTIC",
+      "montant": 10000000,
+      "ceeac": 10000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "23613",
+      "label": "Téléphonie IP et interconnection des réseaux service",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "24111",
+      "label": "Tables bureaux avec tiroirs",
+      "montant": 50000000,
+      "ceeac": 50000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "24112",
+      "label": "Achat chaises & Fauteuils bâtiment du Siège",
+      "montant": 25000000,
+      "ceeac": 25000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "24113",
+      "label": "Achat Chaises & fauteuils Bâtiments annexes",
+      "montant": 15000000,
+      "ceeac": 15000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "24114",
+      "label": "Armoires de rangement bâtiment du siège",
+      "montant": 10000000,
+      "ceeac": 10000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "24115",
+      "label": "Armoires de rangement bâtiments annexes",
+      "montant": 5000000,
+      "ceeac": 5000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "24121",
+      "label": "Petit matériel de bureau Acquisition de matériel informatique de",
+      "montant": 5000000,
+      "ceeac": 5000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "24211",
+      "label": "Kit d'acces et videosurveillance",
+      "montant": 1000000,
+      "ceeac": 1000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "24212",
+      "label": "Dispostif machine pointeur",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "24213",
+      "label": "Petits équipements informatiques",
+      "montant": 10000000,
+      "ceeac": 10000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "24214",
+      "label": "Multiprises et câblages informatiques",
+      "montant": 5000000,
+      "ceeac": 5000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "24215",
+      "label": "Petits matériels informatiques",
+      "montant": 4000000,
+      "ceeac": 4000000,
+      "ptf": 0,
+      "famille": "depense"
+    },
+    {
+      "code": "24311",
+      "label": "Matériel de transport",
+      "montant": 200000000,
+      "ceeac": 70000000,
+      "ptf": 130000000,
+      "famille": "depense"
+    },
+    {
+      "code": "24411",
+      "label": "Ménusierie, Peinture, Plomberie",
+      "montant": 0,
+      "ceeac": 0,
+      "ptf": 0,
+      "famille": "depense"
+    }
+  ],
+  "recettes": [
+    {
+      "code": "72101",
+      "label": "République d'Angola - , %",
+      "montant": 2890303491,
+      "ceeac": 2890303491,
+      "ptf": 0,
+      "famille": "recette"
+    },
+    {
+      "code": "72102",
+      "label": "République du Burundi , %",
+      "montant": 1313774314,
+      "ceeac": 0,
+      "ptf": 1313775740,
+      "famille": "recette"
+    },
+    {
+      "code": "72103",
+      "label": "République du Cameroun , %",
+      "montant": 2890303491,
+      "ceeac": 0,
+      "ptf": 2890306628,
+      "famille": "recette"
+    },
+    {
+      "code": "72104",
+      "label": "République Centrafricaine - , %",
+      "montant": 1313774314,
+      "ceeac": 1313774314,
+      "ptf": 0,
+      "famille": "recette"
+    },
+    {
+      "code": "72105",
+      "label": "République du Congo - , %",
+      "montant": 2890303491,
+      "ceeac": 2890303491,
+      "ptf": 0,
+      "famille": "recette"
+    },
+    {
+      "code": "72106",
+      "label": "République Démocratique du Congo , %",
+      "montant": 2627548628,
+      "ceeac": 0,
+      "ptf": 2627551480,
+      "famille": "recette"
+    },
+    {
+      "code": "72107",
+      "label": "République Gabonaise - , %",
+      "montant": 2890303491,
+      "ceeac": 2890303491,
+      "ptf": 0,
+      "famille": "recette"
+    },
+    {
+      "code": "72108",
+      "label": "République de Guinée Equatoriale , %",
+      "montant": 2890303491,
+      "ceeac": 0,
+      "ptf": 2890306628,
+      "famille": "recette"
+    },
+    {
+      "code": "72109",
+      "label": "République Rwandaise , %",
+      "montant": 2627548628,
+      "ceeac": 2626588828,
+      "ptf": 959800,
+      "famille": "recette"
+    },
+    {
+      "code": "72110",
+      "label": "Sao Tomé et Principe - , %",
+      "montant": 1313774314,
+      "ceeac": 1313774314,
+      "ptf": 0,
+      "famille": "recette"
+    },
+    {
+      "code": "72111",
+      "label": "Republique du Tchad , %",
+      "montant": 2627548628,
+      "ceeac": 0,
+      "ptf": 2627551480,
+      "famille": "recette"
+    },
+    {
+      "code": "7411",
+      "label": "Dons projets BAD UNION EUROPEENNE (ITC, ONUDI) AU/ AUDA-NEPAD/ AU-BIRA, Autres IS Banque Mondiale ONUDI ONU/UNOCA/UNOP/ONUSIDA, ONU",
+      "montant": 2840427566,
+      "ceeac": 0,
+      "ptf": 14030081000,
+      "famille": "recette"
+    }
+  ]
+}

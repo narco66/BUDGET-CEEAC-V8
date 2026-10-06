@@ -1,0 +1,2285 @@
+{
+    "execute_le": "2026-10-05T19:33:17+01:00",
+    "base": "budget_ceeac_v8",
+    "duree_s": 212.4,
+    "resume": {
+        "Conforme": 144
+    },
+    "donnees": {
+        "lignes": {
+            "203232": {
+                "id": 1,
+                "code": "203232",
+                "libelle": "Mise en place d'un système de suivi et de coordination régionale des projets énergétiques et synchronisation des actions entre les acteurs",
+                "nature": "pap",
+                "nature_libelle": "PAP",
+                "structure": "DATI · Direction de l’Énergie",
+                "montant_vote": 245000000,
+                "disponible": 231900000,
+                "gele": 0,
+                "credit_autorise": 245000000,
+                "soldes": {
+                    "initial": 245000000,
+                    "revise": 245000000,
+                    "gele": 0,
+                    "reserve": 8500000,
+                    "engage": 4600000,
+                    "liquide": 0,
+                    "ordonnance": 0,
+                    "paye": 0,
+                    "disponible": 231900000,
+                    "reste_a_engager": 240400000,
+                    "reste_a_liquider": 4600000,
+                    "reste_a_ordonnancer": 0,
+                    "reste_a_payer": 0,
+                    "taux_engagement": 1.88,
+                    "taux_liquidation": 0,
+                    "taux_paiement": 0
+                },
+                "completude": 100,
+                "activite": "Mise en place d'un système de suivi et de coordination régionale des projets énergétiques et synchronisation des actions entre les acteurs"
+            },
+            "21323": {
+                "id": 236,
+                "code": "21323",
+                "libelle": "Modernisation et sécurisation de l'infrastructure système et réseau de la",
+                "nature": "hors_pap",
+                "nature_libelle": "Hors PAP",
+                "structure": "DSG · Direction des Systèmes d’information",
+                "montant_vote": 100000000,
+                "disponible": 99000000,
+                "gele": 1000000,
+                "credit_autorise": 100000000,
+                "soldes": {
+                    "initial": 100000000,
+                    "revise": 100000000,
+                    "gele": 1000000,
+                    "reserve": 0,
+                    "engage": 0,
+                    "liquide": 0,
+                    "ordonnance": 0,
+                    "paye": 0,
+                    "disponible": 99000000,
+                    "reste_a_engager": 100000000,
+                    "reste_a_liquider": 0,
+                    "reste_a_ordonnancer": 0,
+                    "reste_a_payer": 0,
+                    "taux_engagement": 0,
+                    "taux_liquidation": 0,
+                    "taux_paiement": 0
+                },
+                "completude": null,
+                "activite": null
+            }
+        },
+        "seuil": "500000",
+        "tiers": {
+            "code": "TIE-000010",
+            "raison_sociale": "Société Équatoriale de Licences",
+            "nif": "JEU-NIF-001"
+        },
+        "code_archive": "0787fe8b-e13f-4cca-8675-e5baa97903ee"
+    },
+    "temoins_avant": {
+        "expression_besoins": 30,
+        "engagements": 17,
+        "liquidations": 12,
+        "ordonnancements": 7,
+        "paiements": 6,
+        "revenue_orders": 2,
+        "credit_movements": 1,
+        "users": 29
+    },
+    "temoins_apres": {
+        "expression_besoins": 30,
+        "engagements": 17,
+        "liquidations": 12,
+        "ordonnancements": 7,
+        "paiements": 6,
+        "revenue_orders": 2,
+        "credit_movements": 1,
+        "users": 29
+    },
+    "cas": [
+        {
+            "id": "AUT-01",
+            "module": "Authentification",
+            "titre": "Connexion avec des identifiants valides",
+            "profil": "Initiateur",
+            "donnees": "clarisse.ndong@ceeac.int / mot de passe de démonstration",
+            "etapes": [
+                "Saisir l’adresse électronique et le mot de passe",
+                "Valider"
+            ],
+            "attendu": "Connexion acceptée (HTTP 200), profil « initiateur » restitué.",
+            "obtenu": "HTTP 200, rôle initiateur, Clarisse NDONG — DATI · Direction de l’Énergie",
+            "statut": "Conforme",
+            "duree_ms": 1190
+        },
+        {
+            "id": "AUT-02",
+            "module": "Authentification",
+            "titre": "Connexion avec un mot de passe erroné",
+            "profil": "Initiateur",
+            "donnees": "clarisse.ndong@ceeac.int / « mauvais-mdp »",
+            "etapes": [
+                "Saisir un mot de passe erroné",
+                "Valider"
+            ],
+            "attendu": "Connexion refusée (HTTP 422), message d’erreur, aucune session ouverte.",
+            "obtenu": "HTTP 422 : « Identifiants invalides. »",
+            "statut": "Conforme",
+            "duree_ms": 244
+        },
+        {
+            "id": "AUT-03",
+            "module": "Authentification",
+            "titre": "Connexion d’un compte désactivé",
+            "profil": "Agent désactivé",
+            "donnees": "Compte « jeu.desactive@ceeac.int » créé désactivé pour le test",
+            "etapes": [
+                "Créer le compte désactivé",
+                "Tenter la connexion"
+            ],
+            "attendu": "Connexion refusée (HTTP 403).",
+            "obtenu": "HTTP 403 : « Ce compte ne peut pas se connecter. »",
+            "statut": "Conforme",
+            "duree_ms": 425
+        },
+        {
+            "id": "AUT-04",
+            "module": "Authentification",
+            "titre": "Accès à une API sans être connecté",
+            "profil": "Anonyme",
+            "donnees": "GET /expressions-besoin sans session",
+            "etapes": [
+                "Appeler la liste des expressions de besoin sans authentification"
+            ],
+            "attendu": "Accès refusé (HTTP 401).",
+            "obtenu": "HTTP 401",
+            "statut": "Conforme",
+            "duree_ms": 10
+        },
+        {
+            "id": "AUT-05",
+            "module": "Authentification",
+            "titre": "Profil de l’utilisateur connecté",
+            "profil": "Comptable",
+            "donnees": "rita.obame@ceeac.int",
+            "etapes": [
+                "Ouvrir l’application connecté"
+            ],
+            "attendu": "Le profil courant restitue le rôle « comptable ».",
+            "obtenu": "HTTP 200, rôle comptable",
+            "statut": "Conforme",
+            "duree_ms": 11
+        },
+        {
+            "id": "HAB-01",
+            "module": "Habilitations",
+            "titre": "Un initiateur n’accède pas à l’administration des comptes",
+            "profil": "Initiateur",
+            "donnees": "clarisse.ndong — GET /admin/utilisateurs",
+            "etapes": [
+                "Ouvrir Administration › Utilisateurs"
+            ],
+            "attendu": "Accès refusé (HTTP 403).",
+            "obtenu": "HTTP 403",
+            "statut": "Conforme",
+            "duree_ms": 29
+        },
+        {
+            "id": "HAB-02",
+            "module": "Habilitations",
+            "titre": "Un comptable ne crée pas d’expression de besoin",
+            "profil": "Comptable",
+            "donnees": "rita.obame — ligne 203232",
+            "etapes": [
+                "Tenter de créer une expression de besoin"
+            ],
+            "attendu": "Création refusée (HTTP 403).",
+            "obtenu": "HTTP 403",
+            "statut": "Conforme",
+            "duree_ms": 266
+        },
+        {
+            "id": "HAB-03",
+            "module": "Habilitations",
+            "titre": "L’auditeur consulte le journal d’audit",
+            "profil": "Auditeur",
+            "donnees": "chantal.ibinga — GET /admin/audit",
+            "etapes": [
+                "Ouvrir Administration › Journal d’audit"
+            ],
+            "attendu": "Consultation autorisée (HTTP 200), événements listés.",
+            "obtenu": "HTTP 200, 25 événements sur la page",
+            "statut": "Conforme",
+            "duree_ms": 120
+        },
+        {
+            "id": "EB-01",
+            "module": "Expression de besoin",
+            "titre": "Création d’un brouillon sur une ligne de la structure",
+            "profil": "Initiateur",
+            "donnees": "clarisse.ndong (DATI-DENER) — ligne 203232",
+            "etapes": [
+                "Mes tâches › Expressions de besoin › Nouvelle expression de besoin",
+                "Choisir la ligne 203232"
+            ],
+            "attendu": "Brouillon créé (HTTP 201) avec une référence EB/2026/… et le statut « brouillon ».",
+            "obtenu": "HTTP 201, EB/2026/DATI-DENER/000460, statut brouillon",
+            "statut": "Conforme",
+            "duree_ms": 514
+        },
+        {
+            "id": "EB-02",
+            "module": "Expression de besoin",
+            "titre": "Soumission d’un brouillon incomplet",
+            "profil": "Initiateur",
+            "donnees": "Brouillon EB-01 sans objet, justification, sous-ligne ni pièce",
+            "etapes": [
+                "Cliquer sur Soumettre"
+            ],
+            "attendu": "Soumission refusée (HTTP 422) ; champs signalés : objet, justification, lignes, documents.",
+            "obtenu": "HTTP 422 ; champs signalés : objet, justification, lignes, documents",
+            "statut": "Conforme",
+            "duree_ms": 72
+        },
+        {
+            "id": "EB-03",
+            "module": "Expression de besoin",
+            "titre": "Saisie de la description et des sous-lignes",
+            "profil": "Initiateur",
+            "donnees": "Objet « Jeu d’essai — atelier régional efficacité énergétique » ; sous-lignes : location de salle 1 × 700 000 ; pauses-café 50 × 10 000",
+            "etapes": [
+                "Étape Description : objet, justification, urgence normale, priorité haute",
+                "Étape Tâches et détails : deux sous-lignes"
+            ],
+            "attendu": "Enregistrement accepté (HTTP 200) ; montant total calculé = 1 200 000 FCFA.",
+            "obtenu": "HTTP 200, montant 1 200 000 FCFA",
+            "statut": "Conforme",
+            "duree_ms": 225
+        },
+        {
+            "id": "EB-04",
+            "module": "Expression de besoin",
+            "titre": "Ajout des pièces justificatives",
+            "profil": "Initiateur",
+            "donnees": "Pièces PDF pour chaque type obligatoire du référentiel",
+            "etapes": [
+                "Étape Pièces jointes : choisir le type, déposer le fichier, Joindre la pièce"
+            ],
+            "attendu": "Chaque pièce est acceptée (HTTP 200) et listée sur le dossier.",
+            "obtenu": "HTTP 200 pour 7 pièce(s) : TDR, Devis, Facture pro forma, Spécifications techniques, Note justificative, Planning, Bon de commande",
+            "statut": "Conforme",
+            "duree_ms": 972
+        },
+        {
+            "id": "EB-05",
+            "module": "Expression de besoin",
+            "titre": "Contrôle de disponibilité à la soumission",
+            "profil": "Initiateur",
+            "donnees": "Second brouillon sur la ligne 203232 : 1 × 900 000 000 FCFA",
+            "etapes": [
+                "Créer un brouillon",
+                "Saisir une sous-ligne de 900 000 000",
+                "Joindre une pièce",
+                "Soumettre"
+            ],
+            "attendu": "Soumission refusée (HTTP 422) pour crédit insuffisant (champ « credit »).",
+            "obtenu": "HTTP 422 : « Le crédit disponible de la ligne 203232 est insuffisant. »",
+            "statut": "Conforme",
+            "duree_ms": 1249
+        },
+        {
+            "id": "EB-06",
+            "module": "Expression de besoin",
+            "titre": "Soumission d’un dossier complet",
+            "profil": "Initiateur",
+            "donnees": "Dossier EB-01 complété (EB-03, EB-04)",
+            "etapes": [
+                "Étape Soumission : Soumettre"
+            ],
+            "attendu": "Statut « soumise » ; le dossier attend le Directeur de la structure.",
+            "obtenu": "HTTP 200, statut soumise, étape directeur",
+            "statut": "Conforme",
+            "duree_ms": 728
+        },
+        {
+            "id": "TAC-01",
+            "module": "Mes tâches",
+            "titre": "La soumission crée une tâche pour le valideur",
+            "profil": "Directeur",
+            "donnees": "jp.okombi (Direction de l’Énergie)",
+            "etapes": [
+                "Ouvrir Mes tâches"
+            ],
+            "attendu": "Une tâche ouverte référence l’expression de besoin soumise.",
+            "obtenu": "Tâche présente : « EB/2026/DATI-DENER/000460 »",
+            "statut": "Conforme",
+            "duree_ms": 517
+        },
+        {
+            "id": "EB-07",
+            "module": "Expression de besoin",
+            "titre": "Un directeur d’une autre structure ne peut pas valider",
+            "profil": "Directeur (DSI)",
+            "donnees": "dsi.directeur — dossier EB-06",
+            "etapes": [
+                "Tenter Valider"
+            ],
+            "attendu": "Action refusée (HTTP 403).",
+            "obtenu": "HTTP 403",
+            "statut": "Conforme",
+            "duree_ms": 48
+        },
+        {
+            "id": "EB-08",
+            "module": "Expression de besoin",
+            "titre": "Retour pour correction sans motif",
+            "profil": "Directeur",
+            "donnees": "jp.okombi — motif vide",
+            "etapes": [
+                "Cliquer sur Retourner",
+                "Laisser le motif vide"
+            ],
+            "attendu": "Refus (HTTP 422) : motif et observations obligatoires.",
+            "obtenu": "HTTP 422 ; champs signalés : motif, observations",
+            "statut": "Conforme",
+            "duree_ms": 22
+        },
+        {
+            "id": "EB-09",
+            "module": "Expression de besoin",
+            "titre": "Retour pour correction puis nouvelle soumission",
+            "profil": "Directeur, puis Initiateur",
+            "donnees": "Motif « Préciser le nombre de participants » ; champ concerné : justification",
+            "etapes": [
+                "Directeur : Retourner avec motif et observations",
+                "Initiateur : compléter la justification",
+                "Initiateur : Soumettre"
+            ],
+            "attendu": "Statut « retournee » après le retour ; « soumise » après la nouvelle soumission ; événement de retour tracé.",
+            "obtenu": "retournee → soumise ; événement « retour » journalisé",
+            "statut": "Conforme",
+            "duree_ms": 912
+        },
+        {
+            "id": "NOT-01",
+            "module": "Notifications",
+            "titre": "L’initiateur est notifié du retour",
+            "profil": "Initiateur",
+            "donnees": "clarisse.ndong",
+            "etapes": [
+                "Ouvrir la cloche ou Notifications"
+            ],
+            "attendu": "Une notification non lue concerne le dossier retourné.",
+            "obtenu": "Notification : « EB/2026/DATI-DENER/000460 nécessite votre action. »",
+            "statut": "Conforme",
+            "duree_ms": 77
+        },
+        {
+            "id": "EB-10",
+            "module": "Expression de besoin",
+            "titre": "Validation par chaque acteur du circuit",
+            "profil": "Directeur, Commissaire ou Secrétaire général",
+            "donnees": "Acteur déterminé par l’étape : directeur de la structure, puis commissaire (PAP) ou Secrétaire général (hors PAP)",
+            "etapes": [
+                "Chaque valideur ouvre le dossier et clique sur Valider"
+            ],
+            "attendu": "Le dossier progresse jusqu’à l’étape « ordonnateur ».",
+            "obtenu": "Validé par jp.okombi@ceeac.int → serge.mabika@ceeac.int ; étape ordonnateur",
+            "statut": "Conforme",
+            "duree_ms": 726
+        },
+        {
+            "id": "EB-11",
+            "module": "Expression de besoin",
+            "titre": "Approbation par l’ordonnateur et génération de l’engagement",
+            "profil": "Ordonnateur",
+            "donnees": "ordonnateur@ceeac.int",
+            "etapes": [
+                "Ouvrir le dossier",
+                "Cliquer sur Approuver"
+            ],
+            "attendu": "Le bouton Valider est refusé à cette étape (403). L’approbation passe le dossier à « transformee_engagement » et crée un engagement ENG-2026-… de 1 200 000 FCFA.",
+            "obtenu": "Valider : HTTP 403 ; Approuver : statut transformee_engagement, engagement ENG-2026-003898 de 1 200 000 FCFA",
+            "statut": "Conforme",
+            "duree_ms": 2398
+        },
+        {
+            "id": "EB-12",
+            "module": "Expression de besoin",
+            "titre": "Pas de double génération d’engagement",
+            "profil": "Initiateur",
+            "donnees": "Dossier déjà transformé",
+            "etapes": [
+                "Tenter Générer l’engagement une seconde fois"
+            ],
+            "attendu": "Action refusée ; un seul engagement existe pour le dossier.",
+            "obtenu": "HTTP 403 ; 1 engagement pour le dossier",
+            "statut": "Conforme",
+            "duree_ms": 13
+        },
+        {
+            "id": "EB-13",
+            "module": "Expression de besoin",
+            "titre": "Rejet définitif d’un dossier",
+            "profil": "Directeur",
+            "donnees": "Troisième dossier « Jeu d’essai — mission non programmée », 300 000 FCFA",
+            "etapes": [
+                "Initiateur : créer, compléter, soumettre",
+                "Directeur : Rejeter avec motif"
+            ],
+            "attendu": "Statut « rejetee » ; le dossier n’est plus modifiable.",
+            "obtenu": "statut rejetee ; modification ultérieure refusée (HTTP 403)",
+            "statut": "Conforme",
+            "duree_ms": 1681
+        },
+        {
+            "id": "ENG-01",
+            "module": "Engagement",
+            "titre": "Fiche de l’engagement généré",
+            "profil": "Expert Budget",
+            "donnees": "blaise.essono — engagement issu de EB-12",
+            "etapes": [
+                "Ouvrir Engagements",
+                "Ouvrir le dossier"
+            ],
+            "attendu": "Engagement à l’étape « expert_budget », montant 1 200 000 FCFA, rattaché à l’expression de besoin.",
+            "obtenu": "ENG-2026-003898, étape expert_budget, 1 200 000 FCFA, EB EB/2026/DATI-DENER/000460",
+            "statut": "Conforme",
+            "duree_ms": 118
+        },
+        {
+            "id": "ENG-02",
+            "module": "Engagement",
+            "titre": "Un initiateur ne peut pas instruire l’engagement",
+            "profil": "Initiateur",
+            "donnees": "clarisse.ndong",
+            "etapes": [
+                "Tenter Transmettre"
+            ],
+            "attendu": "Action refusée (HTTP 403).",
+            "obtenu": "HTTP 403",
+            "statut": "Conforme",
+            "duree_ms": 15
+        },
+        {
+            "id": "ENG-03",
+            "module": "Engagement",
+            "titre": "Rattachement du bénéficiaire au référentiel des tiers",
+            "profil": "Expert Budget",
+            "donnees": "Tiers « Société Équatoriale de Licences » (NIF JEU-NIF-001)",
+            "etapes": [
+                "Onglet Instruction › Bénéficiaire",
+                "Rechercher le tiers",
+                "Enregistrer le bénéficiaire"
+            ],
+            "attendu": "Bénéficiaire et NIF repris du référentiel.",
+            "obtenu": "Bénéficiaire Société Équatoriale de Licences, NIF JEU-NIF-001",
+            "statut": "Conforme",
+            "duree_ms": 72
+        },
+        {
+            "id": "ENG-04",
+            "module": "Engagement",
+            "titre": "Ajout d’une pièce d’engagement",
+            "profil": "Expert Budget",
+            "donnees": "Bon de commande (PDF)",
+            "etapes": [
+                "Pièces obligatoires › Joindre",
+                "Type « Bon de commande »"
+            ],
+            "attendu": "Pièce acceptée (HTTP 200).",
+            "obtenu": "HTTP 200",
+            "statut": "Conforme",
+            "duree_ms": 68
+        },
+        {
+            "id": "ENG-05",
+            "module": "Engagement",
+            "titre": "Transmission par l’Expert Budget",
+            "profil": "Expert Budget",
+            "donnees": "Observations « Instruction complète »",
+            "etapes": [
+                "Cliquer sur Transmettre",
+                "Saisir les observations"
+            ],
+            "attendu": "Le dossier passe à l’étape « chef_budget ».",
+            "obtenu": "étape chef_budget",
+            "statut": "Conforme",
+            "duree_ms": 115
+        },
+        {
+            "id": "ENG-06",
+            "module": "Engagement",
+            "titre": "Retour sans motif par le Chef de service Budget",
+            "profil": "Chef de service Budget",
+            "donnees": "chef.budget — motif vide",
+            "etapes": [
+                "Cliquer sur Retourner sans motif"
+            ],
+            "attendu": "Refus (HTTP 422) : motif obligatoire.",
+            "obtenu": "HTTP 422 ; champs : motif",
+            "statut": "Conforme",
+            "duree_ms": 10
+        },
+        {
+            "id": "ENG-07",
+            "module": "Engagement",
+            "titre": "Examen par le Chef de service puis le Directeur du Budget",
+            "profil": "Chef de service Budget, Directeur du Budget",
+            "donnees": "chef.budget puis directeur.budget",
+            "etapes": [
+                "Chef de service : Transmettre",
+                "Directeur du Budget : Transmettre"
+            ],
+            "attendu": "Le dossier arrive à l’étape « controleur_financier ».",
+            "obtenu": "chef_budget → directeur_budget → controleur_financier",
+            "statut": "Conforme",
+            "duree_ms": 261
+        },
+        {
+            "id": "ENG-08",
+            "module": "Engagement",
+            "titre": "Visa du Contrôleur financier",
+            "profil": "Contrôleur financier",
+            "donnees": "controleur.financier — observations « Visa conforme »",
+            "etapes": [
+                "Onglet Contrôle",
+                "Cliquer sur Viser"
+            ],
+            "attendu": "Statut « transforme_liquidation », engagement verrouillé, liquidation créée ; l’engagé de la ligne augmente de 1 200 000.",
+            "obtenu": "statut transforme_liquidation, verrouillé = true, liquidation LIQ/2026/000212 ; engagé de la ligne +1 200 000",
+            "statut": "Conforme",
+            "duree_ms": 2669
+        },
+        {
+            "id": "ENG-09",
+            "module": "Engagement",
+            "titre": "Dégagement partiel d’un engagement visé",
+            "profil": "Directeur du Budget",
+            "donnees": "Dégagement de 200 000 FCFA, acte « JEU-DEG-01 »",
+            "etapes": [
+                "Menu ⋮ › Dégager",
+                "Saisir montant, motif, acte"
+            ],
+            "attendu": "Dégagement accepté ; engagé de la ligne réduit de 200 000 et disponible augmenté d’autant.",
+            "obtenu": "HTTP 200 ; disponible de la ligne +200 000",
+            "statut": "Conforme",
+            "duree_ms": 1595
+        },
+        {
+            "id": "LIQ-01",
+            "module": "Liquidation",
+            "titre": "Service fait supérieur au montant engagé",
+            "profil": "Initiateur",
+            "donnees": "Montant accepté 5 000 000 FCFA (engagé : 1 000 000 après dégagement)",
+            "etapes": [
+                "Étape Service fait : saisir un montant supérieur",
+                "Certifier"
+            ],
+            "attendu": "Refus (HTTP 422) sur le montant accepté.",
+            "obtenu": "HTTP 422 ; champs : montant_accepte",
+            "statut": "Conforme",
+            "duree_ms": 51
+        },
+        {
+            "id": "LIQ-02",
+            "module": "Liquidation",
+            "titre": "Certification du service fait",
+            "profil": "Initiateur",
+            "donnees": "Montant accepté 1 000 000 ; BL-JEU-RCT-01 ; nature « Prestation de services » ; date 2026-10-02",
+            "etapes": [
+                "Étape Service fait : renseigner la réception",
+                "Cocher l’attestation",
+                "Certifier et signer électroniquement"
+            ],
+            "attendu": "Service fait « Certifié ».",
+            "obtenu": "service fait : Certifié",
+            "statut": "Conforme",
+            "duree_ms": 3249
+        },
+        {
+            "id": "LIQ-03",
+            "module": "Liquidation",
+            "titre": "Facture sans montant de taxes",
+            "profil": "Initiateur",
+            "donnees": "FAC-JEU-RCT-001 du 2026-10-03, HT 1 000 000, taxes non renseignées",
+            "etapes": [
+                "Étape Facture : omettre les taxes",
+                "Enregistrer la facture"
+            ],
+            "attendu": "Refus (HTTP 422) sur le champ taxes.",
+            "obtenu": "HTTP 422 ; champs : taxes",
+            "statut": "Conforme",
+            "duree_ms": 14
+        },
+        {
+            "id": "LIQ-04",
+            "module": "Liquidation",
+            "titre": "Enregistrement de la facture",
+            "profil": "Initiateur",
+            "donnees": "FAC-JEU-RCT-001 du 2026-10-03, échéance 2026-11-02, HT 1 000 000, taxes 0, retenue 0, pénalité 0",
+            "etapes": [
+                "Étape Facture : saisir les montants",
+                "Enregistrer la facture"
+            ],
+            "attendu": "Facture enregistrée ; net à payer 1 000 000 FCFA.",
+            "obtenu": "net à payer 1 000 000 FCFA",
+            "statut": "Conforme",
+            "duree_ms": 153
+        },
+        {
+            "id": "LIQ-05",
+            "module": "Liquidation",
+            "titre": "Visa impossible avant la soumission",
+            "profil": "Contrôleur financier",
+            "donnees": "Liquidation non soumise",
+            "etapes": [
+                "Tenter Viser"
+            ],
+            "attendu": "Action refusée (HTTP 403 ou 422).",
+            "obtenu": "HTTP 403",
+            "statut": "Conforme",
+            "duree_ms": 34
+        },
+        {
+            "id": "LIQ-06",
+            "module": "Liquidation",
+            "titre": "Soumission au Contrôleur financier",
+            "profil": "Initiateur",
+            "donnees": "Liquidation complète",
+            "etapes": [
+                "Étape Soumission : Soumettre au CF"
+            ],
+            "attendu": "Statut « en_controle ».",
+            "obtenu": "statut en_controle",
+            "statut": "Conforme",
+            "duree_ms": 154
+        },
+        {
+            "id": "LIQ-07",
+            "module": "Liquidation",
+            "titre": "Visa de la liquidation",
+            "profil": "Contrôleur financier",
+            "donnees": "Observations « Service fait et facture conformes »",
+            "etapes": [
+                "Cliquer sur Viser"
+            ],
+            "attendu": "Statut « transformee_ordonnancement » ; ordonnancement créé.",
+            "obtenu": "statut transformee_ordonnancement ; ordonnancement ORD-2026-000096",
+            "statut": "Conforme",
+            "duree_ms": 1974
+        },
+        {
+            "id": "LIQ-08",
+            "module": "Liquidation",
+            "titre": "Facture en doublon pour le même fournisseur",
+            "profil": "Initiateur",
+            "donnees": "Une autre liquidation ouverte du même fournisseur reçoit le numéro FAC-JEU-RCT-001 déjà enregistré",
+            "etapes": [
+                "Certifier le service fait",
+                "Étape Facture : saisir FAC-JEU-RCT-001",
+                "Soumettre au CF"
+            ],
+            "attendu": "Le doublon est signalé à l’enregistrement de la facture ; la soumission est bloquée (HTTP 422, champ facture).",
+            "obtenu": "doublon signalé = true ; soumission HTTP 422 (facture) : « Cette facture semble avoir déjà été enregistrée dans une liquidation. La soumission est bloquée. »",
+            "statut": "Conforme",
+            "duree_ms": 1825
+        },
+        {
+            "id": "ORD-01",
+            "module": "Ordonnancement",
+            "titre": "Détermination de l’ordonnateur compétent selon le seuil",
+            "profil": "Secrétaire général",
+            "donnees": "Simulation 4 500 000 puis 6 000 000 FCFA",
+            "etapes": [
+                "Délégations et seuil › Moteur de détermination",
+                "Saisir le montant",
+                "Calculer"
+            ],
+            "attendu": "4 500 000 → Secrétaire général (ordonnateur délégué) ; 6 000 000 → Président (ordonnateur principal).",
+            "obtenu": "seuil actif 5 000 000 ; 4,5 M → secretaire_general ; 6 M → ordonnateur",
+            "statut": "Conforme",
+            "duree_ms": 204
+        },
+        {
+            "id": "ORD-02",
+            "module": "Ordonnancement",
+            "titre": "L’ordonnateur principal ne signe pas sous le seuil",
+            "profil": "Ordonnateur (Président)",
+            "donnees": "Ordre de 1 000 000 FCFA",
+            "etapes": [
+                "Tenter Signer l’ordre de paiement"
+            ],
+            "attendu": "Signature refusée (HTTP 403) : l’ordre relève du Secrétaire général.",
+            "obtenu": "ordonnateur désigné : secretaire_general ; HTTP 403",
+            "statut": "Conforme",
+            "duree_ms": 31
+        },
+        {
+            "id": "ORD-03",
+            "module": "Ordonnancement",
+            "titre": "Signature avec un mot de passe erroné",
+            "profil": "Secrétaire général",
+            "donnees": "Mot de passe « erreur »",
+            "etapes": [
+                "Signer l’ordre de paiement",
+                "Cocher la confirmation",
+                "Saisir un mauvais mot de passe"
+            ],
+            "attendu": "Signature refusée (HTTP 422).",
+            "obtenu": "HTTP 422 ; champs : mot_de_passe",
+            "statut": "Conforme",
+            "duree_ms": 685
+        },
+        {
+            "id": "ORD-04",
+            "module": "Ordonnancement",
+            "titre": "Signature et transmission à l’Agence comptable",
+            "profil": "Secrétaire général",
+            "donnees": "Confirmation cochée, mot de passe correct",
+            "etapes": [
+                "Signer l’ordre de paiement",
+                "Confirmer"
+            ],
+            "attendu": "Statut « transforme_paiement » ; un paiement est créé.",
+            "obtenu": "statut transforme_paiement ; paiement PAY-2026-000007 de 1 000 000 FCFA",
+            "statut": "Conforme",
+            "duree_ms": 3971
+        },
+        {
+            "id": "PAY-01",
+            "module": "Paiement",
+            "titre": "Prise en charge par le comptable",
+            "profil": "Comptable",
+            "donnees": "rita.obame",
+            "etapes": [
+                "Ouvrir le paiement",
+                "Prendre en charge"
+            ],
+            "attendu": "Prise en charge acceptée (HTTP 200).",
+            "obtenu": "HTTP 200, statut en_preparation",
+            "statut": "Conforme",
+            "duree_ms": 183
+        },
+        {
+            "id": "PAY-02",
+            "module": "Paiement",
+            "titre": "Règlement en caisse au-delà du plafond",
+            "profil": "Comptable",
+            "donnees": "Mode caisse pour 1 000 000 FCFA",
+            "etapes": [
+                "Onglet Coordonnées : mode Caisse",
+                "Enregistrer"
+            ],
+            "attendu": "Refus (HTTP 422) sur le mode : montant supérieur au plafond de caisse.",
+            "obtenu": "HTTP 422 (mode) ; plafond de caisse paramétré : 500000 — « Le plafond de caisse est de 500 000 FCFA. »",
+            "statut": "Conforme",
+            "duree_ms": 45
+        },
+        {
+            "id": "PAY-03",
+            "module": "Paiement",
+            "titre": "Préparation d’un virement vers un compte validé",
+            "profil": "Comptable",
+            "donnees": "Mode virement ; compte validé du bénéficiaire ; compte CEEAC « CEEAC-01 »",
+            "etapes": [
+                "Onglet Coordonnées : choisir le compte",
+                "Enregistrer",
+                "Soumettre au Chef Comptable"
+            ],
+            "attendu": "Préparation acceptée ; statut « a_controler » après soumission.",
+            "obtenu": "compte GA100010001000100010001 (BGFIBANK) ; statut a_controler",
+            "statut": "Conforme",
+            "duree_ms": 280
+        },
+        {
+            "id": "PAY-04",
+            "module": "Paiement",
+            "titre": "Le comptable ne valide pas sa propre préparation",
+            "profil": "Comptable",
+            "donnees": "rita.obame",
+            "etapes": [
+                "Tenter Valider"
+            ],
+            "attendu": "Action refusée avec message explicite (HTTP 403 ou 422).",
+            "obtenu": "HTTP 422 : « Cette action est réservée au Chef Comptable. »",
+            "statut": "Conforme",
+            "duree_ms": 54
+        },
+        {
+            "id": "PAY-05",
+            "module": "Paiement",
+            "titre": "Validation par le Chef comptable",
+            "profil": "Chef comptable",
+            "donnees": "marc.ndzie",
+            "etapes": [
+                "Cliquer sur Valider"
+            ],
+            "attendu": "Statut « a_signer ».",
+            "obtenu": "statut a_signer",
+            "statut": "Conforme",
+            "duree_ms": 209
+        },
+        {
+            "id": "PAY-06",
+            "module": "Paiement",
+            "titre": "Autorisation du règlement par l’Agent comptable",
+            "profil": "Agent comptable",
+            "donnees": "paul.nguema ; essai avec mot de passe erroné puis correct",
+            "etapes": [
+                "Autoriser le règlement",
+                "Saisir un mot de passe erroné",
+                "Recommencer avec le bon mot de passe"
+            ],
+            "attendu": "Mauvais mot de passe : HTTP 422. Bon mot de passe : statut « autorise ».",
+            "obtenu": "erroné : HTTP 422 ; correct : statut autorise",
+            "statut": "Conforme",
+            "duree_ms": 1424
+        },
+        {
+            "id": "PAY-07",
+            "module": "Paiement",
+            "titre": "Exécution sans avis bancaire",
+            "profil": "Comptable",
+            "donnees": "Montant 400 000 ; référence VIR-JEU-RCT-01 ; sans pièce",
+            "etapes": [
+                "Exécuter sans joindre l’avis bancaire"
+            ],
+            "attendu": "Refus (HTTP 422) sur la preuve.",
+            "obtenu": "HTTP 422 ; champs : preuve",
+            "statut": "Conforme",
+            "duree_ms": 21
+        },
+        {
+            "id": "PAY-08",
+            "module": "Paiement",
+            "titre": "Exécution partielle puis solde",
+            "profil": "Comptable",
+            "donnees": "400 000 (VIR-JEU-RCT-01) puis 600 000 (VIR-JEU-RCT-02), avis bancaires PDF",
+            "etapes": [
+                "Exécuter 400 000 avec avis",
+                "Exécuter le solde de 600 000 avec avis"
+            ],
+            "attendu": "« paye_partiel » après le premier règlement ; « a_rapprocher » après le solde.",
+            "obtenu": "paye_partiel → a_rapprocher",
+            "statut": "Conforme",
+            "duree_ms": 6567
+        },
+        {
+            "id": "PAY-09",
+            "module": "Paiement",
+            "titre": "Rapprochement bancaire",
+            "profil": "Comptable",
+            "donnees": "Référence de relevé REL-JEU-RCT-01",
+            "etapes": [
+                "Cliquer sur Rapprocher",
+                "Saisir la référence du relevé"
+            ],
+            "attendu": "Statut « cloture » ; depuis l’exécution, le payé de la ligne a augmenté de 1 000 000.",
+            "obtenu": "statut cloture ; payé de la ligne : 0 → 1 000 000",
+            "statut": "Conforme",
+            "duree_ms": 1153
+        },
+        {
+            "id": "CHN-01",
+            "module": "Chaîne de dépense",
+            "titre": "Cohérence de bout en bout",
+            "profil": "Directeur du Budget",
+            "donnees": "Dossier EB-01 → PAY",
+            "etapes": [
+                "Ouvrir le Tableau de chaîne",
+                "Ouvrir la fiche de l’engagement"
+            ],
+            "attendu": "Les cinq maillons sont liés ; engagé net 1 000 000, liquidé 1 000 000, payé 1 000 000 ; la ligne reste à l’équilibre.",
+            "obtenu": "EB EB/2026/DATI-DENER/000460 → ENG-2026-003898 → LIQ/2026/000212 ; engagé +1 000 000, disponible −1 000 000 ; tableau de chaîne HTTP 200",
+            "statut": "Conforme",
+            "duree_ms": 392
+        },
+        {
+            "id": "BUD-01",
+            "module": "Budget",
+            "titre": "Gel de crédit",
+            "profil": "Directeur du Budget",
+            "donnees": "Ligne 21323 ; gel 500 000 ; acte JEU-GEL-RCT",
+            "etapes": [
+                "Lignes budgétaires › Enregistrer un mouvement",
+                "Type gel",
+                "Enregistrer le mouvement"
+            ],
+            "attendu": "Mouvement créé (HTTP 201) ; disponible de la ligne réduit de 500 000.",
+            "obtenu": "HTTP 201 ; disponible 99 000 000 → 98 500 000",
+            "statut": "Conforme",
+            "duree_ms": 87
+        },
+        {
+            "id": "BUD-02",
+            "module": "Budget",
+            "titre": "Gel supérieur au disponible",
+            "profil": "Directeur du Budget",
+            "donnees": "Ligne 21323 ; gel de 999 999 999 999",
+            "etapes": [
+                "Enregistrer un mouvement de gel trop élevé"
+            ],
+            "attendu": "Refus (HTTP 422).",
+            "obtenu": "HTTP 422 : « Ce mouvement dépasserait le disponible. »",
+            "statut": "Conforme",
+            "duree_ms": 62
+        },
+        {
+            "id": "BUD-03",
+            "module": "Budget",
+            "titre": "Virement de crédit entre deux lignes",
+            "profil": "Directeur du Budget",
+            "donnees": "De 21323 vers 203232 ; 100 000 ; acte JEU-VIR-RCT",
+            "etapes": [
+                "Type virement",
+                "Choisir la ligne de destination",
+                "Enregistrer le mouvement"
+            ],
+            "attendu": "Deux mouvements symétriques ; le révisé de la destination augmente de 100 000.",
+            "obtenu": "2 mouvements ; révisé de la destination +100 000",
+            "statut": "Conforme",
+            "duree_ms": 204
+        },
+        {
+            "id": "BUD-04",
+            "module": "Budget",
+            "titre": "Un initiateur n’enregistre pas de mouvement",
+            "profil": "Initiateur",
+            "donnees": "clarisse.ndong ; gel de 1 000 sur 203232",
+            "etapes": [
+                "Tenter un mouvement"
+            ],
+            "attendu": "Refus avec message explicite (HTTP 403 ou 422).",
+            "obtenu": "HTTP 422 : « Seul le Directeur du Budget enregistre un mouvement de crédit. »",
+            "statut": "Conforme",
+            "duree_ms": 84
+        },
+        {
+            "id": "BUD-05",
+            "module": "Clôture",
+            "titre": "Demande de clôture avec des dossiers ouverts",
+            "profil": "Directeur du Budget",
+            "donnees": "Exercice 2026, motif « Fin de gestion »",
+            "etapes": [
+                "Clôture annuelle › Demander la clôture"
+            ],
+            "attendu": "Refus (HTTP 422) : la chaîne contient des dossiers ouverts.",
+            "obtenu": "HTTP 422 : « 24 dossier(s) encore ouverts empêchent la clôture. »",
+            "statut": "Conforme",
+            "duree_ms": 115
+        },
+        {
+            "id": "REC-01",
+            "module": "Recettes",
+            "titre": "Un initiateur ne saisit pas de prévision",
+            "profil": "Initiateur",
+            "donnees": "clarisse.ndong",
+            "etapes": [
+                "Tenter Nouvelle prévision"
+            ],
+            "attendu": "Refus (HTTP 403).",
+            "obtenu": "HTTP 403",
+            "statut": "Conforme",
+            "duree_ms": 105
+        },
+        {
+            "id": "REC-02",
+            "module": "Recettes",
+            "titre": "Prévision : saisie, soumission, validation",
+            "profil": "Expert Budget, Directeur du Budget",
+            "donnees": "Catégorie VTE ; « Jeu d’essai — ventes de publications » ; 5 000 000 FCFA",
+            "etapes": [
+                "Expert : Nouvelle prévision puis Soumettre",
+                "Expert : tenter Valider",
+                "Directeur du Budget : Valider"
+            ],
+            "attendu": "Création HTTP 201 ; validation par l’expert refusée (403) ; validation par le Directeur acceptée.",
+            "obtenu": "PRV-2026-000002 : créée, soumise ; expert refusé (403) ; validée par le Directeur du Budget",
+            "statut": "Conforme",
+            "duree_ms": 166
+        },
+        {
+            "id": "REC-03",
+            "module": "Recettes",
+            "titre": "Titre de recette issu de la prévision",
+            "profil": "Comptable",
+            "donnees": "Débiteur « Librairie de démonstration » ; 5 000 000 ; échéance 2026-12-15",
+            "etapes": [
+                "Recettes › Nouvelle recette",
+                "Choisir la prévision validée",
+                "Enregistrer",
+                "Soumettre"
+            ],
+            "attendu": "Titre créé (HTTP 201) et soumis.",
+            "obtenu": "REC-2026-000003 créé puis soumis",
+            "statut": "Conforme",
+            "duree_ms": 120
+        },
+        {
+            "id": "REC-04",
+            "module": "Recettes",
+            "titre": "Séparation des fonctions : vérification et validation",
+            "profil": "Comptable, Expert Budget, Directeur du Budget",
+            "donnees": "Titre REC-03 (auteur : comptable)",
+            "etapes": [
+                "Auteur : tenter Vérifier",
+                "Expert Budget : Vérifier",
+                "Directeur du Budget : Valider",
+                "Auteur : tenter Prendre en charge",
+                "Chef comptable : Prendre en charge"
+            ],
+            "attendu": "L’auteur ne vérifie pas et ne prend pas en charge (refus) ; vérification, validation et prise en charge acceptées par des acteurs distincts.",
+            "obtenu": "vérification par l’auteur : HTTP 403 ; prise en charge par l’auteur : HTTP 422 ; vérifié (expert), validé (directeur), pris_en_charge (chef comptable)",
+            "statut": "Conforme",
+            "duree_ms": 189
+        },
+        {
+            "id": "REC-05",
+            "module": "Recettes",
+            "titre": "Encaissement supérieur au solde du titre",
+            "profil": "Agent comptable",
+            "donnees": "6 000 000 affectés à un titre de 5 000 000",
+            "etapes": [
+                "Encaissements › Nouvel encaissement",
+                "Affecter 6 000 000 au titre"
+            ],
+            "attendu": "Refus (HTTP 422).",
+            "obtenu": "HTTP 422 : « L’affectation dépasse le solde de REC-2026-000003. Traitez le trop-perçu explicitement. »",
+            "statut": "Conforme",
+            "duree_ms": 43
+        },
+        {
+            "id": "REC-06",
+            "module": "Recettes",
+            "titre": "Encaissement partiel puis solde",
+            "profil": "Agent comptable",
+            "donnees": "2 000 000 puis 3 000 000 (VIR-REC-JEU-RCT)",
+            "etapes": [
+                "Nouvel encaissement de 2 000 000",
+                "Nouvel encaissement de 3 000 000"
+            ],
+            "attendu": "« partiellement_encaisse » puis « solde » ; solde à recouvrer 0.",
+            "obtenu": "partiellement_encaisse → solde",
+            "statut": "Conforme",
+            "duree_ms": 187
+        },
+        {
+            "id": "REC-07",
+            "module": "Recettes",
+            "titre": "Rapprochement réservé à un acteur distinct",
+            "profil": "Agent comptable, Chef comptable",
+            "donnees": "Encaissement REC-06",
+            "etapes": [
+                "Agent comptable : tenter Rapprocher",
+                "Chef comptable : Rapprocher"
+            ],
+            "attendu": "Agent : refus (HTTP 403) ; Chef comptable : accepté.",
+            "obtenu": "agent : HTTP 403 ; chef comptable : HTTP 200",
+            "statut": "Conforme",
+            "duree_ms": 67
+        },
+        {
+            "id": "SE-01",
+            "module": "Suivi-évaluation",
+            "titre": "Saisie et soumission d’une réalisation physique",
+            "profil": "Initiateur",
+            "donnees": "Activité de la ligne 203232 ; période 2026-T4 ; 1 atelier réalisé sur 2 prévus ; preuve PDF",
+            "etapes": [
+                "Saisie et validation › Réalisation physique",
+                "Joindre la preuve",
+                "Soumettre"
+            ],
+            "attendu": "Réalisation créée (HTTP 201) puis soumise.",
+            "obtenu": "réalisation créée et soumis",
+            "statut": "Conforme",
+            "duree_ms": 260
+        },
+        {
+            "id": "SE-02",
+            "module": "Suivi-évaluation",
+            "titre": "L’auteur ne valide pas sa propre réalisation",
+            "profil": "Initiateur",
+            "donnees": "clarisse.ndong",
+            "etapes": [
+                "Tenter Valider sa réalisation"
+            ],
+            "attendu": "Refus (HTTP 403 ou 422).",
+            "obtenu": "HTTP 422 : « Séparation des fonctions : vous ne pouvez pas contrôler votre propre saisie. »",
+            "statut": "Conforme",
+            "duree_ms": 25
+        },
+        {
+            "id": "SE-03",
+            "module": "Suivi-évaluation",
+            "titre": "Validation par un autre acteur",
+            "profil": "Directeur (responsable)",
+            "donnees": "jp.okombi, puis Directeur du Budget si une seconde validation est requise",
+            "etapes": [
+                "Valider la réalisation"
+            ],
+            "attendu": "Validation acceptée ; statut final « valide ».",
+            "obtenu": "valide_responsable → valide",
+            "statut": "Conforme",
+            "duree_ms": 183
+        },
+        {
+            "id": "GOV-01",
+            "module": "Gouvernance",
+            "titre": "Vérification d’un code inconnu",
+            "profil": "Directeur du Budget",
+            "donnees": "Code « CODE-INEXISTANT-000 »",
+            "etapes": [
+                "Vérifier un document",
+                "Saisir le code",
+                "Vérifier"
+            ],
+            "attendu": "Document non reconnu (HTTP 404).",
+            "obtenu": "HTTP 404",
+            "statut": "Conforme",
+            "duree_ms": 19
+        },
+        {
+            "id": "GOV-02",
+            "module": "Gouvernance",
+            "titre": "Vérification d’un acte officiel archivé",
+            "profil": "Directeur du Budget",
+            "donnees": "Code du dernier acte archivé avant la campagne",
+            "etapes": [
+                "Vérifier un document",
+                "Saisir le code imprimé en pied de page",
+                "Vérifier"
+            ],
+            "attendu": "Document reconnu (HTTP 200) avec sa référence et son type.",
+            "obtenu": "HTTP 200 ; authentique ; engagement ENG-2026-003891 ; intègre = true ; version courante = true",
+            "statut": "Conforme",
+            "duree_ms": 96
+        },
+        {
+            "id": "GOV-03",
+            "module": "Gouvernance",
+            "titre": "Contrôle préalable d’un fichier d’import",
+            "profil": "Directeur du Budget",
+            "donnees": "CSV : « code,montant » ; 203232,999 ; INCONNU-999,1000",
+            "etapes": [
+                "Préparation des imports",
+                "Coller le contenu CSV",
+                "Contrôler"
+            ],
+            "attendu": "Ligne officielle bloquée (non modifiée) ; ligne inconnue en attente (non créée).",
+            "obtenu": "203232 : bloque ; INCONNU-999 : en_attente",
+            "statut": "Conforme",
+            "duree_ms": 63
+        },
+        {
+            "id": "ADM-01",
+            "module": "Administration",
+            "titre": "Création de compte avec un mot de passe trop court",
+            "profil": "Administrateur des habilitations",
+            "donnees": "Mot de passe « abc »",
+            "etapes": [
+                "Utilisateurs › Nouveau compte",
+                "Saisir un mot de passe de 3 caractères"
+            ],
+            "attendu": "Refus (HTTP 422) sur le mot de passe.",
+            "obtenu": "HTTP 422 ; champs : password",
+            "statut": "Conforme",
+            "duree_ms": 29
+        },
+        {
+            "id": "ADM-02",
+            "module": "Administration",
+            "titre": "Création d’un compte valide",
+            "profil": "Administrateur des habilitations",
+            "donnees": "ESSAI Brice ; essai.brice@ceeac.int ; DATI-DENER ; initiateur",
+            "etapes": [
+                "Nouveau compte",
+                "Renseigner identité, rattachement, rôle, mot de passe",
+                "Enregistrer"
+            ],
+            "attendu": "Compte créé (HTTP 201), statut actif.",
+            "obtenu": "HTTP 201 ; \"essai.brice@ceeac.int\"",
+            "statut": "Conforme",
+            "duree_ms": 512
+        },
+        {
+            "id": "ADM-03",
+            "module": "Administration",
+            "titre": "Un non-administrateur ne crée pas de compte",
+            "profil": "Directeur du Budget",
+            "donnees": "directeur.budget",
+            "etapes": [
+                "Tenter Nouveau compte"
+            ],
+            "attendu": "Refus (HTTP 403).",
+            "obtenu": "HTTP 403",
+            "statut": "Conforme",
+            "duree_ms": 6
+        },
+        {
+            "id": "ADM-04",
+            "module": "Administration",
+            "titre": "Habilitation incompatible sans dérogation",
+            "profil": "Administrateur des habilitations",
+            "donnees": "Rôle « controleur_financier » pour clarisse.ndong (initiateur)",
+            "etapes": [
+                "Habilitations › Nouvelle habilitation",
+                "Agent clarisse.ndong, rôle Contrôleur financier",
+                "Soumettre"
+            ],
+            "attendu": "Refus (HTTP 422) : conflit de séparation des fonctions.",
+            "obtenu": "HTTP 422 : « L’initiateur ne peut pas viser sa propre dépense. »",
+            "statut": "Conforme",
+            "duree_ms": 32
+        },
+        {
+            "id": "ADM-05",
+            "module": "Administration",
+            "titre": "Habilitation avec dérogation motivée",
+            "profil": "Administrateur des habilitations, Ordonnateur",
+            "donnees": "Même demande avec dérogation et motif",
+            "etapes": [
+                "Cocher Demander une dérogation",
+                "Saisir le motif",
+                "Soumettre pour validation"
+            ],
+            "attendu": "Habilitation créée (HTTP 201) en attente de validation par l’ordonnateur.",
+            "obtenu": "HTTP 201 ; statut \"en_attente\"",
+            "statut": "Conforme",
+            "duree_ms": 27
+        },
+        {
+            "id": "AUT-06",
+            "module": "Authentification",
+            "titre": "Double authentification exigée pour un compte protégé",
+            "profil": "Agent avec MFA",
+            "donnees": "Compte « jeu.mfa@ceeac.int » créé avec la double authentification obligatoire",
+            "etapes": [
+                "Saisir adresse et mot de passe",
+                "Saisir le code à usage unique",
+                "Recommencer sans code"
+            ],
+            "attendu": "Sans code : demande de code (HTTP 202). Avec code valide : connexion (HTTP 200). Code absent après enrôlement : refus (HTTP 422).",
+            "obtenu": "HTTP 202 (code demandé) → HTTP 200 avec code → HTTP 422 sans code (code)",
+            "statut": "Conforme",
+            "duree_ms": 1870
+        },
+        {
+            "id": "AUT-07",
+            "module": "Authentification",
+            "titre": "Blocage après échecs répétés",
+            "profil": "Agent",
+            "donnees": "Compte « jeu.blocage@ceeac.int » ; mots de passe erronés successifs",
+            "etapes": [
+                "Saisir un mauvais mot de passe jusqu’au seuil",
+                "Saisir ensuite le bon mot de passe"
+            ],
+            "attendu": "Après le nombre d’échecs fixé par la politique de sécurité, la connexion est bloquée (HTTP 429) même avec le bon mot de passe.",
+            "obtenu": "5 échecs puis HTTP 429 : « Trop de tentatives. Réessayez dans 15 minute(s). »",
+            "statut": "Conforme",
+            "duree_ms": 2994
+        },
+        {
+            "id": "AUT-08",
+            "module": "Authentification",
+            "titre": "Déconnexion",
+            "profil": "Initiateur",
+            "donnees": "clarisse.ndong",
+            "etapes": [
+                "Menu à votre nom › Se déconnecter"
+            ],
+            "attendu": "Déconnexion acceptée (HTTP 200 ou 204).",
+            "obtenu": "HTTP 200",
+            "statut": "Conforme",
+            "duree_ms": 16
+        },
+        {
+            "id": "EB-14",
+            "module": "Expression de besoin",
+            "titre": "Aperçu PDF d’un brouillon",
+            "profil": "Initiateur",
+            "donnees": "Brouillon « Jeu d’essai — aperçu »",
+            "etapes": [
+                "Ouvrir le brouillon",
+                "Aperçu PDF"
+            ],
+            "attendu": "Un PDF est produit (marqué brouillon) sans être archivé comme acte officiel.",
+            "obtenu": "PDF de 1 321 Ko ; aucun acte archivé",
+            "statut": "Conforme",
+            "duree_ms": 1713
+        },
+        {
+            "id": "EB-15",
+            "module": "Expression de besoin",
+            "titre": "Copie modifiable d’un dossier rejeté",
+            "profil": "Initiateur",
+            "donnees": "Dossier rejeté en EB-13",
+            "etapes": [
+                "Menu ⋮ › Créer une copie modifiable"
+            ],
+            "attendu": "Un nouveau brouillon est créé avec une nouvelle référence ; le dossier rejeté reste inchangé.",
+            "obtenu": "copie EB/2026/DATI-DENER/000464 en brouillon ; source EB/2026/DATI-DENER/000462 toujours rejetee",
+            "statut": "Conforme",
+            "duree_ms": 119
+        },
+        {
+            "id": "EB-16",
+            "module": "Expression de besoin",
+            "titre": "Annulation d’un brouillon par son initiateur",
+            "profil": "Initiateur",
+            "donnees": "Brouillon « Jeu d’essai — besoin abandonné »",
+            "etapes": [
+                "Menu ⋮ › Annuler",
+                "Annuler sans motif",
+                "Annuler avec motif"
+            ],
+            "attendu": "Sans motif : refus (HTTP 422). Avec motif : statut « annulee ».",
+            "obtenu": "sans motif : HTTP 422 ; avec motif : statut annulee",
+            "statut": "Conforme",
+            "duree_ms": 412
+        },
+        {
+            "id": "ENG-10",
+            "module": "Engagement",
+            "titre": "Retour pour correction puis nouvelle transmission",
+            "profil": "Chef de service Budget, Expert Budget",
+            "donnees": "Dossier « Jeu d’essai — retour engagement », 300 000 FCFA ; motif « Bénéficiaire à préciser »",
+            "etapes": [
+                "Expert : renseigner le bénéficiaire et Transmettre",
+                "Chef de service : Retourner avec motif",
+                "Expert : Transmettre de nouveau"
+            ],
+            "attendu": "Statut « retourne » ; après correction, le dossier revient à l’étape « chef_budget ».",
+            "obtenu": "retourne → étape chef_budget",
+            "statut": "Conforme",
+            "duree_ms": 5510
+        },
+        {
+            "id": "ENG-11",
+            "module": "Engagement",
+            "titre": "Annulation d’un engagement avant visa",
+            "profil": "Directeur du Budget",
+            "donnees": "Dossier « Jeu d’essai — engagement annulé », 400 000 FCFA",
+            "etapes": [
+                "Menu ⋮ › Annuler",
+                "Sans motif puis avec motif"
+            ],
+            "attendu": "Sans motif : refus (HTTP 422). Avec motif : statut « annule » ; le disponible de la ligne est rétabli.",
+            "obtenu": "sans motif : HTTP 422 ; statut annule ; disponible +400 000",
+            "statut": "Conforme",
+            "duree_ms": 5396
+        },
+        {
+            "id": "ENG-12",
+            "module": "Engagement",
+            "titre": "Visa refusé à un autre profil que le Contrôleur financier",
+            "profil": "Directeur du Budget",
+            "donnees": "Engagement à l’étape « controleur_financier »",
+            "etapes": [
+                "Tenter Viser"
+            ],
+            "attendu": "Action refusée (HTTP 403).",
+            "obtenu": "HTTP 403",
+            "statut": "Conforme",
+            "duree_ms": 6038
+        },
+        {
+            "id": "LIQ-09",
+            "module": "Liquidation",
+            "titre": "Retour de la liquidation par le Contrôleur financier",
+            "profil": "Contrôleur financier",
+            "donnees": "Dossier « Jeu d’essai — retour liquidation », 350 000 FCFA ; motif « Facture illisible »",
+            "etapes": [
+                "Initiateur : certifier, saisir la facture, soumettre",
+                "CF : Retourner avec motif"
+            ],
+            "attendu": "La liquidation revient à l’étape de l’initiateur.",
+            "obtenu": "sans motif : HTTP 422 ; statut retournee, étape initiateur",
+            "statut": "Conforme",
+            "duree_ms": 9401
+        },
+        {
+            "id": "LIQ-10",
+            "module": "Liquidation",
+            "titre": "Rectification après visa (avoir)",
+            "profil": "Contrôleur financier",
+            "donnees": "Dossier « Jeu d’essai — avoir », 500 000 FCFA ; avoir de 50 000",
+            "etapes": [
+                "Menu ⋮ › Rectifier",
+                "Type avoir, montant, motif"
+            ],
+            "attendu": "La rectification est enregistrée sans réécrire le visa.",
+            "obtenu": "HTTP 200 ; visa VLQ-2026-000097 inchangé",
+            "statut": "Conforme",
+            "duree_ms": 14558
+        },
+        {
+            "id": "ORD-05",
+            "module": "Ordonnancement",
+            "titre": "Retour de l’ordre vers la liquidation",
+            "profil": "Secrétaire général",
+            "donnees": "Dossier « Jeu d’essai — retour ordre », 450 000 FCFA ; motif « Imputation à vérifier »",
+            "etapes": [
+                "Ouvrir l’ordre",
+                "Retourner sans motif, puis avec motif"
+            ],
+            "attendu": "Sans motif : refus (HTTP 422). Avec motif : l’ordre est retourné.",
+            "obtenu": "sans motif : HTTP 422 ; statut retourne",
+            "statut": "Conforme",
+            "duree_ms": 11830
+        },
+        {
+            "id": "ORD-06",
+            "module": "Ordonnancement",
+            "titre": "Transmission en erreur puis reprise sans doublon",
+            "profil": "Secrétaire général",
+            "donnees": "Dossier « Jeu d’essai — reprise transmission » ; panne de transmission simulée sur l’ordre",
+            "etapes": [
+                "Signer l’ordre (la transmission échoue)",
+                "Relancer maintenant",
+                "Relancer une seconde fois"
+            ],
+            "attendu": "« transmission_erreur » après signature ; « transforme_paiement » après reprise ; seconde reprise refusée ; un seul paiement.",
+            "obtenu": "transmission_erreur → transforme_paiement ; seconde reprise HTTP 403 ; 1 paiement",
+            "statut": "Conforme",
+            "duree_ms": 16670
+        },
+        {
+            "id": "ORD-07",
+            "module": "Ordonnancement",
+            "titre": "Enregistrement d’une délégation d’ordonnancement",
+            "profil": "Ordonnateur (Président)",
+            "donnees": "Seuil 6 000 000 ; du 2026-10-05 au 2026-12-31 ; décision « DEC-JEU-2026-01 »",
+            "etapes": [
+                "Délégations et seuil › Nouvelle délégation"
+            ],
+            "attendu": "Délégation créée (HTTP 201) ; type de dépense par défaut « Toutes natures ».",
+            "obtenu": "HTTP 201 ; type de dépense « Toutes natures »",
+            "statut": "Conforme",
+            "duree_ms": 39
+        },
+        {
+            "id": "ORD-08",
+            "module": "Ordonnancement",
+            "titre": "Déclaration d’une suppléance",
+            "profil": "Ordonnateur (Président)",
+            "donnees": "Titulaire « Président de la Commission », suppléant « Secrétaire Général », du 2026-11-01 au 2026-11-15",
+            "etapes": [
+                "Délégations et seuil › Déclarer une absence"
+            ],
+            "attendu": "Suppléance enregistrée (HTTP 201) ; une date de fin antérieure au début est refusée (HTTP 422).",
+            "obtenu": "dates inversées : HTTP 422 ; suppléance : HTTP 201",
+            "statut": "Conforme",
+            "duree_ms": 57
+        },
+        {
+            "id": "PAY-10",
+            "module": "Paiement",
+            "titre": "Compte bancaire non validé refusé",
+            "profil": "Comptable",
+            "donnees": "Nouveau compte « GA-JEU-ATTENTE » ajouté au bénéficiaire, non validé",
+            "etapes": [
+                "Tiers : ajouter le compte",
+                "Paiement : choisir ce compte",
+                "Enregistrer"
+            ],
+            "attendu": "Préparation refusée (HTTP 422, champ compte bancaire).",
+            "obtenu": "HTTP 422 (compte_bancaire_id) : « Choisissez un compte validé du tiers TIE-000010 · Société Équatoriale de Licences. »",
+            "statut": "Conforme",
+            "duree_ms": 16121
+        },
+        {
+            "id": "PAY-11",
+            "module": "Paiement",
+            "titre": "Suspension puis levée de la suspension",
+            "profil": "Agent comptable",
+            "donnees": "Paiement autorisé « Jeu d’essai — suspension » ; motif « Vérification du RIB »",
+            "etapes": [
+                "Menu ⋮ › Suspendre",
+                "Tenter l’exécution",
+                "Lever la suspension"
+            ],
+            "attendu": "« suspendu » ; l’exécution est refusée pendant la suspension ; retour à « autorise » après levée.",
+            "obtenu": "suspendu ; exécution refusée (HTTP 422) ; levée → autorise",
+            "statut": "Conforme",
+            "duree_ms": 18616
+        },
+        {
+            "id": "PAY-12",
+            "module": "Paiement",
+            "titre": "Lot de virements",
+            "profil": "Comptable",
+            "donnees": "Deux paiements autorisés (« Jeu d’essai — lot A » et « lot B », 210 000 et 220 000) ; un lot d’un seul paiement",
+            "etapes": [
+                "Lots › cocher un seul virement › Créer le lot",
+                "Cocher les deux virements › Créer le lot",
+                "Exécuter le lot avec l’avis bancaire"
+            ],
+            "attendu": "Lot d’un seul paiement refusé (HTTP 422) ; lot de deux créé (LOT-PAY-…) ; après exécution, les deux paiements sont « a_rapprocher ».",
+            "obtenu": "lot d’un paiement : HTTP 422 ; LOT-PAY-2026-000001 exécuté ; paiements a_rapprocher",
+            "statut": "Conforme",
+            "duree_ms": 39149
+        },
+        {
+            "id": "PAY-13",
+            "module": "Paiement",
+            "titre": "Rejet bancaire puis réémission",
+            "profil": "Comptable",
+            "donnees": "Paiement « lot A » exécuté ; motif « Compte clôturé »",
+            "etapes": [
+                "Menu ⋮ › Rejet bancaire",
+                "Tenter une nouvelle exécution directe",
+                "Réémettre"
+            ],
+            "attendu": "« rejete_bancaire », montant payé ramené à 0 ; exécution directe refusée ; réémission → « en_preparation ».",
+            "obtenu": "rejete_bancaire (payé 0) ; exécution directe HTTP 422 ; réémission → en_preparation",
+            "statut": "Conforme",
+            "duree_ms": 286
+        },
+        {
+            "id": "TIE-01",
+            "module": "Tiers et marchés",
+            "titre": "Création d’un tiers et contrôle des doublons",
+            "profil": "Comptable",
+            "donnees": "« Jeu d’essai Fournitures SARL », NIF « jeu-nif-900 » ; puis même raison sociale ; puis même NIF",
+            "etapes": [
+                "Tiers et comptes › Nouveau tiers",
+                "Recommencer avec la même raison sociale",
+                "Recommencer avec le même NIF"
+            ],
+            "attendu": "Création (HTTP 201), NIF normalisé en majuscules, statut actif ; doublons refusés (HTTP 422).",
+            "obtenu": "HTTP 201, NIF JEU-NIF-900, statut actif ; doublons : raison_sociale / nif (HTTP 422)",
+            "statut": "Conforme",
+            "duree_ms": 66
+        },
+        {
+            "id": "TIE-02",
+            "module": "Tiers et marchés",
+            "titre": "Un initiateur ne crée pas de tiers",
+            "profil": "Initiateur",
+            "donnees": "clarisse.ndong",
+            "etapes": [
+                "Tenter Nouveau tiers"
+            ],
+            "attendu": "Refus (HTTP 403 ou 422).",
+            "obtenu": "HTTP 422 : « La création d’un tiers est réservée au Budget, au Comptable ou à l’administration fonctionnelle. »",
+            "statut": "Conforme",
+            "duree_ms": 13
+        },
+        {
+            "id": "TIE-03",
+            "module": "Tiers et marchés",
+            "titre": "Validation d’un compte bancaire par un second acteur",
+            "profil": "Comptable, Chef comptable",
+            "donnees": "Compte BGFIBANK « GA-JEU-900 » du tiers TIE-01",
+            "etapes": [
+                "Comptable : ajouter le compte",
+                "Comptable : tenter de le valider",
+                "Chef comptable : Valider"
+            ],
+            "attendu": "Compte « en_attente » ; validation par son auteur refusée (HTTP 422) ; validation par le chef comptable acceptée (« valide »).",
+            "obtenu": "en_attente → auteur refusé (HTTP 422) → valide",
+            "statut": "Conforme",
+            "duree_ms": 79
+        },
+        {
+            "id": "TIE-04",
+            "module": "Tiers et marchés",
+            "titre": "Suspension d’un tiers",
+            "profil": "Agent comptable",
+            "donnees": "Tiers TIE-01 ; motif « Contentieux »",
+            "etapes": [
+                "Fiche tiers › Statut suspendu"
+            ],
+            "attendu": "Statut « suspendu » enregistré avec son motif.",
+            "obtenu": "statut suspendu",
+            "statut": "Conforme",
+            "duree_ms": 37
+        },
+        {
+            "id": "MAR-01",
+            "module": "Tiers et marchés",
+            "titre": "Création d’un marché et rattachement à l’engagement",
+            "profil": "Expert Budget",
+            "donnees": "« Jeu d’essai — fourniture de serveurs », 12 000 000, consultation ; engagement du scénario principal",
+            "etapes": [
+                "Marchés et contrats › Nouveau marché",
+                "Rattacher à l’engagement"
+            ],
+            "attendu": "Marché créé (HTTP 201) puis rattaché ; statut « notifie ».",
+            "obtenu": "marché rattaché ; statut notifie",
+            "statut": "Conforme",
+            "duree_ms": 61
+        },
+        {
+            "id": "REC-08",
+            "module": "Recettes",
+            "titre": "Prévision : modification, suppression et annulation selon le statut",
+            "profil": "Expert Budget, Directeur du Budget",
+            "donnees": "Brouillon « Jeu d’essai — brouillon jetable » ; prévision « Jeu d’essai — documentation » 12 000 000 révisée à 9 000 000",
+            "etapes": [
+                "Modifier une prévision en brouillon",
+                "Supprimer un brouillon",
+                "Soumettre, puis tenter de modifier et supprimer",
+                "Directeur : Annuler avec motif"
+            ],
+            "attendu": "Brouillon modifiable et supprimable ; après soumission, modification et suppression refusées (422) ; annulation par le Directeur acceptée (« annule »).",
+            "obtenu": "brouillon supprimé ; 12 M → 9 M ; après soumission : modification et suppression HTTP 422 ; statut annule",
+            "statut": "Conforme",
+            "duree_ms": 260
+        },
+        {
+            "id": "REC-09",
+            "module": "Recettes",
+            "titre": "Trop-perçu conservé comme avance",
+            "profil": "Agent comptable",
+            "donnees": "Titre de 5 000 000 ; virement reçu de 6 500 000 ; trop-perçu 1 500 000 en avance",
+            "etapes": [
+                "Nouvel encaissement de 6 500 000",
+                "Affecter 5 000 000 au titre",
+                "Traiter 1 500 000 en avance"
+            ],
+            "attendu": "Titre « solde » à 5 000 000 encaissés ; une avance de 1 500 000 est tracée.",
+            "obtenu": "titre solde (5 000 000 encaissés) ; avance de 1 500 000 tracée",
+            "statut": "Conforme",
+            "duree_ms": 331
+        },
+        {
+            "id": "REC-10",
+            "module": "Recettes",
+            "titre": "Encaissement non identifié",
+            "profil": "Agent comptable",
+            "donnees": "750 000 reçus sans titre (VIR-REC-JEU-NI)",
+            "etapes": [
+                "Nouvel encaissement sans titre"
+            ],
+            "attendu": "Encaissement enregistré (HTTP 201) au statut « non identifié ».",
+            "obtenu": "HTTP 201 ; statut non_identifie",
+            "statut": "Conforme",
+            "duree_ms": 64
+        },
+        {
+            "id": "REC-11",
+            "module": "Recettes",
+            "titre": "Relance d’une créance",
+            "profil": "Comptable",
+            "donnees": "Titre échu de 2 000 000 ; première relance par courriel à facturation@example.test",
+            "etapes": [
+                "Ouvrir le titre",
+                "Relancer : type, canal, destinataire",
+                "Enregistrer la relance"
+            ],
+            "attendu": "Relance enregistrée (HTTP 201) et visible dans l’écran Relances.",
+            "obtenu": "HTTP 201 ; 2 relance(s) listée(s)",
+            "statut": "Conforme",
+            "duree_ms": 304
+        },
+        {
+            "id": "REC-12",
+            "module": "Recettes",
+            "titre": "Contributions des États membres et appels de fonds",
+            "profil": "Expert Budget",
+            "donnees": "Gabon : contribution 2026 existante (non appelée) ; nouvelle saisie 2026 ; contribution 2027 de 8 000 000 (quote-part 12,50 %)",
+            "etapes": [
+                "Nouvelle contribution 2026 pour le Gabon",
+                "Appeler la contribution 2026",
+                "Appeler une seconde fois",
+                "Nouvelle contribution 2027 puis Appeler"
+            ],
+            "attendu": "Doublon refusé (422) ; l’appel 2026 produit un titre de recette (201) ; un second appel ne crée pas de second titre ; la contribution 2027 s’enregistre (201) mais son appel est refusé tant que l’exercice n’est pas ouvert (422).",
+            "obtenu": "doublon HTTP 422 ; appel 2026 → titre REC-2026-000006 ; second appel HTTP 422 (1 titre) ; 2027 enregistrée, appel HTTP 422 « L’exercice n’est pas ouvert à cette opération. »",
+            "statut": "Conforme",
+            "duree_ms": 135
+        },
+        {
+            "id": "REC-13",
+            "module": "Recettes",
+            "titre": "Paramétrage des modes d’encaissement réservé au Directeur du Budget",
+            "profil": "Directeur du Budget, Expert Budget",
+            "donnees": "Mode « mobile » — Paiement mobile",
+            "etapes": [
+                "Expert : tenter Ajouter",
+                "Directeur : Ajouter puis désactiver"
+            ],
+            "attendu": "Expert : refus (HTTP 403) ; Directeur : création (201) puis désactivation (200).",
+            "obtenu": "expert : HTTP 403 ; directeur : créé puis désactivé",
+            "statut": "Conforme",
+            "duree_ms": 76
+        },
+        {
+            "id": "SE-04",
+            "module": "Suivi-évaluation",
+            "titre": "Indicateur : cible, mesure, preuve et validation",
+            "profil": "Initiateur, Directeur, Directeur du Budget",
+            "donnees": "Indicateur « IND-JEU-RCT » (projets suivis, base 2) ; cible T4 = 10 ; mesure = 8",
+            "etapes": [
+                "Créer l’indicateur et sa cible",
+                "Saisir la mesure et soumettre",
+                "Valider sans preuve",
+                "Joindre la preuve puis valider (deux niveaux)"
+            ],
+            "attendu": "Taux d’atteinte calculé à 80 % ; validation refusée sans preuve (422) ; puis « valide_responsable » → « valide ».",
+            "obtenu": "taux d’atteinte 80 % ; sans preuve : HTTP 422 (preuve) ; valide_responsable → valide",
+            "statut": "Conforme",
+            "duree_ms": 542
+        },
+        {
+            "id": "SE-05",
+            "module": "Suivi-évaluation",
+            "titre": "Avancement supérieur à 100 % sans justification",
+            "profil": "Initiateur",
+            "donnees": "120 réalisés pour 100 prévus, sans motif d’exception",
+            "etapes": [
+                "Saisir la réalisation"
+            ],
+            "attendu": "Refus (HTTP 422) : justification de l’exception exigée.",
+            "obtenu": "HTTP 422 ; champs : exception_motif",
+            "statut": "Conforme",
+            "duree_ms": 27
+        },
+        {
+            "id": "SE-06",
+            "module": "Suivi-évaluation",
+            "titre": "Écart critique et mesure corrective",
+            "profil": "Directeur du Budget",
+            "donnees": "Écart physique/financier, cause technique « Décaissement avant livraison » ; mesure « Replanifier la livraison »",
+            "etapes": [
+                "Écarts › déclarer l’écart",
+                "Mesure corrective sans responsable",
+                "Mesure corrective complète"
+            ],
+            "attendu": "Écart créé (HTTP 201) ; mesure sans responsable refusée (422) ; mesure complète créée (201).",
+            "obtenu": "écart critique ; mesure sans responsable HTTP 422 ; mesure complète HTTP 201",
+            "statut": "Conforme",
+            "duree_ms": 142
+        },
+        {
+            "id": "SE-07",
+            "module": "Suivi-évaluation",
+            "titre": "Risque critique et recommandation",
+            "profil": "Initiateur",
+            "donnees": "Risque probabilité 4 × impact 4 ; recommandation « Publier le rapport trimestriel »",
+            "etapes": [
+                "Signaler un risque",
+                "Saisir une recommandation"
+            ],
+            "attendu": "Risque classé « critique » ; recommandation créée (HTTP 201).",
+            "obtenu": "risque critique ; recommandation HTTP 201",
+            "statut": "Conforme",
+            "duree_ms": 86
+        },
+        {
+            "id": "SE-08",
+            "module": "Suivi-évaluation",
+            "titre": "Jalon franchi avec preuve",
+            "profil": "Initiateur",
+            "donnees": "Jalon « TDR validés », prévu le 2026-10-15 ; franchi le 2026-10-04",
+            "etapes": [
+                "Fiche activité › Jalons",
+                "Déclarer franchi sans preuve",
+                "Déclarer franchi avec la preuve « PV comité »"
+            ],
+            "attendu": "Sans preuve : refus (422) ; avec preuve : jalon franchi.",
+            "obtenu": "sans preuve : HTTP 422 ; avec preuve : HTTP 200",
+            "statut": "Conforme",
+            "duree_ms": 90
+        },
+        {
+            "id": "SE-09",
+            "module": "Suivi-évaluation",
+            "titre": "Révision de planning soumise à validation",
+            "profil": "Initiateur, Directeur",
+            "donnees": "Tâche de l’activité décalée au 2026-12-01 – 2026-12-31 ; motif « Glissement »",
+            "etapes": [
+                "Gantt › Proposer un nouveau planning",
+                "Auteur : tenter de valider",
+                "Directeur : Valider"
+            ],
+            "attendu": "Révision créée (201) ; validation par l’auteur refusée (422) ; validation par le directeur acceptée ; planning initial conservé.",
+            "obtenu": "auteur : HTTP 422 ; directeur : statut validee ; nouveau début 2026-12-01",
+            "statut": "Conforme",
+            "duree_ms": 110
+        },
+        {
+            "id": "SE-10",
+            "module": "Suivi-évaluation",
+            "titre": "Rapport de performance : circuit et publication",
+            "profil": "Directeur, Directeur du Budget, Initiateur",
+            "donnees": "Rapport trimestriel 2026-T4",
+            "etapes": [
+                "Directeur : créer et soumettre",
+                "Directeur (auteur) : tenter de valider",
+                "Directeur du Budget : valider puis publier",
+                "Initiateur : télécharger le PDF"
+            ],
+            "attendu": "Validation par l’auteur refusée (422) ; rapport publié ; PDF officiel disponible.",
+            "obtenu": "auteur : HTTP 422 ; statut publie ; PDF 860 Ko",
+            "statut": "Conforme",
+            "duree_ms": 1416
+        },
+        {
+            "id": "TAC-02",
+            "module": "Mes tâches",
+            "titre": "Prise en charge et commentaire d’une tâche",
+            "profil": "Directeur, Directeur (DSI)",
+            "donnees": "Tâche ouverte de jp.okombi ; commentaire « Pièce complémentaire demandée »",
+            "etapes": [
+                "Ouvrir la tâche",
+                "Ajouter une observation",
+                "Un autre directeur tente de commenter",
+                "Prendre en charge"
+            ],
+            "attendu": "Commentaire accepté ; intrusion refusée (403) ; tâche « en_cours ».",
+            "obtenu": "commentaire HTTP 200 ; intrusion HTTP 403 ; statut en_cours",
+            "statut": "Conforme",
+            "duree_ms": 5963
+        },
+        {
+            "id": "NOT-02",
+            "module": "Notifications",
+            "titre": "Marquer comme lu / non lu",
+            "profil": "Initiateur",
+            "donnees": "Notifications de clarisse.ndong",
+            "etapes": [
+                "Marquer une notification non lue",
+                "Tout marquer comme lu"
+            ],
+            "attendu": "La notification repasse non lue ; après « Tout marquer comme lu », le compteur est à 0.",
+            "obtenu": "non lue → tout lu ; compteur 0",
+            "statut": "Conforme",
+            "duree_ms": 356
+        },
+        {
+            "id": "DOC-01",
+            "module": "Gouvernance",
+            "titre": "Acte officiel émis puis vérifié",
+            "profil": "Directeur du Budget",
+            "donnees": "Fiche PDF de l’engagement du scénario principal",
+            "etapes": [
+                "Fiche engagement › PDF",
+                "Vérifier un document avec le code imprimé"
+            ],
+            "attendu": "PDF produit et archivé avec un code de vérification ; la vérification confirme l’authenticité et l’intégrité.",
+            "obtenu": "PDF 1 322 Ko ; code 0f401ed5… authentique et intègre",
+            "statut": "Conforme",
+            "duree_ms": 97
+        },
+        {
+            "id": "DOC-02",
+            "module": "Gouvernance",
+            "titre": "Recherche documentaire",
+            "profil": "Directeur du Budget",
+            "donnees": "Recherche « ENG-2026 »",
+            "etapes": [
+                "Recherche documentaire",
+                "Saisir la référence",
+                "Rechercher"
+            ],
+            "attendu": "Les pièces et actes correspondants sont listés (HTTP 200).",
+            "obtenu": "HTTP 200 ; 21 résultat(s)",
+            "statut": "Conforme",
+            "duree_ms": 106
+        },
+        {
+            "id": "ORG-01",
+            "module": "Organisation",
+            "titre": "Création d’une structure et contrôle des doublons",
+            "profil": "Administrateur fonctionnel, Expert Budget",
+            "donnees": "Service « DSG-DSI-JEU » rattaché à la DSI",
+            "etapes": [
+                "Expert : tenter Nouvelle structure",
+                "Administrateur : créer",
+                "Recréer le même sigle"
+            ],
+            "attendu": "Expert : refus (403) ; création (201) ; doublon refusé (422).",
+            "obtenu": "expert HTTP 403 ; création HTTP 201 ; doublon HTTP 422",
+            "statut": "Conforme",
+            "duree_ms": 127
+        },
+        {
+            "id": "ORG-02",
+            "module": "Organisation",
+            "titre": "Cycle hiérarchique et suppression",
+            "profil": "Administrateur fonctionnel",
+            "donnees": "Sous-structure « DSG-DSI-JEU-B » sous « DSG-DSI-JEU »",
+            "etapes": [
+                "Créer la sous-structure",
+                "Rattacher le parent à son enfant",
+                "Supprimer le parent",
+                "Supprimer l’enfant"
+            ],
+            "attendu": "Cycle refusé (422) ; parent avec enfant non supprimable (422) ; feuille supprimée (200).",
+            "obtenu": "cycle HTTP 422 ; parent HTTP 422 ; feuille supprimée",
+            "statut": "Conforme",
+            "duree_ms": 254
+        },
+        {
+            "id": "ORG-03",
+            "module": "Organisation",
+            "titre": "Désactivation et réactivation d’une structure",
+            "profil": "Administrateur fonctionnel",
+            "donnees": "Structure « DSG-DSI-JEU »",
+            "etapes": [
+                "Désactiver",
+                "Réactiver"
+            ],
+            "attendu": "La structure passe inactive puis active.",
+            "obtenu": "inactive → active",
+            "statut": "Conforme",
+            "duree_ms": 67
+        },
+        {
+            "id": "ADM-06",
+            "module": "Administration",
+            "titre": "Validation d’une habilitation en attente",
+            "profil": "Ordonnateur",
+            "donnees": "Habilitation créée en ADM-05",
+            "etapes": [
+                "Habilitations › Valider"
+            ],
+            "attendu": "Après validation, l’agent porte le rôle attribué.",
+            "obtenu": "validée par ordonnateur ; rôle porté",
+            "statut": "Conforme",
+            "duree_ms": 44
+        },
+        {
+            "id": "ADM-07",
+            "module": "Administration",
+            "titre": "Intérim : attribution puis clôture",
+            "profil": "Administrateur des habilitations",
+            "donnees": "Titulaire clarisse.ndong (initiateur) ; intérimaire aline.moussavou ; 5 jours",
+            "etapes": [
+                "Suivi des accès › Nouvel intérim",
+                "Clôturer"
+            ],
+            "attendu": "Pendant l’intérim, l’intérimaire porte le rôle du titulaire ; la clôture le lui retire.",
+            "obtenu": "rôle porté pendant l’intérim ; retiré à la clôture",
+            "statut": "Conforme",
+            "duree_ms": 83
+        },
+        {
+            "id": "ADM-08",
+            "module": "Administration",
+            "titre": "Délégation administrative révoquée",
+            "profil": "Administrateur des habilitations",
+            "donnees": "Délégant ordonnateur, délégataire SG, « Signature des ordres », 10 jours",
+            "etapes": [
+                "Nouvelle délégation",
+                "Révoquer avec motif"
+            ],
+            "attendu": "Délégation effective à la création ; plus effective après révocation.",
+            "obtenu": "effective → révoquée (non effective)",
+            "statut": "Conforme",
+            "duree_ms": 82
+        },
+        {
+            "id": "ADM-09",
+            "module": "Administration",
+            "titre": "Modification d’une règle métier journalisée",
+            "profil": "Administrateur fonctionnel",
+            "donnees": "Plafond de caisse porté à 750 000, motif « Actualisation du plafond »",
+            "etapes": [
+                "Paramétrage › Règles métier",
+                "Modifier la valeur avec motif"
+            ],
+            "attendu": "Valeur enregistrée et événement d’audit créé.",
+            "obtenu": "valeur 500000 → 750000 ; audit présent",
+            "statut": "Conforme",
+            "duree_ms": 60
+        },
+        {
+            "id": "ADM-10",
+            "module": "Administration",
+            "titre": "Paramètre général modifié avec motif obligatoire",
+            "profil": "Administrateur fonctionnel",
+            "donnees": "Paramètre « devise » = XAF",
+            "etapes": [
+                "Modifier sans motif",
+                "Modifier avec motif"
+            ],
+            "attendu": "Sans motif : refus (422) ; avec motif : accepté, historique conservé.",
+            "obtenu": "sans motif HTTP 422 ; avec motif HTTP 200 ; historique : « Confirmation de la devise »",
+            "statut": "Conforme",
+            "duree_ms": 52
+        },
+        {
+            "id": "ADM-11",
+            "module": "Administration",
+            "titre": "Seuils qui se chevauchent",
+            "profil": "Administrateur fonctionnel",
+            "donnees": "Seuil ORD 0 – 5 000 000 puis 4 000 000 – 9 000 000 pour le même acteur",
+            "etapes": [
+                "Paramétrage › Seuils › Ajouter",
+                "Ajouter un second seuil chevauchant"
+            ],
+            "attendu": "Premier seuil créé (201) ; second refusé (422).",
+            "obtenu": "second seuil : HTTP 422 « Ce seuil chevauche une tranche déjà active. »",
+            "statut": "Conforme",
+            "duree_ms": 55
+        },
+        {
+            "id": "ADM-12",
+            "module": "Administration",
+            "titre": "Auto-élévation de privilèges refusée",
+            "profil": "Administrateur des habilitations",
+            "donnees": "amina.oko s’attribue le rôle « ordonnateur »",
+            "etapes": [
+                "Utilisateurs › sa propre fiche › Ajouter un rôle"
+            ],
+            "attendu": "Refus (HTTP 422) et tentative journalisée.",
+            "obtenu": "HTTP 422 ; tentative journalisée",
+            "statut": "Conforme",
+            "duree_ms": 46
+        },
+        {
+            "id": "ADM-13",
+            "module": "Administration",
+            "titre": "Simulation des droits d’un compte",
+            "profil": "Administrateur des habilitations",
+            "donnees": "Action « engagement.viser » pour le Contrôleur financier puis pour l’initiateur",
+            "etapes": [
+                "Suivi des accès › Vérifier les droits"
+            ],
+            "attendu": "Autorisé pour le Contrôleur financier ; refusé pour l’initiateur.",
+            "obtenu": "CF : autorisé ; initiateur : refusé",
+            "statut": "Conforme",
+            "duree_ms": 88
+        },
+        {
+            "id": "ADM-14",
+            "module": "Administration",
+            "titre": "Permission de signature non attribuable par la matrice",
+            "profil": "Administrateur des habilitations",
+            "donnees": "Accorder « ordonnancement.signer » au rôle auditeur",
+            "etapes": [
+                "Rôles et permissions › Accorder"
+            ],
+            "attendu": "Refus (HTTP 422) : la signature relève du seuil, pas d’une case.",
+            "obtenu": "HTTP 422 : « Cette permission n’est pas une case de matrice. Elle suit le rôle, le périmètre ou le seuil, et n’est pas accordée ici. »",
+            "statut": "Conforme",
+            "duree_ms": 33
+        },
+        {
+            "id": "ADM-15",
+            "module": "Administration",
+            "titre": "Désactivation d’un compte",
+            "profil": "Administrateur des habilitations",
+            "donnees": "Compte dsi.initiateur ; motif « Mutation »",
+            "etapes": [
+                "Utilisateurs › ⋮ › Désactiver le compte",
+                "L’agent tente de se connecter"
+            ],
+            "attendu": "Statut « desactive » ; connexion refusée (403) ; ses dossiers restent consultables.",
+            "obtenu": "desactive ; connexion HTTP 403 ; 5 dossier(s) conservé(s)",
+            "statut": "Conforme",
+            "duree_ms": 790
+        },
+        {
+            "id": "ADM-16",
+            "module": "Administration",
+            "titre": "Nouvelle incompatibilité de rôles appliquée",
+            "profil": "Administrateur des habilitations",
+            "donnees": "Incompatibilité auditeur / expert_budget ; attribution du rôle expert_budget à l’auditeur",
+            "etapes": [
+                "Suivi des accès › Nouvelle incompatibilité",
+                "Attribuer le rôle incompatible"
+            ],
+            "attendu": "Incompatibilité créée (201) ; attribution refusée (422).",
+            "obtenu": "attribution : HTTP 422 « Jeu d’essai »",
+            "statut": "Conforme",
+            "duree_ms": 82
+        },
+        {
+            "id": "GAR-01",
+            "module": "Planification GAR",
+            "titre": "Une seule version brouillon à la fois",
+            "profil": "Expert Budget",
+            "donnees": "Initialisation de la chaîne de résultats 2026",
+            "etapes": [
+                "Planification › Initialiser (deux fois)"
+            ],
+            "attendu": "Un brouillon est disponible ; une seconde initialisation est refusée (422).",
+            "obtenu": "première initialisation HTTP 422 ; seconde HTTP 422 ; version n° 2 en brouillon",
+            "statut": "Conforme",
+            "duree_ms": 321
+        },
+        {
+            "id": "GAR-02",
+            "module": "Planification GAR",
+            "titre": "Ajout et archivage de nœuds",
+            "profil": "Expert Budget",
+            "donnees": "Tâche « Jeu d’essai — tâche ajoutée » sous une activité",
+            "etapes": [
+                "Nouveau nœud (tâche)",
+                "Archiver l’activité parente",
+                "Archiver la tâche avec motif"
+            ],
+            "attendu": "Tâche créée (201) ; activité ayant un enfant non archivable (422) ; tâche archivée sans être supprimée.",
+            "obtenu": "tâche créée ; parent HTTP 422 ; tâche archive",
+            "statut": "Conforme",
+            "duree_ms": 117
+        },
+        {
+            "id": "GAR-03",
+            "module": "Planification GAR",
+            "titre": "Soumission, validation et publication de la version",
+            "profil": "Expert Budget, Directeur du Budget",
+            "donnees": "Libellé d’activité révisé ; date d’effet 2026-01-01",
+            "etapes": [
+                "Expert : modifier un libellé puis soumettre",
+                "Expert : tenter de valider",
+                "Directeur : valider puis publier",
+                "Expert : tenter de modifier la version publiée"
+            ],
+            "attendu": "Auteur refusé (422) ; version « publie » ; modification après publication refusée (422).",
+            "obtenu": "auteur HTTP 422 ; statut publie ; modification après publication HTTP 422",
+            "statut": "Conforme",
+            "duree_ms": 1838
+        },
+        {
+            "id": "GAR-04",
+            "module": "Planification GAR",
+            "titre": "Avenant à une version publiée",
+            "profil": "Expert Budget",
+            "donnees": "Justification « Ajustement après publication »",
+            "etapes": [
+                "Créer un avenant"
+            ],
+            "attendu": "Nouvelle version en brouillon (HTTP 201).",
+            "obtenu": "version n° 3 en brouillon",
+            "statut": "Conforme",
+            "duree_ms": 1893
+        },
+        {
+            "id": "PREP-01",
+            "module": "Préparation budgétaire",
+            "titre": "Une seule campagne par exercice ; calendrier de la campagne",
+            "profil": "Expert Budget",
+            "donnees": "Nouvelle campagne « CAMP-JEU-2027 » sur 2027 alors que « JEU-PREP-2027 » existe ; étape « Collecte » au 2027-02-15 sur la campagne existante",
+            "etapes": [
+                "Campagnes › Nouvelle campagne",
+                "Ouvrir la campagne existante › Calendrier › ajouter une étape"
+            ],
+            "attendu": "Seconde campagne refusée (422) ; étape ajoutée à la campagne existante (201).",
+            "obtenu": "seconde campagne HTTP 422 « Une campagne est déjà en cours sur cet exercice. » ; étape ajoutée à JEU-PREP-2027",
+            "statut": "Conforme",
+            "duree_ms": 112
+        },
+        {
+            "id": "PREP-02",
+            "module": "Préparation budgétaire",
+            "titre": "Hypothèse publiée puis révisée",
+            "profil": "Expert Budget",
+            "donnees": "Hypothèse « INFL-JEU » inflation 3 %, puis 4 %",
+            "etapes": [
+                "Cadrage › Nouvelle hypothèse",
+                "Publier",
+                "Modifier la valeur"
+            ],
+            "attendu": "La version publiée reste à 3 % ; la modification crée une nouvelle version.",
+            "obtenu": "publiée : 3 % ; 2 versions",
+            "statut": "Conforme",
+            "duree_ms": 150
+        },
+        {
+            "id": "PREP-03",
+            "module": "Préparation budgétaire",
+            "titre": "Plafond de structure appliqué aux propositions",
+            "profil": "Expert Budget",
+            "donnees": "Enveloppe fonctionnement DSI 500 000 ; ligne proposée 1 × 600 000",
+            "etapes": [
+                "Cadrage › Nouvelle enveloppe",
+                "Ouvrir la campagne",
+                "Nouvelle proposition",
+                "Ajouter une ligne au-delà du plafond"
+            ],
+            "attendu": "Ligne dépassant le plafond refusée (422).",
+            "obtenu": "HTTP 422 : « Le plafond de la structure est dépassé. L’enregistrement est bloqué. »",
+            "statut": "Conforme",
+            "duree_ms": 228
+        },
+        {
+            "id": "PREP-04",
+            "module": "Préparation budgétaire",
+            "titre": "Ligne, détails et périodes d’une proposition",
+            "profil": "Expert Budget",
+            "donnees": "Ligne 999901 « Fournitures » 2 × 100 000 ; détail « Ramettes » 3 × 50 000 ; T1 = 150 000 puis T2 = 1",
+            "etapes": [
+                "Ajouter la ligne",
+                "Ajouter le détail",
+                "Répartir par période"
+            ],
+            "attendu": "Montant 200 000 puis recalculé à 150 000 par les détails ; période dépassant le montant refusée (422).",
+            "obtenu": "200 000 → 150 000 ; T2 HTTP 422",
+            "statut": "Conforme",
+            "duree_ms": 221
+        },
+        {
+            "id": "PREP-05",
+            "module": "Préparation budgétaire",
+            "titre": "Soumission et arbitrage",
+            "profil": "Expert Budget, Directeur du Budget",
+            "donnees": "Arbitrage : retenu 120 000, motif « Ajustement au plafond »",
+            "etapes": [
+                "Soumettre la proposition",
+                "Tenter de modifier",
+                "Directeur : Retenir avec montant révisé"
+            ],
+            "attendu": "Modification après soumission refusée (422) ; montant retenu 120 000, montant demandé conservé (150 000).",
+            "obtenu": "modification HTTP 422 ; retenu 120 000 / demandé 150 000",
+            "statut": "Conforme",
+            "duree_ms": 312
+        },
+        {
+            "id": "PREP-06",
+            "module": "Préparation budgétaire",
+            "titre": "Version, validation et adoption du budget",
+            "profil": "Expert Budget, Directeur du Budget",
+            "donnees": "Version « Projet v1 » de la campagne",
+            "etapes": [
+                "Créer et soumettre la version",
+                "Expert : tenter de valider puis d’adopter",
+                "Directeur : valider puis adopter (deux fois)"
+            ],
+            "attendu": "Expert refusé (422) ; adoption : ligne 999901 votée à 120 000, exercice 2027 « executoire » ; seconde adoption sans doublon.",
+            "obtenu": "expert HTTP 422 ; ligne 999901 votée 120000 (1 ligne) ; exercice 2027 executoire",
+            "statut": "Conforme",
+            "duree_ms": 290
+        },
+        {
+            "id": "CLO-01",
+            "module": "Clôture",
+            "titre": "Clôture d’un exercice sans dossier ouvert",
+            "profil": "Directeur du Budget, Secrétaire général",
+            "donnees": "Exercice 2019 créé vide pour l’essai ; référence d’archive « ARCH-JEU-2019 »",
+            "etapes": [
+                "Directeur : Demander la clôture",
+                "Directeur : tenter de confirmer",
+                "SG : Confirmer",
+                "SG : Archiver"
+            ],
+            "attendu": "Demande acceptée (201) ; confirmation par le demandeur refusée (422) ; exercice « clos » ; archive enregistrée.",
+            "obtenu": "demandeur HTTP 422 ; statut clos ; archive ARCH-JEU-2019",
+            "statut": "Conforme",
+            "duree_ms": 193
+        },
+        {
+            "id": "CLO-02",
+            "module": "Clôture",
+            "titre": "Réouverture motivée d’un exercice clos",
+            "profil": "Administrateur fonctionnel",
+            "donnees": "Exercice 2019 clos en CLO-01",
+            "etapes": [
+                "Paramétrage › Exercices › Rouvrir sans motif puis avec motif"
+            ],
+            "attendu": "Sans motif : refus (422) ; avec motif : exercice rouvert et réouverture journalisée.",
+            "obtenu": "sans motif HTTP 422 ; statut ouvert",
+            "statut": "Conforme",
+            "duree_ms": 54
+        }
+    ]
+}

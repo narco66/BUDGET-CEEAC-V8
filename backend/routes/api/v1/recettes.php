@@ -1,0 +1,48 @@
+<?php
+
+use App\Domains\Revenues\Http\Controllers\RevenueController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/recettes/tableau', [RevenueController::class, 'tableau']);
+Route::get('/recettes/referentiel', [RevenueController::class, 'referentiel']);
+Route::get('/recettes/previsions', [RevenueController::class, 'previsions']);
+Route::post('/recettes/previsions', [RevenueController::class, 'storePrevision']);
+Route::get('/recettes/previsions/{forecast}', [RevenueController::class, 'showPrevision']);
+Route::patch('/recettes/previsions/{forecast}', [RevenueController::class, 'updatePrevision']);
+Route::delete('/recettes/previsions/{forecast}', [RevenueController::class, 'destroyPrevision']);
+Route::post('/recettes/previsions/{forecast}/soumettre', [RevenueController::class, 'soumettrePrevision']);
+Route::post('/recettes/previsions/{forecast}/valider', [RevenueController::class, 'validerPrevision']);
+Route::post('/recettes/previsions/{forecast}/annuler', [RevenueController::class, 'annulerPrevision']);
+Route::get('/recettes/titres', [RevenueController::class, 'titres']);
+Route::post('/recettes/titres', [RevenueController::class, 'storeTitre']);
+Route::get('/recettes/titres/{order}', [RevenueController::class, 'showTitre']);
+Route::patch('/recettes/titres/{order}', [RevenueController::class, 'updateTitre']);
+Route::post('/recettes/titres/{order}/soumettre', [RevenueController::class, 'soumettre']);
+Route::post('/recettes/titres/{order}/verifier', [RevenueController::class, 'verifier']);
+Route::post('/recettes/titres/{order}/valider', [RevenueController::class, 'valider']);
+Route::post('/recettes/titres/{order}/prendre-en-charge', [RevenueController::class, 'prendre']);
+Route::post('/recettes/titres/{order}/rejeter', [RevenueController::class, 'rejeter']);
+Route::post('/recettes/titres/{order}/suspendre', [RevenueController::class, 'suspendre']);
+Route::post('/recettes/titres/{order}/reprendre', [RevenueController::class, 'reprendre']);
+Route::post('/recettes/titres/{order}/annuler', [RevenueController::class, 'annuler']);
+Route::post('/recettes/titres/{order}/regulariser', [RevenueController::class, 'regulariser']);
+Route::post('/recettes/titres/{order}/pieces', [RevenueController::class, 'piece']);
+Route::get('/recettes/titres/{order}/document', [RevenueController::class, 'document']);
+Route::post('/recettes/titres/{order}/relances', [RevenueController::class, 'storeRelance']);
+Route::get('/recettes/contributions', [RevenueController::class, 'contributions']);
+Route::post('/recettes/contributions', [RevenueController::class, 'storeContribution']);
+Route::post('/recettes/contributions/{contribution}/appeler', [RevenueController::class, 'appeler']);
+Route::get('/recettes/creances', [RevenueController::class, 'creances']);
+Route::get('/recettes/echeancier', [RevenueController::class, 'echeancier']);
+Route::get('/recettes/encaissements', [RevenueController::class, 'encaissements']);
+Route::post('/recettes/encaissements', [RevenueController::class, 'storeEncaissement']);
+Route::post('/recettes/encaissements/{receipt}/affecter', [RevenueController::class, 'affecter']);
+Route::get('/recettes/rapprochements', [RevenueController::class, 'rapprochements']);
+Route::post('/recettes/encaissements/{receipt}/rapprocher', [RevenueController::class, 'rapprocher']);
+Route::get('/recettes/relances', [RevenueController::class, 'relances']);
+Route::get('/recettes/etats', [RevenueController::class, 'etats']);
+Route::post('/recettes/categories', [RevenueController::class, 'storeCategorie']);
+Route::patch('/recettes/categories/{category}', [RevenueController::class, 'updateCategorie']);
+Route::post('/recettes/modes', [RevenueController::class, 'storeMode']);
+Route::patch('/recettes/modes/{mode}', [RevenueController::class, 'updateMode']);
+Route::post('/recettes/seuils', [RevenueController::class, 'storeSeuil']);

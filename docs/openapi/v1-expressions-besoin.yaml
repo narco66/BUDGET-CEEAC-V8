@@ -1,0 +1,110 @@
+openapi: 3.0.3
+info:
+  title: BUDGET-CEEAC API
+  version: 1.0.0
+  description: Contrat v1. Le module livré est l’Expression de Besoin.
+servers:
+  - url: http://127.0.0.1:8001/api/v1
+paths:
+  /auth/me:
+    get:
+      summary: Acteur courant
+      parameters:
+        - $ref: '#/components/parameters/Actor'
+      responses:
+        '200':
+          description: Profil de l’acteur résolu
+  /acteurs:
+    get:
+      summary: Acteurs de démonstration et notifications
+      parameters:
+        - $ref: '#/components/parameters/Actor'
+      responses:
+        '200':
+          description: Liste des acteurs
+  /expressions-besoin:
+    get:
+      summary: Liste paginée et tableau de bord
+      parameters:
+        - $ref: '#/components/parameters/Actor'
+        - in: query
+          name: q
+          schema: { type: string }
+        - in: query
+          name: statut
+          schema: { type: string }
+        - in: query
+          name: nature
+          schema: { type: string, enum: [pap, hors_pap] }
+      responses:
+        '200':
+          description: data, meta, tableau_de_bord
+        '403':
+          $ref: '#/components/responses/Forbidden'
+    post:
+      summary: Créer un brouillon à partir d’une ligne budgétaire
+      parameters:
+        - $ref: '#/components/parameters/Actor'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [budget_line_id]
+              properties:
+                budget_line_id: { type: integer }
+      responses:
+        '201':
+          description: Brouillon créé
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '422':
+          $ref: '#/components/responses/Validation'
+  /expressions-besoin/{id}/soumettre:
+    post:
+      summary: Soumettre. Le crédit, les pièces et l’égalité des imputations sont contrôlés par Laravel.
+      parameters:
+        - $ref: '#/components/parameters/Actor'
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          description: Dossier soumis
+        '422':
+          $ref: '#/components/responses/Validation'
+  /expressions-besoin/{id}/retourner:
+    post:
+      summary: Retour pour correction. Motif et observations obligatoires.
+      parameters:
+        - $ref: '#/components/parameters/Actor'
+        - $ref: '#/components/parameters/Id'
+      responses:
+        '200':
+          description: Statut retournee, version conservée
+        '422':
+          $ref: '#/components/responses/Validation'
+components:
+  parameters:
+    Actor:
+      in: header
+      name: X-Actor-Id
+      schema: { type: integer }
+      description: Acteur de développement. Sans en-tête, l’initiateur de démonstration est utilisé. Ce n’est pas encore une session Sanctum.
+    Id:
+      in: path
+      name: id
+      required: true
+      schema: { type: integer }
+  responses:
+    Forbidden:
+      description: Policy refusée
+    Validation:
+      description: Erreur métier ou de formulaire
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message: { type: string }
+              errors: { type: object }
+              code: { type: string, example: VALIDATION_ERROR }
