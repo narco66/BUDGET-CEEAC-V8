@@ -24,9 +24,12 @@ use App\Domains\Needs\Models\ExpressionBesoin;
 use App\Domains\Needs\Policies\NeedPolicy;
 use App\Domains\Tasks\Listeners\ProjectTasks;
 use App\Shared\Notifications\JournaliserNotification;
+use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Events\NotificationSent;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -44,6 +47,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Plafond général de l’API par utilisateur (ou par adresse IP sans session) :
+        // large pour l’usage normal du SPA, il borne l’énumération et les rafales.
+        RateLimiter::for('api', fn (Request $request) => Limit::perMinute((int) config('gesbudep.api_requetes_par_minute', 600))
+            ->by((string) ($request->user()?->id ?? $request->ip())));
         Event::listen(NotificationSent::class, [JournaliserNotification::class, 'handle']);
         Gate::policy(ExpressionBesoin::class, NeedPolicy::class);
         Gate::policy(Engagement::class, EngagementPolicy::class);

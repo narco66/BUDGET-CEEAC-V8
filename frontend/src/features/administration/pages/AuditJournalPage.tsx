@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import api from '../../../api/httpClient';
-import { Button, DataTable, EmptyState, ErrorMessage, ICON, KeyValueList, PageHeader, Pagination, SearchInput, SectionCard, type PageMeta } from '../../../components/ui';
-import { errorsOf } from '../../../utils/format';
+import { Badge, Button, DataTable, EmptyState, ErrorMessage, ICON, KeyValueList, PageHeader, Pagination, SearchInput, SectionCard, useDialogs, useToast, type PageMeta } from '../../../components/ui';
+import { dateHeure, errorsOf } from '../../../utils/format';
 
 type Ligne = {
     id: number;
@@ -21,6 +21,9 @@ export default function AuditJournalPage() {
     const [lignes, setLignes] = useState<Ligne[]>([]);
     const [meta, setMeta] = useState<PageMeta | null>(null);
     const [indicateurs, setIndicateurs] = useState<Record<string, number>>({});
+    const [gels, setGels] = useState<{ id: number; portee: string; objet: string | null; motif: string; depuis: string | null }[]>([]);
+    const { prompt } = useDialogs();
+    const toast = useToast();
     const [q, setQ] = useState('');
     const [module, setModule] = useState('');
     const [resultat, setResultat] = useState('');
@@ -43,6 +46,7 @@ export default function AuditJournalPage() {
             setMeta(response.data.meta);
             setFuseau(response.data.meta?.fuseau ?? 'Africa/Libreville');
             setIndicateurs(response.data.indicateurs ?? {});
+            setGels(response.data.gels ?? []);
         } catch (caught) {
             setError(errorsOf(caught));
         } finally {
@@ -85,6 +89,24 @@ export default function AuditJournalPage() {
         try {
             await api.post('/admin/audit/gel', { scope: 'journal', motif: motifGel });
             setMotifGel('');
+            charger(page);
+        } catch (caught) {
+            setError(errorsOf(caught));
+        }
+    }
+
+    async function leverGel(gel: { id: number; motif: string }) {
+        const values = await prompt({
+            title: 'Lever le gel du journal',
+            description: `Gel posé pour : ${gel.motif}. La levée est tracée et exige un motif.`,
+            confirmLabel: 'Lever le gel',
+            tone: 'warning',
+            fields: [{ name: 'motif', label: 'Motif de la levée', type: 'textarea', required: true }],
+        });
+        if (!values) return;
+        try {
+            await api.post(`/admin/audit/gels/${gel.id}/lever`, values);
+            toast.success('Gel levé.');
             charger(page);
         } catch (caught) {
             setError(errorsOf(caught));
@@ -137,7 +159,29 @@ export default function AuditJournalPage() {
                 <Pagination meta={meta} noun="événement" onPage={(suivante) => { setPage(suivante); charger(suivante); }} />
             </SectionCard>
             {fiche && (
-                <SectionCard title={fiche.action} icon={ICON.document} subtitle={fiche.quand}>
+                <SectionCard
+                    title={fiche.action}
+                    icon={ICON.document}
+                    subtitle={fiche.quand}
+                    actions={<Button size="sm" icon={ICON.edit} onClick={async () => {
+                        const values = await prompt({
+                            title: 'Rectifier cet événement',
+                            description: 'L’événement d’origine n’est jamais modifié : une rectification motivée lui est liée dans le journal.',
+                            confirmLabel: 'Rectifier',
+                            tone: 'warning',
+                            fields: [{ name: 'motif', label: 'Motif de la rectification', type: 'textarea', required: true }],
+                        });
+                        if (!values) return;
+                        try {
+                            await api.post(`/admin/audit/${fiche.id}/rectification`, values);
+                            toast.success('Rectification enregistrée.');
+                            ouvrir(fiche.id);
+                            charger(page);
+                        } catch (caught) {
+                            setError(errorsOf(caught));
+                        }
+                    }}>Rectifier</Button>}
+                >
                     <KeyValueList items={[
                         { label: 'Acteur', value: fiche.acteur || 'Système' },
                         { label: 'Qualité', value: fiche.role || '—' },
@@ -158,7 +202,18 @@ export default function AuditJournalPage() {
                     )}
                 </SectionCard>
             )}
-            <SectionCard title="Gel du journal" icon={ICON.archive}>
+            <SectionCard title="Gel du journal" icon={ICON.archive} subtitle="Un gel suspend toute purge du journal, par exemple pendant un contrôle ou un contentieux.">
+                {gels.length > 0 && (
+                    <ul className="list-rows" style={{ marginBottom: 12 }}>
+                        {gels.map((gel) => (
+                            <li key={gel.id} className="list-row">
+                                <Badge tone="warning" size="sm" icon={ICON.lock}>Gel actif</Badge>
+                                <span className="list-row-main">{gel.motif}{gel.objet ? ` · ${gel.objet}` : ''}<span className="cell-sub">depuis le {dateHeure(gel.depuis)}</span></span>
+                                <Button size="sm" onClick={() => leverGel(gel)}>Lever</Button>
+                            </li>
+                        ))}
+                    </ul>
+                )}
                 <form className="form-actions" onSubmit={geler}>
                     <input className="inp" value={motifGel} onChange={(event) => setMotifGel(event.target.value)} placeholder="Motif du gel" aria-label="Motif du gel" required />
                     <Button type="submit" disabled={motifGel.trim() === ''}>Geler</Button>

@@ -10,7 +10,33 @@ class IndicatorMeasurement extends Model
 {
     use ProtectsValidatedValues;
 
-    protected $guarded = [];
+    /** Colonnes assignables : liste explicite, jamais d’affectation massive ouverte. */
+    protected $fillable = [
+        'indicator_id',
+        'monitoring_period_id',
+        'value',
+        'status',
+        'version',
+        'formula_version',
+        'supersedes_id',
+        'superseded_at',
+        'attainment_rate',
+        'comment',
+        'source',
+        'exception_motif',
+        'author_id',
+        'validator_id',
+        'submitted_at',
+        'validated_at',
+        'rejection_motif',
+        'numerator',
+        'denominator',
+        'justification',
+        'responsible_validator_id',
+        'responsible_validated_at',
+        'consolidated_by',
+        'consolidated_at',
+    ];
 
     protected function casts(): array
     {

@@ -156,6 +156,30 @@ export default function DossierFichePage() {
                 </SectionCard>
             )}
             <SectionCard title="Détails, périodes et financements" icon={ICON.budget}>
+                {(() => {
+                    // Ventilation déjà saisie : chaque élément reste visible et peut être retiré
+                    // tant que le dossier est modifiable (sinon une erreur de saisie bloquerait la soumission).
+                    const elements = (fiche.lignes ?? []).flatMap((ligneDossier: any) => [
+                        ...(ligneDossier.details ?? []).map((row: any) => ({ cle: `d${row.id}`, ligne: ligneDossier.code, nature: 'Détail', libelle: `${row.designation} · ${row.quantite} × ${fcfa(row.cout_unitaire)}`, montant: row.montant, url: `/preparation/details/${row.id}` })),
+                        ...(ligneDossier.periodes ?? []).map((row: any) => ({ cle: `p${row.id}`, ligne: ligneDossier.code, nature: 'Période', libelle: row.periode, montant: row.montant, url: `/preparation/periodes/${row.id}` })),
+                        ...(ligneDossier.financements ?? []).map((row: any) => ({ cle: `f${row.id}`, ligne: ligneDossier.code, nature: 'Financement', libelle: row.source ?? 'Source', montant: row.montant, url: `/preparation/financements/${row.id}` })),
+                    ]);
+                    return (
+                        <DataTable
+                            columns={[
+                                { key: 'ligne', header: 'Ligne', className: 'mono', render: (row: any) => row.ligne },
+                                { key: 'nature', header: 'Nature', render: (row: any) => row.nature },
+                                { key: 'libelle', header: 'Élément', render: (row: any) => row.libelle },
+                                { key: 'montant', header: 'Montant (FCFA)', align: 'right', className: 'cell-amount', render: (row: any) => fcfa(row.montant) },
+                                { key: 'actions', header: 'Actions', srHeader: true, align: 'right', render: (row: any) => editable && <Button size="sm" variant="danger-outline" loading={pending === row.cle} onClick={() => action(row.cle, () => api.delete(row.url), `${row.nature} retiré(e).`)}>Retirer</Button> },
+                            ] as Column<any>[]}
+                            rows={elements}
+                            rowKey={(row: any) => row.cle}
+                            compact
+                            empty={<EmptyState icon={ICON.budget} title="Aucune ventilation saisie" compact>Ajoutez ci-dessous les détails, la répartition par période et les financements.</EmptyState>}
+                        />
+                    );
+                })()}
                 <form className="form-grid" onSubmit={(event) => { event.preventDefault(); void action('detail', () => api.post(`/preparation/lignes/${detail.line_id}/details`, { designation: detail.designation, quantite: Number(detail.quantite), cout_unitaire: Number(detail.cout_unitaire) }), 'Détail enregistré.'); }}>
                     <FormField label="Ligne">
                         <select className="inp" required value={detail.line_id} onChange={(event) => setDetail({ ...detail, line_id: event.target.value })}>
@@ -233,9 +257,22 @@ export default function DossierFichePage() {
                 ] as Column<any>[]} rows={fiche.arbitrages ?? []} rowKey={(row) => row.id} empty={<EmptyState icon={ICON.history} title="Aucun arbitrage" compact />} />
             </SectionCard>
             <SectionCard title="Pièces" icon={ICON.document}>
-                <ul>
+                {(fiche.pieces ?? []).length === 0 && <p className="subtle">Aucune pièce jointe.</p>}
+                <ul className="list-rows">
                     {(fiche.pieces ?? []).map((piece: any) => (
-                        <li key={piece.id}><Button size="sm" onClick={() => action(`p${piece.id}`, async () => {
+                        <li key={piece.id} className="list-row">{editable && <Button size="sm" variant="danger-outline" loading={pending === `rp${piece.id}`} onClick={() => action(`rp${piece.id}`, () => api.delete(`/preparation/pieces/${piece.id}`), 'Pièce retirée.')}>Retirer</Button>}{editable && (
+                            <label className="btn btn-secondary btn-sm" style={{ cursor: 'pointer' }}>
+                                Remplacer
+                                <input type="file" hidden accept=".pdf,.jpg,.jpeg,.png,.xlsx,.docx" onChange={(event) => {
+                                    const fichier = event.target.files?.[0];
+                                    event.target.value = '';
+                                    if (!fichier) return;
+                                    const corps = new FormData();
+                                    corps.append('fichier', fichier);
+                                    void action(`mp${piece.id}`, () => api.post(`/preparation/pieces/${piece.id}/remplacer`, corps), 'Nouvelle version de la pièce enregistrée.');
+                                }} />
+                            </label>
+                        )}<Button size="sm" onClick={() => action(`p${piece.id}`, async () => {
                             const response = await api.get(`/preparation/pieces/${piece.id}/telecharger`, { responseType: 'blob' });
                             const url = URL.createObjectURL(response.data);
                             const lien = document.createElement('a');

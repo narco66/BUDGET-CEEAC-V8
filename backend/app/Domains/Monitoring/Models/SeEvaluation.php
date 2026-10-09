@@ -8,7 +8,19 @@ class SeEvaluation extends Model
 {
     protected $table = 'se_evaluations';
 
-    protected $guarded = [];
+    /** Colonnes assignables : liste explicite, jamais d’affectation massive ouverte. */
+    protected $fillable = [
+        'reference',
+        'subject',
+        'scope',
+        'monitoring_period_id',
+        'pap_enrichment_id',
+        'type',
+        'evaluator_role',
+        'criteria',
+        'conclusions',
+        'status',
+    ];
 
     protected function casts(): array
     {

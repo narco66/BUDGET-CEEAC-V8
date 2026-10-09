@@ -6,7 +6,27 @@ use Illuminate\Database\Eloquent\Model;
 
 class CorrectiveAction extends Model
 {
-    protected $guarded = [];
+    /** Colonnes assignables : liste explicite, jamais d’affectation massive ouverte. */
+    protected $fillable = [
+        'performance_variance_id',
+        'pap_enrichment_id',
+        'description',
+        'responsible_role',
+        'decided_on',
+        'due_on',
+        'expected_result',
+        'progress',
+        'status',
+        'last_comment',
+        'closed_at',
+        'created_by',
+        'last_reminded_at',
+        'reference',
+        'anomaly',
+        'cause',
+        'responsible_label',
+        'se_problem_id',
+    ];
 
     /**
      * @var list<string>

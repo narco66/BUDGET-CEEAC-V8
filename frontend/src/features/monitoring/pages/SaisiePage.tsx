@@ -19,6 +19,7 @@ import {
     useToast,
     type Column,
 } from '../../../components/ui';
+import AgregationIndicateurs from '../components/AgregationIndicateurs';
 import { Pager } from '../components/se';
 
 const PERIODE_COLLECTE: Record<string, { label: string; tone: 'success' | 'info' | 'neutral' | 'warning' }> = {
@@ -328,6 +329,8 @@ export default function SaisiePage() {
                 />
                 <Pager meta={meta} onPage={setPage} />
             </SectionCard>
+
+            <AgregationIndicateurs />
         </main>
     );
 }

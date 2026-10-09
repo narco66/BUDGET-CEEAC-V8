@@ -214,7 +214,7 @@ class RevenueController extends Controller
     public function piece(Request $request, RevenueOrder $order): JsonResponse
     {
         $data = $request->validate([
-            'fichier' => ['required', 'file', 'max:10240'],
+            'fichier' => ['required', 'file', 'max:10240', 'extensions:'.implode(',', config('ged.extensions')), 'mimes:'.implode(',', config('ged.extensions'))],
             'type_piece' => ['required', 'string', 'max:64'],
         ]);
         $document = $this->cycle->attacher($request->user(), $order, $data['fichier'], $data['type_piece']);

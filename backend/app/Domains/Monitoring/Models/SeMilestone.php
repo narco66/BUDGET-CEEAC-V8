@@ -14,7 +14,17 @@ class SeMilestone extends Model
 {
     protected $table = 'se_milestones';
 
-    protected $guarded = [];
+    /** Colonnes assignables : liste explicite, jamais d’affectation massive ouverte. */
+    protected $fillable = [
+        'pap_enrichment_id',
+        'pap_task_id',
+        'position',
+        'label',
+        'planned_on',
+        'achieved_on',
+        'proof_label',
+        'responsible_label',
+    ];
 
     protected function casts(): array
     {

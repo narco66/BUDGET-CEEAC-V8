@@ -4,6 +4,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Plafond de requêtes de l’API
+    |--------------------------------------------------------------------------
+    |
+    | Nombre de requêtes par minute et par utilisateur (ou par adresse IP sans
+    | session) au-delà duquel l’API répond 429. La connexion et la vérification
+    | publique gardent leurs propres limites, plus strictes.
+    |
+    */
+
+    'api_requetes_par_minute' => (int) env('GESBUDEP_API_REQUETES_PAR_MINUTE', 600),
+
+    /*
+    |--------------------------------------------------------------------------
     | Changement d’acteur de démonstration
     |--------------------------------------------------------------------------
     |

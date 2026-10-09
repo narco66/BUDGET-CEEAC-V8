@@ -11,6 +11,7 @@ use App\Domains\Needs\Http\Requests\StoreExpressionBesoinRequest;
 use App\Domains\Needs\Http\Requests\UpdateExpressionBesoinRequest;
 use App\Domains\Needs\Http\Resources\ExpressionBesoinResource;
 use App\Domains\Needs\Models\ExpressionBesoin;
+use App\Domains\Needs\Services\ExpressionBesoinActePublisher;
 use App\Domains\Needs\Services\ExpressionBesoinFichePresenter;
 use App\Domains\Needs\Services\ExpressionBesoinWorkflow;
 use App\Domains\PAP\Models\PapTask;
@@ -177,7 +178,7 @@ class ExpressionBesoinController extends Controller
 
         $data = $request->validate([
             'type' => ['required', 'string', 'max:64'],
-            'fichier' => ['required', 'file', 'max:10240'],
+            'fichier' => ['required', 'file', 'max:10240', 'extensions:'.implode(',', config('ged.extensions')), 'mimes:'.implode(',', config('ged.extensions'))],
         ]);
 
         $file = $request->file('fichier');
@@ -278,13 +279,7 @@ class ExpressionBesoinController extends Controller
      */
     private function archiveOfficial(ExpressionBesoin $eb, string $event, ?User $actor, bool $quietly = true): ?GeneratedDocument
     {
-        $documents = app(OfficialDocumentService::class);
-        if (! in_array($eb->status, [EbStatus::Approuvee, EbStatus::Transformee], true) || $documents->current($eb, 'expression_besoin') !== null) {
-            return null;
-        }
-        $arguments = [$eb, 'expression_besoin', $eb->reference, 'pdf.expression-besoin', ['fiche' => app(ExpressionBesoinFichePresenter::class)->present($this->loadDetail($eb))], $event, $actor];
-
-        return $quietly ? $documents->archiveQuietly(...$arguments) : $documents->archive(...$arguments);
+        return app(ExpressionBesoinActePublisher::class)->emettre($eb, $event, $actor, $quietly);
     }
 
     public function export(Request $request): BinaryFileResponse
@@ -376,17 +371,7 @@ class ExpressionBesoinController extends Controller
 
     private function loadDetail(ExpressionBesoin $eb): ExpressionBesoin
     {
-        return $eb->load([
-            'exercice',
-            'organizationUnit.parent',
-            'initiator',
-            'budgetLine.enrichment.tasks',
-            'lines',
-            'imputations.budgetLine',
-            'documents',
-            'events.actor',
-            'engagement',
-        ]);
+        return $eb->load(ExpressionBesoinActePublisher::RELATIONS);
     }
 
     private function guardEditable(Request $request, ExpressionBesoin $eb): void

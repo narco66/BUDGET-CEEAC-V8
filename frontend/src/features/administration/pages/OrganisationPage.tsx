@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useMemo, useState } from 'react';
 import api from '../../../api/httpClient';
-import { Button, DataTable, EmptyState, ErrorMessage, FormField, ICON, Modal, OpenCell, PageHeader, SectionCard, StatusBadge, useToast } from '../../../components/ui';
-import { errorsOf } from '../../../utils/format';
+import { Badge, Button, DataTable, EmptyState, ErrorMessage, FormField, ICON, Modal, OpenCell, PageHeader, SectionCard, StatusBadge, useDialogs, useToast } from '../../../components/ui';
+import { dateFr, errorsOf } from '../../../utils/format';
 
 type Noeud = { id: number; code: string; nom: string; type: string; type_libelle: string; actif: boolean; enfants?: Noeud[] };
 
@@ -20,10 +20,15 @@ export default function OrganisationPage() {
     const [edition, setEdition] = useState({ name: '', kind: 'service', parent_id: '', sort_order: '0', description: '' });
     const [pending, setPending] = useState<string | null>(null);
     const [q, setQ] = useState('');
+    const { prompt } = useDialogs();
+    const [versions, setVersions] = useState<any[]>([]);
+    const [agents, setAgents] = useState<any[]>([]);
+    const [affectation, setAffectation] = useState({ user_id: '', position_id: '', starts_on: '', reference: '' });
 
     function charger() {
         api.get('/organisation/arbre').then((response) => { setArbre(response.data); setError(''); }).catch((caught) => setError(errorsOf(caught)));
         api.get('/organisation/fonctions').then((response) => setFonctions(response.data.data ?? [])).catch(() => setFonctions([]));
+        api.get('/organisation/versions').then((response) => setVersions(response.data.data ?? [])).catch(() => setVersions([]));
     }
 
     useEffect(() => { charger(); }, []);
@@ -103,6 +108,56 @@ export default function OrganisationPage() {
     }
 
     const droits = arbre?.droits ?? {};
+
+    useEffect(() => {
+        if (droits.gerer && agents.length === 0) {
+            api.get('/admin/utilisateurs').then((response) => setAgents(response.data.data ?? [])).catch(() => setAgents([]));
+        }
+    }, [droits.gerer]);
+
+    async function agir(cle: string, request: () => Promise<unknown>, message: string, apres?: () => void) {
+        setPending(cle);
+        setError('');
+        try {
+            await request();
+            toast.success(message);
+            apres?.();
+            charger();
+        } catch (caught) {
+            setError(errorsOf(caught));
+        } finally {
+            setPending(null);
+        }
+    }
+
+    async function editerFonction(row: any | null) {
+        const values = await prompt({
+            title: row ? `Modifier la fonction ${row.code}` : 'Nouvelle fonction',
+            description: 'Le rang ordonne les fonctions : le responsable d’une structure est l’agent affecté à la fonction de rang le plus élevé (le plus petit numéro).',
+            confirmLabel: 'Enregistrer',
+            fields: [
+                { name: 'code', label: 'Code', required: true, defaultValue: row?.code ?? '' },
+                { name: 'label', label: 'Libellé', required: true, defaultValue: row?.libelle ?? '' },
+                { name: 'rank', label: 'Rang', type: 'number', defaultValue: row?.rang ? String(row.rang) : '' },
+                { name: 'description', label: 'Description', type: 'textarea', defaultValue: row?.description ?? '' },
+            ],
+        });
+        if (!values) return;
+        const payload = { code: values.code, label: values.label, rank: values.rank ? Number(values.rank) : null, description: values.description || null };
+        await agir('fonction', () => (row ? api.patch(`/organisation/fonctions/${row.id}`, payload) : api.post('/organisation/fonctions', payload)), 'Fonction enregistrée.');
+    }
+
+    async function cloturerAffectation(row: any) {
+        const values = await prompt({
+            title: `Clôturer l’affectation de ${row.agent}`,
+            description: `${row.fonction} · depuis le ${dateFr(row.debut)}. L’affectation est conservée dans l’historique.`,
+            confirmLabel: 'Clôturer',
+            tone: 'warning',
+            fields: [{ name: 'motif', label: 'Motif', type: 'textarea' }],
+        });
+        if (!values || !fiche?.data) return;
+        await agir(`af${row.id}`, () => api.post(`/organisation/affectations/${row.id}/cloturer`, values), 'Affectation clôturée.', () => ouvrir(fiche.data.id));
+    }
     const data = fiche?.data;
 
     return (
@@ -158,6 +213,48 @@ export default function OrganisationPage() {
                                     <Button type="button" loading={pending === 'statut'} onClick={() => basculer(!data.actif)}>{data.actif ? 'Désactiver' : 'Activer'}</Button>
                                 </form>
                             )}
+                            <h3 className="card-title">Affectations</h3>
+                            <DataTable
+                                columns={[
+                                    { key: 'agent', header: 'Agent', render: (row: any) => row.agent ?? '—' },
+                                    { key: 'fonction', header: 'Fonction', render: (row: any) => row.fonction ?? '—' },
+                                    { key: 'periode', header: 'Période', render: (row: any) => `${dateFr(row.debut)}${row.fin ? ` → ${dateFr(row.fin)}` : ''}` },
+                                    { key: 'statut', header: 'Statut', render: (row: any) => row.statut === 'active' ? <Badge tone="success" size="sm" dot>Active</Badge> : <Badge tone="neutral" size="sm">Terminée</Badge> },
+                                    { key: 'actions', header: 'Actions', srHeader: true, align: 'right', render: (row: any) => droits.gerer && row.statut === 'active' && <Button size="sm" loading={pending === `af${row.id}`} onClick={() => cloturerAffectation(row)}>Clôturer</Button> },
+                                ]}
+                                rows={data.affectations ?? []}
+                                rowKey={(row: any) => row.id}
+                                compact
+                                empty={<EmptyState icon={ICON.users} title="Aucune affectation" compact />}
+                            />
+                            {droits.gerer && (
+                                <form className="form-grid" onSubmit={(event) => {
+                                    event.preventDefault();
+                                    void agir('affecter', () => api.post('/organisation/affectations', {
+                                        user_id: Number(affectation.user_id),
+                                        organization_unit_id: data.id,
+                                        position_id: Number(affectation.position_id),
+                                        starts_on: affectation.starts_on,
+                                        reference: affectation.reference || null,
+                                    }), 'Agent affecté.', () => { setAffectation({ user_id: '', position_id: '', starts_on: '', reference: '' }); ouvrir(data.id); });
+                                }}>
+                                    <FormField label="Agent" required>
+                                        <select className="inp" required value={affectation.user_id} onChange={(event) => setAffectation({ ...affectation, user_id: event.target.value })}>
+                                            <option value="">Choisir</option>
+                                            {agents.map((row: any) => <option key={row.id} value={row.id}>{row.name ?? row.nom}</option>)}
+                                        </select>
+                                    </FormField>
+                                    <FormField label="Fonction" required>
+                                        <select className="inp" required value={affectation.position_id} onChange={(event) => setAffectation({ ...affectation, position_id: event.target.value })}>
+                                            <option value="">Choisir</option>
+                                            {fonctions.filter((row: any) => row.actif !== false).map((row: any) => <option key={row.id} value={row.id}>{row.libelle}</option>)}
+                                        </select>
+                                    </FormField>
+                                    <FormField label="Début" required><input className="inp" type="date" required value={affectation.starts_on} onChange={(event) => setAffectation({ ...affectation, starts_on: event.target.value })} /></FormField>
+                                    <FormField label="Acte de nomination"><input className="inp" value={affectation.reference} onChange={(event) => setAffectation({ ...affectation, reference: event.target.value })} /></FormField>
+                                    <div className="span-all"><Button type="submit" icon={ICON.create} loading={pending === 'affecter'}>Affecter</Button></div>
+                                </form>
+                            )}
                             <h3 className="card-title">Enfants</h3>
                             <DataTable
                                 columns={[
@@ -175,11 +272,12 @@ export default function OrganisationPage() {
                         </div>
                     ) : <p className="muted">Sélectionnez une structure.</p>}
                 </SectionCard>
-                <SectionCard title="Fonctions" icon={ICON.roles} subtitle={`${fonctions.length} fonction(s)`} flush>
+                <SectionCard title="Fonctions" icon={ICON.roles} subtitle={`${fonctions.length} fonction(s)`} flush actions={droits.gerer && <Button size="sm" icon={ICON.create} loading={pending === 'fonction'} onClick={() => editerFonction(null)}>Nouvelle</Button>}>
                     <DataTable
                         columns={[
                             { key: 'code', header: 'Code', render: (row: any) => <span className="cell-ref">{row.code}</span> },
                             { key: 'libelle', header: 'Libellé', render: (row: any) => row.libelle },
+                            { key: 'actions', header: 'Actions', srHeader: true, align: 'right', render: (row: any) => droits.gerer && <Button size="sm" icon={ICON.edit} onClick={() => editerFonction(row)}>Modifier</Button> },
                         ]}
                         rows={fonctions}
                         rowKey={(row: any) => row.id}
@@ -188,6 +286,21 @@ export default function OrganisationPage() {
                     />
                 </SectionCard>
             </div>
+            <SectionCard title="Versions du référentiel" icon={ICON.history} subtitle="Chaque publication de l’organigramme officiel est conservée." flush>
+                <DataTable
+                    columns={[
+                        { key: 'code', header: 'Version', render: (row: any) => <span className="cell-ref">{row.code}</span> },
+                        { key: 'libelle', header: 'Libellé', render: (row: any) => row.libelle },
+                        { key: 'document', header: 'Document', render: (row: any) => <span className="cell-sub">{row.document ?? '—'}</span> },
+                        { key: 'effet', header: 'Date d’effet', render: (row: any) => dateFr(row.date_effet) },
+                        { key: 'statut', header: 'Statut', render: (row: any) => <StatusBadge statut={row.statut === 'publie' ? 'actif' : row.statut} libelle={row.statut === 'publie' ? 'Publiée' : row.statut} size="sm" /> },
+                    ]}
+                    rows={versions}
+                    rowKey={(row: any) => row.id}
+                    compact
+                    empty={<EmptyState icon={ICON.history} title="Aucune version publiée" compact />}
+                />
+            </SectionCard>
             {modal && (
                 <Modal title="Nouvelle structure" onClose={() => setModal(false)} footer={<><Button onClick={() => setModal(false)}>Annuler</Button><Button variant="primary" type="submit" form="org-form" loading={pending === 'sauver'}>Enregistrer</Button></>}>
                     <form id="org-form" className="form-grid" onSubmit={enregistrer}>

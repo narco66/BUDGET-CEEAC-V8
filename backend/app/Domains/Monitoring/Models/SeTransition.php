@@ -8,5 +8,10 @@ class SeTransition extends Model
 {
     public $timestamps = false;
 
-    protected $guarded = [];
+    /** Colonnes assignables : liste explicite, jamais d’affectation massive ouverte. */
+    protected $fillable = [
+        'from_status',
+        'action',
+        'to_status',
+    ];
 }

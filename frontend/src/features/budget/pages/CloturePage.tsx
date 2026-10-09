@@ -16,6 +16,7 @@ import {
     StatusBadge,
     Stepper,
     StripCell,
+    useDialogs,
     useToast,
     type Column,
     type StepItem,
@@ -29,7 +30,7 @@ const STATUTS_EXERCICE: Record<string, string> = {
     clos: 'Clos',
 };
 
-type Periode = { id: number; label: string; statut: string; peut_fermer?: boolean };
+type Periode = { id: number; label: string; statut: string; peut_fermer?: boolean; peut_rouvrir?: boolean };
 
 function etapes(exercice: any): StepItem[] {
     const demandee = exercice.cloture === 'demande' || exercice.statut === 'clos';
@@ -46,6 +47,7 @@ function etapes(exercice: any): StepItem[] {
 
 export default function CloturePage() {
     const toast = useToast();
+    const { prompt } = useDialogs();
     const [portrait, setPortrait] = useState<any>(null);
     const [error, setError] = useState('');
     const [motif, setMotif] = useState('');
@@ -94,6 +96,11 @@ export default function CloturePage() {
                     <input className="inp" name="motif" required placeholder="Motif de fermeture" aria-label={`Motif de fermeture ${periode.label}`} style={{ minWidth: 220 }} />
                     <Button size="sm" type="submit" icon={ICON.lock} loading={pending === `p${periode.id}`}>Fermer la période échue</Button>
                 </form>
+            ) : periode.peut_rouvrir ? (
+                <Button size="sm" variant="warning" loading={pending === `r${periode.id}`} onClick={async () => {
+                    const values = await prompt({ title: `Rouvrir ${periode.label}`, description: 'La réouverture permet de nouveau des écritures sur la période ; elle est tracée.', confirmLabel: 'Rouvrir', tone: 'warning', fields: [{ name: 'motif', label: 'Motif', type: 'textarea', required: true }] });
+                    if (values) agir(`r${periode.id}`, () => api.post(`/cloture/periodes/${periode.id}/rouvrir`, values), 'Période rouverte.');
+                }}>Rouvrir</Button>
             ) : <span className="subtle">—</span>),
         },
     ];
@@ -178,7 +185,16 @@ export default function CloturePage() {
                             rows={exercice.periodes ?? []}
                             rowKey={(periode) => periode.id}
                             compact
-                            empty={<EmptyState icon={ICON.calendar} title="Aucune période" compact />}
+                            empty={(
+                                <EmptyState
+                                    icon={ICON.calendar}
+                                    title="Aucune période"
+                                    compact
+                                    action={exercice.statut !== 'clos' && <Button size="sm" icon={ICON.calendar} loading={pending === `pp${exercice.id}`} onClick={() => agir(`pp${exercice.id}`, () => api.post(`/cloture/${exercice.id}/periodes`), 'Périodes de l’exercice créées.')}>Créer les périodes</Button>}
+                                >
+                                    Les périodes mensuelles permettent de fermer les mois échus.
+                                </EmptyState>
+                            )}
                         />
                     </SectionCard>
                 );

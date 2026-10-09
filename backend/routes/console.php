@@ -70,6 +70,8 @@ Artisan::command('notifications:purger', function () {
 })->purpose('Supprime les notifications lues au-delà de la durée de conservation ; les non lues sont conservées');
 
 Schedule::command('notifications:purger')->dailyAt('06:30')->withoutOverlapping(15);
+// Actes des dossiers franchis hors de l’interface (import, reprise) : archivés et versés à la GED.
+Schedule::command('actes:emettre')->dailyAt('06:45')->withoutOverlapping(30);
 
 Schedule::command('recettes:alertes')->dailyAt('07:20')->withoutOverlapping(15);
 

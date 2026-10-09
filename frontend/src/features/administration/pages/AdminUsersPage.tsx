@@ -50,6 +50,9 @@ export default function AdminUsers() {
     const [pending, setPending] = useState(false);
     const [unite, setUnite] = useState('');
     const [droits, setDroits] = useState<any>(null);
+    const [editing, setEditing] = useState(false);
+    const [editForm, setEditForm] = useState<any>({});
+    const [editingId, setEditingId] = useState<number | null>(null);
 
     function load() {
         setLoading(true);
@@ -90,6 +93,51 @@ export default function AdminUsers() {
             setForm(EMPTY);
             setCreating(false);
             toast.success('Compte créé.');
+            load();
+        } catch (caught) {
+            setError(errorsOf(caught));
+        } finally {
+            setPending(false);
+        }
+    }
+
+    async function editer(user: { id: number }) {
+        setError('');
+        try {
+            const response = await api.get(`/admin/utilisateurs/${user.id}`);
+            const donnees = response.data.data;
+            setEditForm({
+                nom: donnees.nom ?? '',
+                email: donnees.email ?? '',
+                matricule: donnees.matricule ?? '',
+                telephone: donnees.telephone ?? '',
+                organization_unit_id: donnees.organization_unit_id ?? '',
+                fonction: donnees.fonction ?? '',
+                role: donnees.role ?? '',
+                initiales: donnees.initiales ?? '',
+                mfa_required: donnees.mfa ?? false,
+            });
+            setEditingId(user.id);
+            setEditing(true);
+        } catch (caught) {
+            toast.error(errorsOf(caught));
+        }
+    }
+
+    async function modifierCompte(event?: FormEvent) {
+        event?.preventDefault();
+        if (!editingId) return;
+        setPending(true);
+        setError('');
+        try {
+            const response = await api.put(`/admin/utilisateurs/${editingId}`, {
+                ...editForm,
+                organization_unit_id: Number(editForm.organization_unit_id),
+            });
+            setEditForm(response.data.data);
+            setEditing(false);
+            setEditingId(null);
+            toast.success('Compte modifié.');
             load();
         } catch (caught) {
             setError(errorsOf(caught));
@@ -175,6 +223,7 @@ export default function AdminUsers() {
 
     const referencesMissing = !loadingReferences && (!roles.length || !structures.length);
     const set = (key: keyof typeof EMPTY) => (event: { target: { value: string } }) => setForm({ ...form, [key]: event.target.value });
+    const edit = (key: string) => (event: { target: { value: string } }) => setEditForm({ ...editForm, [key]: event.target.value });
 
     const columns: Column<any>[] = [
         {
@@ -199,6 +248,7 @@ export default function AdminUsers() {
             render: (row) => (
                 <ActionMenu label={`Actions pour ${row.nom}`} actions={[
                     { label: 'Voir la fiche', icon: ICON.view, onSelect: () => openUser(row) },
+                    { label: 'Modifier le compte', icon: ICON.edit, onSelect: () => editer(row), hidden: row.statut !== 'actif' },
                     { label: 'Désactiver le compte', icon: faUserSlash, onSelect: () => deactivate(row), hidden: row.statut !== 'actif', danger: true, separatorBefore: true },
                 ]} />
             ),
@@ -289,6 +339,60 @@ export default function AdminUsers() {
                         </div>
                     </form>
                     <ErrorMessage error={error} title="Création refusée" />
+                </Modal>
+            )}
+
+            {editing && (
+                <Modal
+                    size="lg"
+                    title="Modifier le compte"
+                    description="Mettez à jour l’identité, le rattachement et le rôle principal du compte."
+                    icon={ICON.edit}
+                    onClose={() => { setEditing(false); setEditingId(null); }}
+                    footer={(
+                        <>
+                            <Button onClick={() => { setEditing(false); setEditingId(null); }}>Annuler</Button>
+                            <Button variant="primary" icon={ICON.save} loading={pending} disabled={loadingReferences || !roles.length || !structures.length} onClick={() => modifierCompte()}>Enregistrer</Button>
+                        </>
+                    )}
+                >
+                    <form id="edit-user-form" onSubmit={modifierCompte} className="stack">
+                        <div className="form-section">
+                            <h3 className="form-section-title"><span className="card-title-icon" aria-hidden="true">1</span>Identité</h3>
+                            <div className="form-grid" style={{ ['--cols' as string]: 3 }}>
+                                <FormField label="Nom complet" required className="span-2"><input className="inp" value={editForm.nom ?? ''} onChange={edit('nom')} /></FormField>
+                                <FormField label="Initiales" required><input className="inp" value={editForm.initiales ?? ''} onChange={edit('initiales')} /></FormField>
+                                <FormField label="E-mail" required className="span-2"><input className="inp" type="email" value={editForm.email ?? ''} onChange={edit('email')} /></FormField>
+                                <FormField label="Matricule" optional><input className="inp mono" value={editForm.matricule ?? ''} onChange={edit('matricule')} /></FormField>
+                                <FormField label="Téléphone" optional><input className="inp" value={editForm.telephone ?? ''} onChange={edit('telephone')} /></FormField>
+                            </div>
+                        </div>
+                        <div className="form-section">
+                            <h3 className="form-section-title"><span className="card-title-icon" aria-hidden="true">2</span>Rattachement et rôle</h3>
+                            <div className="form-grid">
+                                <FormField label="Fonction" required className="span-all"><input className="inp" value={editForm.fonction ?? ''} onChange={edit('fonction')} /></FormField>
+                                <FormField label="Structure" required>
+                                    <select className="inp" value={editForm.organization_unit_id ?? ''} onChange={edit('organization_unit_id')} disabled={loadingReferences || !structures.length}>
+                                        <option value="">Choisir une structure</option>
+                                        {structures.map((structure) => <option key={structure.id} value={structure.id}>{structure.label}</option>)}
+                                    </select>
+                                </FormField>
+                                <FormField label="Rôle principal" required>
+                                    <select className="inp" value={editForm.role ?? ''} onChange={edit('role')} disabled={loadingReferences || !roles.length}>
+                                        <option value="">Choisir un rôle</option>
+                                        {roles.map((role) => <option key={role.id} value={role.code}>{role.label}</option>)}
+                                    </select>
+                                </FormField>
+                            </div>
+                        </div>
+                        <div className="form-section">
+                            <h3 className="form-section-title"><span className="card-title-icon" aria-hidden="true">3</span>Sécurité</h3>
+                            <FormField label="Exiger l’authentification forte (MFA)">
+                                <input type="checkbox" checked={!!editForm.mfa_required} onChange={(event) => setEditForm({ ...editForm, mfa_required: event.target.checked })} />
+                            </FormField>
+                        </div>
+                    </form>
+                    <ErrorMessage error={error} title="Modification refusée" />
                 </Modal>
             )}
 

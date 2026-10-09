@@ -111,6 +111,25 @@ class AdminController extends Controller
         return response()->json(['data' => $this->userPayload($user)], 201);
     }
 
+    public function updateUser(Request $request, User $user): JsonResponse
+    {
+        AdminGate::authorize($request, 'habilitations');
+        $data = $request->validate([
+            'nom' => ['required', 'string', 'max:80'],
+            'email' => ['required', 'email', 'unique:users,email,'.$user->id],
+            'matricule' => ['nullable', 'string', 'max:32', 'unique:users,matricule,'.$user->id],
+            'telephone' => ['nullable', 'string', 'max:32'],
+            'organization_unit_id' => ['required', 'integer', 'exists:organization_units,id'],
+            'fonction' => ['required', 'string', 'max:120'],
+            'role' => ['required', 'string', 'exists:roles,code,active,1'],
+            'initiales' => ['required', 'string', 'max:8'],
+            'mfa_required' => ['sometimes', 'boolean'],
+        ]);
+        $user = $this->administration->updateUser($request->user(), $user, $data);
+
+        return response()->json(['data' => $this->userPayload($user->load('organizationUnit', 'roles'))]);
+    }
+
     public function deactivate(Request $request, User $user): JsonResponse
     {
         AdminGate::authorize($request, 'habilitations');
@@ -588,6 +607,8 @@ class AdminController extends Controller
                 'ip' => $row->ip,
                 'vue_le' => $row->last_seen?->toDateTimeString(),
                 'revoquee_le' => $row->revoked_at?->toDateTimeString(),
+                // Sans activité depuis la durée de session, la session n’ouvre plus rien : elle est expirée.
+                'expiree' => $row->revoked_at === null && ($row->last_seen === null || $row->last_seen->lt(now()->subMinutes((int) config('session.lifetime')))),
             ]),
         ]);
     }
@@ -675,8 +696,10 @@ class AdminController extends Controller
             'email' => $user->email,
             'matricule' => $user->matricule,
             'telephone' => $user->phone,
+            'initiales' => $user->initials,
             'fonction' => $user->function_title,
             'role' => $user->role,
+            'organization_unit_id' => $user->organization_unit_id,
             'roles' => $user->relationLoaded('roles') ? $user->roles->pluck('code') : [],
             'structure' => $user->organizationUnit?->structureLabel(),
             'statut' => $user->account_status,

@@ -10,7 +10,30 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Indicator extends Model
 {
-    protected $guarded = [];
+    /** Colonnes assignables : liste explicite, jamais d’affectation massive ouverte. */
+    protected $fillable = [
+        'pap_enrichment_id',
+        'code',
+        'label',
+        'description',
+        'type',
+        'gar_level',
+        'unit',
+        'direction',
+        'aggregation',
+        'formula_version',
+        'baseline_value',
+        'baseline_on',
+        'source',
+        'responsible_role',
+        'status',
+        'weight',
+        'formula',
+        'frequency',
+        'numerator_label',
+        'denominator_label',
+        'responsible_user_id',
+    ];
 
     protected function casts(): array
     {

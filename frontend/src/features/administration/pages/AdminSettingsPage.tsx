@@ -15,10 +15,12 @@ import {
     PageHeader,
     PageSkeleton,
     SectionCard,
+    Modal,
     Tabs,
+    useDialogs,
     useToast,
 } from '../../../components/ui';
-import { errorsOf } from '../../../utils/format';
+import { dateHeure, errorsOf } from '../../../utils/format';
 
 const PANELS = [
     { value: 'parametres', label: 'Paramètres', icon: faSliders },
@@ -27,6 +29,7 @@ const PANELS = [
     { value: 'referentiels', label: 'Référentiels', icon: faListUl },
     { value: 'numerotation', label: 'Numérotation', icon: faHashtag },
     { value: 'securite', label: 'Sécurité', icon: faShieldHalved },
+    { value: 'sessions', label: 'Sessions', icon: ICON.users },
     { value: 'integrations', label: 'Intégrations', icon: faPlug },
     { value: 'audit', label: 'Journal d’audit', icon: ICON.history },
 ];
@@ -39,8 +42,110 @@ export default function AdminSettings() {
     const [thresholds, setThresholds] = useState<any[]>([]);
     const [integrations, setIntegrations] = useState<any[]>([]);
     const [audit, setAudit] = useState<any[]>([]);
+    const [sessions, setSessions] = useState<any[] | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const { prompt } = useDialogs();
+    const [etapes, setEtapes] = useState<{ version: any; workflow: any; steps: { code: string; label: string; actor_role: string }[] } | null>(null);
+
+    function recharger() {
+        return Promise.all([api.get('/admin/parametres'), api.get('/admin/workflows')]).then(([settingsResponse, workflowsResponse]) => {
+            setSettings(settingsResponse.data);
+            setWorkflows(workflowsResponse.data.data);
+        });
+    }
+
+    /** Exécute une action d’administration, puis relit le paramétrage (aucune mise à jour optimiste). */
+    async function agir(request: () => Promise<unknown>, succes: string) {
+        setError('');
+        try {
+            await request();
+            await recharger();
+            toast.success(succes);
+            return true;
+        } catch (caught) {
+            setError(errorsOf(caught));
+            toast.error(errorsOf(caught));
+            return false;
+        }
+    }
+
+    async function modifierParametre(row: any) {
+        const values = await prompt({
+            title: `Modifier ${row.key}`,
+            description: row.critical ? 'Paramètre critique : le motif est obligatoire et la modification est tracée.' : 'La modification est tracée au journal d’audit.',
+            confirmLabel: 'Enregistrer',
+            tone: row.critical ? 'warning' : 'default',
+            fields: [
+                { name: 'value', label: 'Valeur', required: true, defaultValue: String(row.value ?? '') },
+                { name: 'motif', label: 'Motif', type: 'textarea', required: Boolean(row.critical) },
+            ],
+        });
+        if (values) {
+            agir(() => api.put(`/admin/parametres/${encodeURIComponent(row.key)}`, values), 'Paramètre enregistré.');
+        }
+    }
+
+    async function rouvrirExercice(row: any) {
+        const values = await prompt({
+            title: `Rouvrir l’exercice ${row.annee}`,
+            description: 'La réouverture permet de nouveau des écritures sur un exercice clos. Elle est tracée et exige un motif.',
+            confirmLabel: 'Rouvrir',
+            tone: 'danger',
+            fields: [{ name: 'motif', label: 'Motif', type: 'textarea', required: true }],
+        });
+        if (values) {
+            agir(() => api.post(`/admin/exercices/${row.id}/rouvrir`, values), `Exercice ${row.annee} rouvert.`);
+        }
+    }
+
+    async function avancerSequence(row: any) {
+        const values = await prompt({
+            title: `Séquence ${row.code}`,
+            description: 'Une séquence ne recule jamais : un numéro déjà attribué ne peut pas être réutilisé.',
+            confirmLabel: 'Enregistrer',
+            fields: [{ name: 'last_value', label: 'Dernier numéro attribué', type: 'number', required: true, defaultValue: String(row.last_value) }],
+        });
+        if (values) {
+            agir(() => api.patch(`/admin/numerotation/${row.id}`, { last_value: Number(values.last_value) }), 'Séquence mise à jour.');
+        }
+    }
+
+    function chargerSessions() {
+        api.get('/admin/sessions').then((response) => setSessions(response.data.data ?? [])).catch((caught) => setError(errorsOf(caught)));
+    }
+
+    useEffect(() => {
+        if (panel === 'sessions' && sessions === null) {
+            chargerSessions();
+        }
+    }, [panel]);
+
+    async function revoquerSession(row: any) {
+        setError('');
+        try {
+            await api.post(`/admin/sessions/${row.id}/revoquer`);
+            toast.success(`Session de ${row.utilisateur ?? 'l’utilisateur'} révoquée.`);
+            chargerSessions();
+        } catch (caught) {
+            setError(errorsOf(caught));
+        }
+    }
+
+    function editerEtapes(workflow: any, version: any) {
+        setEtapes({
+            workflow,
+            version,
+            steps: (version.steps ?? []).map((step: any) => ({ code: step.code ?? '', label: step.label ?? '', actor_role: step.actor_role ?? '' })),
+        });
+    }
+
+    async function enregistrerEtapes(event: FormEvent) {
+        event.preventDefault();
+        if (!etapes) return;
+        const ok = await agir(() => api.put(`/admin/workflows/versions/${etapes.version.id}`, { steps: etapes.steps }), 'Étapes du brouillon enregistrées.');
+        if (ok) setEtapes(null);
+    }
 
     useEffect(() => {
         Promise.all([
@@ -103,6 +208,7 @@ export default function AdminSettings() {
                                     { key: 'key', header: 'Clé', className: 'mono', render: (row: any) => row.key },
                                     { key: 'value', header: 'Valeur', render: (row: any) => row.value },
                                     { key: 'critical', header: 'Sensibilité', render: (row: any) => row.critical ? <Badge tone="danger" icon={ICON.lock} size="sm">Critique</Badge> : <span className="subtle">—</span> },
+                                    { key: 'actions', header: 'Actions', srHeader: true, align: 'right', render: (row: any) => <Button size="sm" icon={ICON.edit} onClick={() => modifierParametre(row)}>Modifier</Button> },
                                 ]}
                                 rows={settings.data}
                                 rowKey={(row: any) => row.key}
@@ -113,7 +219,11 @@ export default function AdminSettings() {
                         <SectionCard title="Exercices" icon={faCalendarDays}>
                             <ul className="list-rows">
                                 {settings.exercices.map((row) => (
-                                    <li key={row.annee} className="list-row"><span className="list-row-main mono strong">{row.annee}</span><Badge tone="neutral" size="sm">{row.statut}</Badge></li>
+                                    <li key={row.annee} className="list-row">
+                                        <span className="list-row-main mono strong">{row.annee}</span>
+                                        <Badge tone="neutral" size="sm">{row.statut}</Badge>
+                                        {row.statut === 'clos' && <Button size="sm" variant="danger-outline" onClick={() => rouvrirExercice(row)}>Rouvrir</Button>}
+                                    </li>
                                 ))}
                             </ul>
                         </SectionCard>
@@ -134,12 +244,23 @@ export default function AdminSettings() {
                 <div className="stack">
                     {workflows.length === 0 && <div className="card"><EmptyState icon={faCodeBranch} title="Aucun workflow" /></div>}
                     {workflows.map((workflow) => (
-                        <SectionCard key={workflow.id} title={workflow.label} icon={faCodeBranch}>
+                        <SectionCard
+                            key={workflow.id}
+                            title={workflow.label}
+                            icon={faCodeBranch}
+                            actions={(() => {
+                                const brouillon = (workflow.versions ?? []).find((version: any) => version.status === 'brouillon');
+                                return brouillon
+                                    ? <Button size="sm" variant="primary" icon={ICON.check} onClick={() => agir(() => api.post(`/admin/workflows/${workflow.id}/publier`), `Workflow ${workflow.label} publié.`)}>Publier le brouillon</Button>
+                                    : <Button size="sm" icon={ICON.create} onClick={() => agir(() => api.post(`/admin/workflows/${workflow.id}/versions`), 'Nouvelle version en brouillon.')}>Nouvelle version</Button>;
+                            })()}
+                        >
                             {(workflow.versions ?? []).map((version) => (
                                 <div key={version.id} className="stack-sm" style={{ paddingBottom: 10, borderBottom: '1px solid var(--color-divider)' }}>
                                     <div className="cluster">
                                         <Badge tone="brand" size="sm">v{version.version}</Badge>
                                         <Badge tone={version.status === 'publie' || version.status === 'actif' ? 'success' : 'neutral'} size="sm" dot>{version.status}</Badge>
+                                        {version.status === 'brouillon' && <Button size="sm" icon={ICON.edit} onClick={() => editerEtapes(workflow, version)}>Modifier les étapes</Button>}
                                     </div>
                                     <div className="cluster" style={{ gap: 4 }}>
                                         {(version.steps ?? []).map((step, index) => (
@@ -154,6 +275,30 @@ export default function AdminSettings() {
                         </SectionCard>
                     ))}
                 </div>
+            )}
+
+            {etapes && (
+                <Modal
+                    title={`${etapes.workflow.label} · brouillon v${etapes.version.version}`}
+                    icon={faCodeBranch}
+                    onClose={() => setEtapes(null)}
+                    footer={<><Button onClick={() => setEtapes(null)}>Annuler</Button><Button variant="primary" type="submit" form="etapes-form" icon={ICON.save}>Enregistrer les étapes</Button></>}
+                >
+                    <form id="etapes-form" className="stack" onSubmit={enregistrerEtapes}>
+                        {etapes.steps.map((step, index) => (
+                            <div key={index} className="form-grid" style={{ alignItems: 'end' }}>
+                                <FormField label={`Code de l’étape ${index + 1}`} required><input className="inp mono" required value={step.code} onChange={(event) => setEtapes({ ...etapes, steps: etapes.steps.map((row, i) => i === index ? { ...row, code: event.target.value } : row) })} /></FormField>
+                                <FormField label="Rôle de l’acteur"><input className="inp mono" value={step.actor_role} onChange={(event) => setEtapes({ ...etapes, steps: etapes.steps.map((row, i) => i === index ? { ...row, actor_role: event.target.value } : row) })} /></FormField>
+                                <FormField label="Libellé" required className="span-all"><input className="inp" required value={step.label} onChange={(event) => setEtapes({ ...etapes, steps: etapes.steps.map((row, i) => i === index ? { ...row, label: event.target.value } : row) })} /></FormField>
+                                <div className="cluster span-all">
+                                    <Button size="sm" disabled={index === 0} onClick={() => setEtapes({ ...etapes, steps: etapes.steps.map((row, i) => (i === index - 1 ? etapes.steps[index] : i === index ? etapes.steps[index - 1] : row)) })}>Monter</Button>
+                                    <Button size="sm" variant="danger-outline" disabled={etapes.steps.length === 1} onClick={() => setEtapes({ ...etapes, steps: etapes.steps.filter((_, i) => i !== index) })}>Retirer</Button>
+                                </div>
+                            </div>
+                        ))}
+                        <div><Button size="sm" icon={ICON.create} onClick={() => setEtapes({ ...etapes, steps: [...etapes.steps, { code: '', label: '', actor_role: '' }] })}>Ajouter une étape</Button></div>
+                    </form>
+                </Modal>
             )}
 
             {panel === 'seuils' && (
@@ -211,9 +356,28 @@ export default function AdminSettings() {
                             { key: 'code', header: 'Séquence', render: (row: any) => row.code },
                             { key: 'format', header: 'Format', render: (row: any) => <span className="mono strong">{row.prefix}{row.separator}{row.exercise_year}{row.separator}{'0'.repeat(row.padding)}</span> },
                             { key: 'last', header: 'Dernier numéro', align: 'right', className: 'mono', render: (row: any) => row.last_value },
+                            { key: 'actions', header: 'Actions', srHeader: true, align: 'right', render: (row: any) => <Button size="sm" icon={ICON.edit} onClick={() => avancerSequence(row)}>Ajuster</Button> },
                         ]}
                         rows={settings.sequences}
                         rowKey={(row: any) => row.code}
+                    />
+                </SectionCard>
+            )}
+
+            {panel === 'sessions' && (
+                <SectionCard title="Sessions des utilisateurs" icon={ICON.users} subtitle="Une session révoquée est refusée dès la requête suivante." flush>
+                    <DataTable
+                        columns={[
+                            { key: 'utilisateur', header: 'Utilisateur', render: (row: any) => row.utilisateur ?? '—' },
+                            { key: 'ip', header: 'Adresse IP', className: 'mono', render: (row: any) => row.ip ?? '—' },
+                            { key: 'vue', header: 'Dernière activité', render: (row: any) => dateHeure(row.vue_le) },
+                            { key: 'statut', header: 'Statut', render: (row: any) => row.revoquee_le ? <Badge tone="neutral" size="sm">Révoquée le {dateHeure(row.revoquee_le)}</Badge> : row.expiree ? <Badge tone="neutral" size="sm">Expirée</Badge> : <Badge tone="success" size="sm" dot>Active</Badge> },
+                            { key: 'actions', header: 'Actions', srHeader: true, align: 'right', render: (row: any) => !row.revoquee_le && !row.expiree && <Button size="sm" variant="danger-outline" onClick={() => revoquerSession(row)}>Révoquer</Button> },
+                        ]}
+                        rows={sessions ?? []}
+                        rowKey={(row: any) => row.id}
+                        loading={sessions === null}
+                        empty={<EmptyState icon={ICON.users} title="Aucune session" compact />}
                     />
                 </SectionCard>
             )}
@@ -225,7 +389,7 @@ export default function AdminSettings() {
                         { label: 'Échecs avant verrouillage', value: settings.securite?.max_failures, mono: true },
                         { label: 'Durée du verrouillage', value: settings.securite?.lock_minutes !== undefined ? `${settings.securite.lock_minutes} min` : null, mono: true },
                     ]} />
-                    <p className="subtle">MFA exigée pour les profils sensibles configurés. L’authentification de démonstration reste l’en-tête d’acteur.</p>
+                    <p className="subtle">Authentification par session sécurisée (Sanctum) ; MFA exigée pour les profils sensibles configurés. Le changement d’acteur de démonstration n’est jamais actif en production.</p>
                 </SectionCard>
             )}
 

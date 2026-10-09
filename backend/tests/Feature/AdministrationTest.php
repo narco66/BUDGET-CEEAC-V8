@@ -75,7 +75,7 @@ class AdministrationTest extends TestCase
             ->putJson('/api/v1/admin/utilisateurs/'.$compte->id.'/perimetre', ['unites' => []])
             ->assertOk()
             ->assertJsonPath('data.perimetre', []);
-        $this->assertNull($compte->fresh()->organizationScopeIds());
+        $this->assertSame([$unite], $compte->fresh()->organizationScopeIds());
     }
 
     public function test_le_formulaire_utilisateur_peut_charger_les_roles_et_structures_actifs(): void

@@ -136,6 +136,13 @@ class AuditService
                 'refus' => $this->visibles($lecteur)->where('result', 'refus')->count(),
                 'echecs' => $this->visibles($lecteur)->where('result', 'echec')->count(),
             ],
+            'gels' => AuditHold::query()->whereNull('lifted_at')->latest('id')->get()->map(fn (AuditHold $gel): array => [
+                'id' => $gel->id,
+                'portee' => $gel->scope,
+                'objet' => $gel->object_type ? $gel->object_type.' '.$gel->object_id : null,
+                'motif' => $gel->motif,
+                'depuis' => $gel->created_at?->toDateTimeString(),
+            ])->all(),
         ];
     }
 
@@ -260,17 +267,52 @@ class AuditService
     }
 
     /**
+     * Journaux de module de la chaîne de dépense et objet métier qu’ils tracent.
+     *
+     * @var array<string, array{colonne: string, type: string}>
+     */
+    private const JOURNAUX_CHAINE = [
+        'eb_events' => ['colonne' => 'expression_besoin_id', 'type' => 'expression_besoin'],
+        'eng_events' => ['colonne' => 'engagement_id', 'type' => 'engagement'],
+        'liq_events' => ['colonne' => 'liquidation_id', 'type' => 'liquidation'],
+        'ord_events' => ['colonne' => 'ordonnancement_id', 'type' => 'ordonnancement'],
+        'pay_events' => ['colonne' => 'paiement_id', 'type' => 'paiement'],
+    ];
+
+    /**
+     * Recopie au journal central un événement que le workflow vient d’écrire
+     * dans le journal de son module (appelé par MirroredInAuditJournal).
+     */
+    public function refleterEvenementChaine(Model $event): void
+    {
+        $table = $event->getTable();
+        $carte = self::JOURNAUX_CHAINE[$table] ?? null;
+        if ($carte === null) {
+            return;
+        }
+        $acteur = $event->getAttribute('actor_id') ? User::query()->find($event->getAttribute('actor_id')) : null;
+        $avant = $event->getAttribute('from_status');
+        $apres = $event->getAttribute('to_status');
+
+        $this->enregistrer(
+            $acteur,
+            Str::limit($carte['type'].'.'.$event->getAttribute('action'), 64, ''),
+            $carte['type'],
+            (string) $event->getAttribute($carte['colonne']),
+            $avant !== null ? ['statut' => $avant] : null,
+            $apres !== null ? ['statut' => $apres] : null,
+            $event->getAttribute('motif') ?? $event->getAttribute('observations'),
+            sourceTable: $table,
+            sourceId: (int) $event->getKey(),
+        );
+    }
+
+    /**
      * @return array{repris: int, ignores: int}
      */
     public function reprendreHistoriques(): array
     {
-        $cartes = [
-            'eb_events' => ['colonne' => 'expression_besoin_id', 'type' => 'expression_besoin'],
-            'eng_events' => ['colonne' => 'engagement_id', 'type' => 'engagement'],
-            'liq_events' => ['colonne' => 'liquidation_id', 'type' => 'liquidation'],
-            'ord_events' => ['colonne' => 'ordonnancement_id', 'type' => 'ordonnancement'],
-            'pay_events' => ['colonne' => 'paiement_id', 'type' => 'paiement'],
-        ];
+        $cartes = self::JOURNAUX_CHAINE;
         $repris = 0;
         $ignores = 0;
         foreach ($cartes as $table => $carte) {
@@ -335,7 +377,9 @@ class AuditService
 
     private function voitSensible(User $lecteur): bool
     {
-        return $lecteur->role === 'auditeur' || $lecteur->role === 'administrateur_habilitations';
+        return $lecteur->holds('super_admin')
+            || $lecteur->role === 'auditeur'
+            || $lecteur->role === 'administrateur_habilitations';
     }
 
     private function masquer(User $lecteur, AuditEvent $event): bool

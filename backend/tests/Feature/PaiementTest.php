@@ -100,6 +100,58 @@ class PaiementTest extends TestCase
             ->assertJsonPath('data.statut', 'cloture');
     }
 
+    /**
+     * Scénario du cahier d’audit : un ordre réglé en trois tranches (3/10, 2/10,
+     * 5/10), cumul et reste tenus à jour, dépassement refusé à chaque étape.
+     */
+    public function test_un_ordre_se_paie_en_trois_tranches_sans_jamais_depasser_l_ordonnance(): void
+    {
+        $paiement = $this->autoriser('ORD-2026-000001', 'signer');
+        $comptable = User::query()->where('role', 'comptable')->firstOrFail();
+        $total = (int) $paiement->montant;
+        $tranches = [intdiv($total * 3, 10), intdiv($total * 2, 10)];
+        $tranches[] = $total - array_sum($tranches);
+
+        $cumul = 0;
+        foreach ($tranches as $rang => $montant) {
+            $this->actingAs($comptable)
+                ->post("/api/v1/paiements/{$paiement->id}/executer", [
+                    'montant' => $total - $cumul + 1,
+                    'reference' => 'VIR-DEPASSE-'.$rang,
+                    'date_valeur' => now()->toDateString(),
+                    'preuve' => $this->avisBancaire(),
+                ], ['Accept' => 'application/json'])
+                ->assertStatus(422);
+
+            $cumul += $montant;
+            $reponse = $this->actingAs($comptable)
+                ->post("/api/v1/paiements/{$paiement->id}/executer", [
+                    'montant' => $montant,
+                    'reference' => 'VIR-TRANCHE-'.($rang + 1),
+                    'date_valeur' => now()->toDateString(),
+                    'preuve' => $this->avisBancaire(),
+                ], ['Accept' => 'application/json'])
+                ->assertOk()
+                ->assertJsonPath('data.montant_paye', $cumul)
+                ->assertJsonPath('data.reste', $total - $cumul);
+
+            $reponse->assertJsonPath('data.statut', $cumul < $total ? 'paye_partiel' : 'a_rapprocher');
+            $this->assertCount($rang + 1, $reponse->json('data.executions'));
+        }
+
+        $this->actingAs($comptable)
+            ->post("/api/v1/paiements/{$paiement->id}/executer", [
+                'montant' => 1,
+                'reference' => 'VIR-APRES-SOLDE',
+                'date_valeur' => now()->toDateString(),
+                'preuve' => $this->avisBancaire(),
+            ], ['Accept' => 'application/json'])
+            ->assertStatus(422);
+
+        $this->assertSame($total, (int) $paiement->fresh()->montant_paye);
+        $this->assertSame(3, $paiement->fresh()->executions()->count());
+    }
+
     public function test_le_rejet_bancaire_conserve_l_ordre_signe(): void
     {
         $paiement = $this->autoriser('ORD-2026-000090', 'reprendre');

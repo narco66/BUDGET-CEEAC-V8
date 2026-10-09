@@ -4,6 +4,7 @@ namespace App\Domains\Commitments\Models;
 
 use App\Models\User;
 use App\Shared\Audit\AppendOnly;
+use App\Shared\Audit\MirroredInAuditJournal;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -21,6 +22,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class EngEvent extends Model
 {
     use AppendOnly;
+    use MirroredInAuditJournal;
 
     /**
      * @return array<string, string>

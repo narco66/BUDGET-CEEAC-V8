@@ -223,6 +223,7 @@ class LiquidationController extends Controller
     private function filtered(Request $request)
     {
         $query = Liquidation::query();
+        $request->user()?->restrictOrganizationThrough($query, 'engagement.expressionBesoin');
         if ($status = $request->string('statut')->toString()) {
             $query->where('status', $status);
         }

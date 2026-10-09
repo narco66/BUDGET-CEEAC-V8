@@ -18,7 +18,21 @@ class SeDecision extends Model
 
     protected $table = 'se_decisions';
 
-    protected $guarded = [];
+    /** Colonnes assignables : liste explicite, jamais d’affectation massive ouverte. */
+    protected $fillable = [
+        'reference',
+        'pap_enrichment_id',
+        'performance_report_id',
+        'description',
+        'responsible_label',
+        'due_on',
+        'priority',
+        'status',
+        'decision_note',
+        'decided_by',
+        'decided_at',
+        'created_by',
+    ];
 
     protected function casts(): array
     {

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import api from '../../../api/httpClient';
+import CiblesIndicateur from '../components/CiblesIndicateur';
 import { Alert, Button, ErrorMessage, ICON, PageError, PageHeader, PageSkeleton, useDialogs, useToast } from '../../../components/ui';
 import { Card, CardHead, Icon, PerformancePill, Pill, dayMonth, errorMessage, fmt, pct } from '../components/se';
 
@@ -231,6 +232,7 @@ export default function SaisieIndicateurPage() {
                 </form>
             )}
             {mesure?.motif_retour && <Alert tone="warning" title="Valeur retournée en correction">{mesure.motif_retour}</Alert>}
+            <CiblesIndicateur indicatorId={indicateur.id ?? id} peutCibler={Boolean(indicateur.peut_cibler)} unite={indicateur.unite} />
 
             <section className="card" aria-label="Circuit de validation" style={{ padding: '14px 16px', display: 'flex', flexDirection: 'column', gap: 10 }}>
                 <ol style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', gap: 8, flexWrap: 'wrap' }}>

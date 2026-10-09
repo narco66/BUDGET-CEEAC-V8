@@ -12,7 +12,31 @@ class PhysicalAchievement extends Model
 {
     use ProtectsValidatedValues;
 
-    protected $guarded = [];
+    /** Colonnes assignables : liste explicite, jamais d’affectation massive ouverte. */
+    protected $fillable = [
+        'pap_enrichment_id',
+        'pap_task_id',
+        'monitoring_period_id',
+        'method',
+        'quantity',
+        'planned',
+        'progress_percent',
+        'status',
+        'comment',
+        'difficulties',
+        'exception_motif',
+        'author_id',
+        'validator_id',
+        'submitted_at',
+        'validated_at',
+        'superseded_at',
+        'supersedes_id',
+        'rejection_motif',
+        'responsible_validator_id',
+        'responsible_validated_at',
+        'consolidated_by',
+        'consolidated_at',
+    ];
 
     protected function casts(): array
     {

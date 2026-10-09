@@ -7,7 +7,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class IndicatorTarget extends Model
 {
-    protected $guarded = [];
+    /** Colonnes assignables : liste explicite, jamais d’affectation massive ouverte. */
+    protected $fillable = [
+        'indicator_id',
+        'monitoring_period_id',
+        'value',
+    ];
 
     protected function casts(): array
     {

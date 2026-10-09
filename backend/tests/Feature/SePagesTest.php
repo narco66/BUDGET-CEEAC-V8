@@ -276,6 +276,82 @@ class SePagesTest extends TestCase
         $this->assertSame('2026-01-25', $suivante->fresh()->ends_on->toDateString());
     }
 
+    public function test_un_planning_valide_ne_se_modifie_que_par_la_hierarchie(): void
+    {
+        $tache = $this->activite->tasks()->orderBy('position')->firstOrFail();
+        $tache->update([
+            'starts_on' => '2026-05-01', 'ends_on' => '2026-05-31',
+            'baseline_starts_on' => '2026-05-01', 'baseline_ends_on' => '2026-05-31',
+            'actual_start' => null, 'actual_end' => null,
+        ]);
+
+        // L’acteur constate le réel, mais ne déplace pas un planning validé.
+        $this->actingAs($this->clarisse)
+            ->patchJson("/api/v1/suivi/taches/{$tache->id}", ['ends_on' => '2026-06-30'])
+            ->assertStatus(422)
+            ->assertJsonValidationErrors(['planning']);
+        $this->actingAs($this->clarisse)
+            ->patchJson("/api/v1/suivi/taches/{$tache->id}", ['actual_start' => '2026-05-04'])
+            ->assertOk();
+
+        // La hiérarchie peut corriger directement ; la référence initiale reste intacte.
+        $this->actingAs($this->directeur)
+            ->patchJson("/api/v1/suivi/taches/{$tache->id}", ['starts_on' => '2026-05-01', 'ends_on' => '2026-06-30'])
+            ->assertOk();
+        $tache->refresh();
+        $this->assertSame('2026-06-30', $tache->ends_on->toDateString());
+        $this->assertSame('2026-05-31', $tache->baseline_ends_on->toDateString());
+
+        // Une tâche encore sans référence se planifie par son acteur (planification initiale).
+        $libre = $this->activite->tasks()->orderBy('position')->skip(1)->firstOrFail();
+        $libre->update(['baseline_starts_on' => null, 'baseline_ends_on' => null]);
+        $this->actingAs($this->clarisse)
+            ->patchJson("/api/v1/suivi/taches/{$libre->id}", ['starts_on' => '2026-07-01', 'ends_on' => '2026-07-31'])
+            ->assertOk();
+    }
+
+    public function test_le_gantt_expose_synthese_droits_et_chemin_critique(): void
+    {
+        [$premiere, $suivante] = $this->activite->tasks()->orderBy('position')->take(2)->get()->all();
+        $premiere->update(['starts_on' => '2026-10-01', 'ends_on' => '2026-10-31', 'actual_start' => '2026-10-01', 'actual_end' => null, 'progress_percent' => 40, 'depends_on_id' => null]);
+        $suivante->update(['starts_on' => '2026-11-01', 'ends_on' => '2026-12-31', 'actual_start' => null, 'actual_end' => null, 'depends_on_id' => $premiere->id]);
+
+        $donnees = $this->actingAs($this->clarisse)->getJson("/api/v1/suivi/activites/{$this->activite->id}/gantt?echelle=semaines")
+            ->assertOk()
+            ->assertJsonStructure(['data' => [
+                'origine', 'jours', 'colonnes', 'periodes', 'barre_activite' => ['prevue', 'projetee'],
+                'synthese' => ['avancement', 'taches', 'taches_terminees', 'taches_en_retard', 'jalons', 'jalons_franchis', 'fin_prevue', 'fin_projetee', 'glissement'],
+                'droits' => ['planifier', 'constater', 'proposer', 'valider_revision'],
+            ]])
+            ->assertJsonPath('data.droits.planifier', false)
+            ->json('data');
+
+        $this->assertGreaterThan(0, $donnees['jours']);
+        $taches = collect($donnees['taches'])->keyBy('id');
+        $this->assertTrue($taches[$suivante->id]['critique'], 'La tâche qui finit le plus tard est sur le chemin critique.');
+        $this->assertTrue($taches[$premiere->id]['critique'], 'Sa tâche préalable aussi.');
+        $this->assertSame($premiere->id, $taches[$suivante->id]['depend_de_id']);
+
+        $this->actingAs($this->directeur)->getJson("/api/v1/suivi/activites/{$this->activite->id}/gantt")->assertJsonPath('data.droits.planifier', true);
+    }
+
+    public function test_une_activite_sans_tache_ni_date_renvoie_un_gantt_vide_exploitable(): void
+    {
+        $ligneLibre = BudgetLine::query()->whereDoesntHave('enrichment')->firstOrFail();
+        $vide = PapEnrichment::query()->create([
+            'budget_line_id' => $ligneLibre->id,
+            'activite' => 'Activité sans planification',
+        ]);
+
+        $transverse = User::factory()->create(['role' => 'directeur_budget', 'password' => 'password']);
+        $this->actingAs($transverse)->getJson("/api/v1/suivi/activites/{$vide->id}/gantt")
+            ->assertOk()
+            ->assertJsonPath('data.jours', 0)
+            ->assertJsonPath('data.taches', [])
+            ->assertJsonPath('data.synthese.taches', 0)
+            ->assertJsonPath('data.activite.gar_noeud_id', null);
+    }
+
     public function test_un_jalon_se_franchit_avec_une_preuve(): void
     {
         $jalon = $this->actingAs($this->clarisse)->postJson("/api/v1/suivi/activites/{$this->activite->id}/jalons", ['label' => 'TDR validés', 'planned_on' => '2026-04-15'])->assertCreated()->json('data.id');

@@ -17,6 +17,7 @@ Route::get('/suivi/tableau-de-bord', [MonitoringController::class, 'dashboard'])
 Route::get('/suivi/activites', [MonitoringController::class, 'activities']);
 Route::get('/suivi/activites/{papEnrichment}', [MonitoringController::class, 'activity'])->whereNumber('papEnrichment');
 Route::get('/suivi/gantt', [MonitoringController::class, 'gantt']);
+Route::get('/suivi/gantt/portefeuille', [MonitoringController::class, 'portfolioGantt']);
 Route::get('/suivi/consolidation', [MonitoringController::class, 'consolidate']);
 Route::get('/suivi/periodes', [MonitoringController::class, 'periods']);
 Route::post('/suivi/periodes/{period}/consolider', [MonitoringController::class, 'closePeriod']);

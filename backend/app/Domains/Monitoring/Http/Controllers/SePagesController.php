@@ -101,7 +101,7 @@ class SePagesController extends Controller
         $this->monitoring->assertVisible($request->user(), $papEnrichment);
         $scale = $request->validate(['echelle' => ['nullable', Rule::in(['semaines', 'mois', 'trimestres'])]])['echelle'] ?? 'mois';
 
-        return response()->json(['data' => $gantt->build($papEnrichment, $scale)]);
+        return response()->json(['data' => $gantt->build($papEnrichment, $scale, $request->user())]);
     }
 
     public function proposePlanning(Request $request, PapEnrichment $papEnrichment, ActivityGanttService $gantt): JsonResponse

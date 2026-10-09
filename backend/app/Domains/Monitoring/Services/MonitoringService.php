@@ -213,6 +213,14 @@ class MonitoringService
             ? (int) $data['depends_on_id']
             : null;
         $this->gantt->assertSchedule($task, $dependsOn);
+        // Une fois le planning initial validé (référence posée), les dates prévues et
+        // la dépendance ne changent que par une révision validée ou par la hiérarchie.
+        $replanifie = (array_key_exists('starts_on', $data) && $data['starts_on'] !== $task->starts_on?->toDateString())
+            || (array_key_exists('ends_on', $data) && $data['ends_on'] !== $task->ends_on?->toDateString())
+            || (array_key_exists('depends_on_id', $data) && $dependsOn !== $task->depends_on_id);
+        if ($replanifie && ($task->baseline_starts_on !== null || $task->baseline_ends_on !== null) && ! $user->holds(...ActivityGanttService::PLANNING_VALIDATORS)) {
+            throw ValidationException::withMessages(['planning' => 'Le planning initial est validé : proposez un nouveau planning, il sera soumis à la hiérarchie.']);
+        }
         $previousEnds = $task->ends_on?->copy();
         $previousActual = $task->actual_end?->copy();
         if (! empty($data['starts_on']) && ! empty($data['ends_on']) && $data['ends_on'] < $data['starts_on']) {
@@ -723,10 +731,18 @@ class MonitoringService
             $this->assertVisible($user, PapEnrichment::query()->findOrFail($indicator->pap_enrichment_id));
         }
 
-        return IndicatorTarget::query()->updateOrCreate(
-            ['indicator_id' => $indicator->id, 'monitoring_period_id' => $periodId],
-            ['value' => $value],
-        );
+        // Règle en vigueur : tout acteur qui voit l’activité fixe ses cibles. Chaque
+        // modification est tracée (ancienne et nouvelle valeur).
+        return DB::transaction(function () use ($user, $indicator, $periodId, $value): IndicatorTarget {
+            $avant = IndicatorTarget::query()->where('indicator_id', $indicator->id)->where('monitoring_period_id', $periodId)->value('value');
+            $cible = IndicatorTarget::query()->updateOrCreate(
+                ['indicator_id' => $indicator->id, 'monitoring_period_id' => $periodId],
+                ['value' => $value],
+            );
+            FinancialAudit::record($user, 'suivi.cible', 'indicator', (string) $indicator->id, ['periode' => $periodId, 'cible' => $avant], ['periode' => $periodId, 'cible' => $value]);
+
+            return $cible;
+        });
     }
 
     /**

@@ -15,6 +15,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 #[Fillable([
@@ -35,6 +36,9 @@ use Illuminate\Support\Facades\DB;
 ])]
 class BudgetLine extends Model
 {
+    /** @var Collection<string, int>|null */
+    private ?Collection $totauxMouvementsCache = null;
+
     /**
      * @return array<string, string>
      */
@@ -96,18 +100,43 @@ class BudgetLine extends Model
 
     public function creditAutorise(): int
     {
-        $entrant = (int) $this->movements()->whereIn('kind', ['ouverture', 'report', 'transfert_entrant'])->sum('amount');
-        $sortant = (int) $this->movements()->whereIn('kind', ['annulation', 'transfert_sortant'])->sum('amount');
+        $mouvements = $this->totauxMouvements();
+        $entrant = $mouvements->only(['ouverture', 'report', 'transfert_entrant'])->sum();
+        $sortant = $mouvements->only(['annulation', 'transfert_sortant'])->sum();
 
         return $this->montantActualise() + $entrant - $sortant;
     }
 
     public function montantGele(): int
     {
-        $gel = (int) $this->movements()->where('kind', 'gel')->sum('amount');
-        $degel = (int) $this->movements()->where('kind', 'degel')->sum('amount');
+        $mouvements = $this->totauxMouvements();
 
-        return max(0, $gel - $degel);
+        return max(0, (int) $mouvements->get('gel', 0) - (int) $mouvements->get('degel', 0));
+    }
+
+    /**
+     * Totaux des mouvements de crédit par nature, lus en une requête et gardés
+     * sur l’instance : une liste qui affiche plusieurs dossiers de la même ligne
+     * ne relit pas les mouvements à chaque rangée. Les mouvements ne s’écrivent
+     * que par CreditMovementService, qui contrôle sur une instance verrouillée
+     * et relue (fresh), jamais sur une instance déjà mise en cache.
+     *
+     * @return Collection<string, int>
+     */
+    private function totauxMouvements(): Collection
+    {
+        return $this->totauxMouvementsCache ??= $this->movements()
+            ->groupBy('kind')
+            ->selectRaw('kind, SUM(amount) as total')
+            ->pluck('total', 'kind')
+            ->map(fn ($total): int => (int) $total);
+    }
+
+    public function refresh()
+    {
+        $this->totauxMouvementsCache = null;
+
+        return parent::refresh();
     }
 
     public function montantEngage(): int

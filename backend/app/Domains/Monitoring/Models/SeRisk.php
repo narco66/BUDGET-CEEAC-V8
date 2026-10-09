@@ -8,7 +8,22 @@ class SeRisk extends Model
 {
     protected $table = 'se_risks';
 
-    protected $guarded = [];
+    /** Colonnes assignables : liste explicite, jamais d’affectation massive ouverte. */
+    protected $fillable = [
+        'reference',
+        'pap_enrichment_id',
+        'description',
+        'category',
+        'probability',
+        'impact',
+        'responsible_role',
+        'prevention',
+        'mitigation',
+        'status',
+        'reviewed_on',
+        'last_comment',
+        'closed_at',
+    ];
 
     /**
      * @var list<string>

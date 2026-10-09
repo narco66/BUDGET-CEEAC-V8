@@ -8,7 +8,21 @@ class SeRecommendation extends Model
 {
     protected $table = 'se_recommendations';
 
-    protected $guarded = [];
+    /** Colonnes assignables : liste explicite, jamais d’affectation massive ouverte. */
+    protected $fillable = [
+        'reference',
+        'origin',
+        'description',
+        'responsible_role',
+        'due_on',
+        'priority',
+        'progress',
+        'status',
+        'pap_enrichment_id',
+        'last_comment',
+        'closed_at',
+        'last_reminded_at',
+    ];
 
     /**
      * Statuts de la description S&E §43. « En retard » n’est pas stocké : il

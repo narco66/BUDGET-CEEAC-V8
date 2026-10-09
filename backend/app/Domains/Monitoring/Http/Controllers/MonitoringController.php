@@ -27,6 +27,7 @@ use App\Domains\Monitoring\Services\GanttService;
 use App\Domains\Monitoring\Services\IndicatorAggregationService;
 use App\Domains\Monitoring\Services\IndicatorCalculationService;
 use App\Domains\Monitoring\Services\MonitoringService;
+use App\Domains\Monitoring\Services\PortfolioGanttService;
 use App\Domains\Monitoring\Services\ReferentialService;
 use App\Domains\Monitoring\Services\ReportingService;
 use App\Domains\Monitoring\Services\VarianceDossierService;
@@ -459,6 +460,21 @@ class MonitoringController extends Controller
         return response()->json(['data' => $gantt->timeline($this->monitoring->visible(request()->user())->get())]);
     }
 
+    public function portfolioGantt(Request $request, PortfolioGanttService $portfolio): JsonResponse
+    {
+        $this->authorize('viewAny', Indicator::class);
+        $filters = $request->validate([
+            'annee' => ['nullable', 'integer', 'between:2000,2100'],
+            'periode' => ['nullable', 'regex:/^(annee|S[12]|T[1-4]|M(0[1-9]|1[0-2]))$/'],
+            'unite_id' => ['nullable', 'integer'],
+            'pilier' => ['nullable', 'string', 'max:255'],
+            'etat' => ['nullable', 'in:a_venir,en_cours,en_retard,termine,indicative'],
+            'recherche' => ['nullable', 'string', 'max:120'],
+        ]);
+
+        return response()->json(['data' => $portfolio->build($request->user(), $filters)]);
+    }
+
     public function aggregateIndicators(IndicatorAggregationService $aggregation): JsonResponse
     {
         $this->authorize('viewAny', Indicator::class);
@@ -532,7 +548,7 @@ class MonitoringController extends Controller
             'type' => ['required', 'in:mesure,realisation,mesure_corrective,recommandation,risque'],
             'id' => ['required', 'integer'],
             'category' => ['required', 'string'],
-            'fichier' => ['required', 'file', 'max:10240'],
+            'fichier' => ['required', 'file', 'max:10240', 'extensions:'.implode(',', config('ged.extensions')), 'mimes:'.implode(',', config('ged.extensions'))],
         ]);
         $model = match ($data['type']) {
             'mesure' => IndicatorMeasurement::query()->findOrFail($data['id']),

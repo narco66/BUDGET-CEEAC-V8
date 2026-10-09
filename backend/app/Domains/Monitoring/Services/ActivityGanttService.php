@@ -6,6 +6,7 @@ use App\Domains\Monitoring\Models\SeMilestone;
 use App\Domains\Monitoring\Models\SePlanningRevision;
 use App\Domains\PAP\Models\PapEnrichment;
 use App\Domains\PAP\Models\PapTask;
+use App\Domains\Planning\Models\GarNode;
 use App\Models\User;
 use App\Shared\Audit\FinancialAudit;
 use App\Shared\Support\TransitionLock;
@@ -34,14 +35,21 @@ class ActivityGanttService
     /**
      * @return array<string, mixed>
      */
-    public function build(PapEnrichment $activity, string $scale = 'mois'): array
+    public function build(PapEnrichment $activity, string $scale = 'mois', ?User $user = null): array
     {
         $activity->loadMissing(['tasks', 'milestones', 'budgetLine.exercice']);
-        $tasks = $activity->tasks->keyBy('id');
+        $tasks = $activity->tasks->sortBy('position')->keyBy('id');
         $projected = $this->project($tasks);
         $statuses = collect($this->sheets->tasks($activity))->keyBy('id');
+        $droits = [
+            // Les dates prévues ne changent que par une révision validée ; le réel se constate.
+            'planifier' => (bool) $user?->holds(...self::PLANNING_VALIDATORS),
+            'constater' => $user !== null,
+            'proposer' => $user !== null,
+            'valider_revision' => (bool) $user?->holds(...self::PLANNING_VALIDATORS),
+        ];
 
-        $dates = collect();
+        $dates = collect([$activity->date_debut, $activity->date_fin, $activity->actual_start]);
         foreach ($tasks as $task) {
             $dates->push($task->baseline_starts_on, $task->baseline_ends_on, $task->starts_on, $task->ends_on, $task->actual_start, $task->actual_end, $projected[$task->id]['fin']);
         }
@@ -50,10 +58,29 @@ class ActivityGanttService
         }
         $dates = $dates->filter()->map(fn ($date) => CarbonImmutable::parse($date)->startOfDay());
         if ($dates->isEmpty()) {
-            return ['activite' => $this->header($activity), 'echelle' => $scale, 'colonnes' => [], 'taches' => [], 'jalons' => [], 'impacts' => [], 'retards' => [], 'revisions' => $this->revisions($activity)];
+            return [
+                'activite' => $this->header($activity),
+                'echelle' => $scale,
+                'origine' => null,
+                'jours' => 0,
+                'colonnes' => [],
+                'periodes' => [],
+                'taches' => [],
+                'jalons' => [],
+                'impacts' => [],
+                'retards' => [],
+                'synthese' => $this->synthese($activity, [], null, null),
+                'revisions' => $this->revisions($activity),
+                'droits' => $droits,
+            ];
         }
+        // Une marge d’une unité d’échelle de part et d’autre : aucune barre ne colle au bord.
         $origin = $this->floor($dates->min(), $scale);
         $horizon = $this->ceil($dates->max(), $scale);
+        if (today()->lt($origin) || today()->gt($horizon)) {
+            $origin = $this->floor(collect([$origin, CarbonImmutable::today()])->min(), $scale);
+            $horizon = $this->ceil(collect([$horizon, CarbonImmutable::today()])->max(), $scale);
+        }
         $span = max(1, $origin->diffInDays($horizon));
         $position = fn ($date) => $date === null ? null : round(max(0, $origin->diffInDays(CarbonImmutable::parse($date)->startOfDay())) / $span * 100, 2);
         $segment = function ($start, $end) use ($position) {
@@ -66,7 +93,8 @@ class ActivityGanttService
         };
 
         $codes = $tasks->mapWithKeys(fn (PapTask $task) => [$task->id => $task->code ?: 'T'.$task->position]);
-        $rows = $tasks->values()->map(function (PapTask $task) use ($segment, $projected, $statuses, $codes) {
+        $critiques = $this->criticalPath($tasks, $projected);
+        $rows = $tasks->values()->map(function (PapTask $task) use ($segment, $projected, $statuses, $codes, $critiques) {
             $projection = $projected[$task->id];
             $realEnd = $task->actual_end ?? ($task->actual_start ? today() : null);
             $finished = $task->actual_end !== null || (float) $task->progress_percent >= 100;
@@ -77,7 +105,13 @@ class ActivityGanttService
                 'libelle' => $task->label,
                 'responsable' => $task->responsible_label,
                 'depend_de' => $task->depends_on_id ? $codes[$task->depends_on_id] ?? null : null,
+                'depend_de_id' => $task->depends_on_id,
                 'type_dependance' => $task->depends_on_id ? 'FD' : null,
+                'critique' => in_array($task->id, $critiques, true),
+                // Référence posée : les dates prévues ne changent plus que par une révision validée.
+                'reference_validee' => $task->baseline_starts_on !== null || $task->baseline_ends_on !== null,
+                'planifiee' => $task->starts_on !== null && $task->ends_on !== null,
+                'poids' => $statuses[$task->id]['poids'] ?? null,
                 'statut' => $statuses[$task->id]['statut'],
                 'avancement' => $task->progress_percent !== null ? (float) $task->progress_percent : null,
                 'initial' => $segment($task->baseline_starts_on ?? $task->starts_on, $task->baseline_ends_on ?? $task->ends_on),
@@ -101,23 +135,89 @@ class ActivityGanttService
         $plannedEnd = $activity->date_fin ? CarbonImmutable::parse($activity->date_fin) : $tasks->pluck('ends_on')->filter()->max();
         $exerciseYear = (int) ($activity->budgetLine?->exercice?->annee ?? today()->year);
 
+        $plannedStart = $activity->date_debut ?? $tasks->pluck('starts_on')->filter()->min();
+        $projectedStart = collect($projected)->pluck('debut')->filter()->min();
+
         return [
             'activite' => $this->header($activity),
             'echelle' => $scale,
+            'origine' => $origin->toDateString(),
+            'jours' => $span,
             'colonnes' => $this->columns($origin, $horizon, $scale, $position),
+            'periodes' => $this->upperColumns($origin, $horizon, $scale, $position),
             'aujourdhui' => today()->between($origin, $horizon) ? $position(today()) : null,
+            'barre_activite' => [
+                'prevue' => $segment($plannedStart, $plannedEnd),
+                'projetee' => $segment($projectedStart ?? $plannedStart, $activityEnd ?? $plannedEnd),
+                'debut' => $plannedStart ? CarbonImmutable::parse($plannedStart)->toDateString() : null,
+                'fin' => $plannedEnd ? CarbonImmutable::parse($plannedEnd)->toDateString() : null,
+            ],
             'taches' => $rows,
-            'jalons' => $activity->milestones->map(fn (SeMilestone $milestone) => [
+            'jalons' => $activity->milestones->sortBy('planned_on')->map(fn (SeMilestone $milestone) => [
                 'id' => $milestone->id,
                 'libelle' => $milestone->label,
                 'date' => ($milestone->achieved_on ?? $milestone->planned_on)?->toDateString(),
+                'prevu_le' => $milestone->planned_on?->toDateString(),
+                'franchi_le' => $milestone->achieved_on?->toDateString(),
+                'preuve' => $milestone->proof_label,
+                'responsable' => $milestone->responsible_label,
+                'tache' => $milestone->pap_task_id ? $codes[$milestone->pap_task_id] ?? null : null,
                 'position' => $position($milestone->achieved_on ?? $milestone->planned_on),
                 'statut' => $milestone->status(),
+                'retard' => $milestone->achieved_on && $milestone->planned_on && $milestone->achieved_on->gt($milestone->planned_on)
+                    ? (int) $milestone->planned_on->diffInDays($milestone->achieved_on)
+                    : ($milestone->achieved_on === null && $milestone->planned_on?->lt(today()) ? (int) $milestone->planned_on->diffInDays(today()) : 0),
             ])->values()->all(),
             'impacts' => $this->impacts($tasks, $projected, $codes, $exerciseYear),
             'retards' => $this->delays($activity, $tasks, $projected, $codes, $activityEnd, $plannedEnd),
             'fin_projetee' => $activityEnd?->toDateString(),
+            'synthese' => $this->synthese($activity, $rows, $activityEnd, $plannedEnd),
             'revisions' => $this->revisions($activity),
+            'droits' => $droits,
+        ];
+    }
+
+    /**
+     * Chemin critique : la chaîne de dépendances qui aboutit à la fin projetée
+     * la plus tardive. Tout retard sur ces tâches retarde l’activité.
+     *
+     * @param  Collection<int, PapTask>  $tasks
+     * @param  array<int, array<string, mixed>>  $projected
+     * @return list<int>
+     */
+    private function criticalPath($tasks, array $projected): array
+    {
+        $dernier = collect($projected)->filter(fn (array $row) => $row['fin'] !== null)->sortByDesc(fn (array $row) => $row['fin']->timestamp)->keys()->first();
+        $chaine = [];
+        while ($dernier !== null && ! in_array($dernier, $chaine, true)) {
+            $chaine[] = (int) $dernier;
+            $dernier = $tasks->get($dernier)?->depends_on_id;
+        }
+
+        return count($chaine) > 1 ? $chaine : [];
+    }
+
+    /**
+     * Indicateurs de tête du Gantt.
+     *
+     * @param  list<array<string, mixed>>  $rows
+     * @return array<string, mixed>
+     */
+    private function synthese(PapEnrichment $activity, array $rows, ?CarbonImmutable $activityEnd, mixed $plannedEnd): array
+    {
+        $milestones = $activity->milestones;
+        $plannedEnd = $plannedEnd ? CarbonImmutable::parse($plannedEnd) : null;
+
+        return [
+            'avancement' => $rows === [] ? null : $this->sheets->weightedTotal($activity),
+            'taches' => count($rows),
+            'taches_terminees' => collect($rows)->filter(fn (array $row) => $row['fin_reelle'] !== null || (float) ($row['avancement'] ?? 0) >= 100)->count(),
+            'taches_en_retard' => collect($rows)->filter(fn (array $row) => $row['retard_fin'] > 0 || ($row['non_demarree'] && $row['retard_demarrage'] > 0))->count(),
+            'jalons' => $milestones->count(),
+            'jalons_franchis' => $milestones->whereNotNull('achieved_on')->count(),
+            'fin_prevue' => $plannedEnd?->toDateString(),
+            'fin_projetee' => $activityEnd?->toDateString(),
+            'glissement' => $activityEnd && $plannedEnd && $activityEnd->gt($plannedEnd) ? (int) $plannedEnd->diffInDays($activityEnd) : 0,
         ];
     }
 
@@ -247,7 +347,35 @@ class ActivityGanttService
             'budget' => $activity->budgetLine ? (int) $this->finances->forLine($activity->budgetLine)['budget_revise'] : null,
             'debut' => $activity->date_debut?->toDateString(),
             'fin' => $activity->date_fin?->toDateString(),
+            'debut_reel' => $activity->actual_start?->toDateString(),
+            'unite_responsable' => $activity->unite_responsable,
+            // Les tâches naissent dans la planification GAR (source unique) : lien vers le nœud de l’activité.
+            'gar_noeud_id' => GarNode::query()->where('pap_enrichment_id', $activity->id)->where('type', 'activite')->orderByDesc('id')->value('id'),
         ];
+    }
+
+    /**
+     * Bandeau supérieur de l’échelle : mois au-dessus des semaines, années
+     * au-dessus des mois et des trimestres.
+     *
+     * @return list<array<string, mixed>>
+     */
+    private function upperColumns(CarbonImmutable $origin, CarbonImmutable $horizon, string $scale, callable $position): array
+    {
+        $columns = [];
+        $cursor = $scale === 'semaines' ? $origin->startOfMonth() : $origin->startOfYear();
+        while ($cursor->lt($horizon)) {
+            $next = $scale === 'semaines' ? $cursor->addMonth() : $cursor->addYear();
+            $debut = $cursor->lt($origin) ? $origin : $cursor;
+            $columns[] = [
+                'libelle' => $scale === 'semaines' ? ucfirst($cursor->locale('fr')->translatedFormat('F Y')) : (string) $cursor->year,
+                'gauche' => $position($debut),
+                'largeur' => round($position(min($next, $horizon)) - $position($debut), 2),
+            ];
+            $cursor = $next;
+        }
+
+        return $columns;
     }
 
     /**

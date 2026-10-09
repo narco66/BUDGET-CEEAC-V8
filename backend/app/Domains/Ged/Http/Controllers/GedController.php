@@ -38,7 +38,7 @@ class GedController
     public function store(Request $request): JsonResponse
     {
         $data = $request->validate([
-            'fichier' => ['required', 'file'],
+            'fichier' => ['required', 'file', 'max:'.config('ged.taille_max_ko')],
             'title' => ['required', 'string', 'max:180'],
             'description' => ['nullable', 'string', 'max:2000'],
             'document_type_id' => ['nullable', 'integer', 'exists:document_types,id'],
@@ -57,7 +57,7 @@ class GedController
     public function version(Request $request, GedDocument $gedDocument): JsonResponse
     {
         $data = $request->validate([
-            'fichier' => ['required', 'file'],
+            'fichier' => ['required', 'file', 'max:'.config('ged.taille_max_ko')],
             'motif' => ['required', 'string', 'max:255'],
         ]);
         $document = $this->ged->nouvelleVersion($request->user(), $gedDocument, $request->file('fichier'), $data);

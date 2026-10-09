@@ -10,6 +10,7 @@ Route::get('/admin/utilisateurs', [AdminController::class, 'users']);
 Route::get('/admin/structures', [AdminController::class, 'structures']);
 Route::post('/admin/utilisateurs', [AdminController::class, 'storeUser']);
 Route::get('/admin/utilisateurs/{user}', [AdminController::class, 'showUser']);
+Route::put('/admin/utilisateurs/{user}', [AdminController::class, 'updateUser']);
 Route::post('/admin/utilisateurs/{user}/desactiver', [AdminController::class, 'deactivate']);
 Route::post('/admin/utilisateurs/{user}/roles', [AdminController::class, 'assignRole']);
 Route::post('/admin/utilisateurs/{user}/roles/retirer', [AdminController::class, 'removeRole']);

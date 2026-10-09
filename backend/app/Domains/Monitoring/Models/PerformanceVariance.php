@@ -9,7 +9,31 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class PerformanceVariance extends Model
 {
-    protected $guarded = [];
+    /** Colonnes assignables : liste explicite, jamais d’affectation massive ouverte. */
+    protected $fillable = [
+        'pap_enrichment_id',
+        'kind',
+        'physical_rate',
+        'financial_rate',
+        'gap',
+        'cause_category',
+        'cause',
+        'consequence',
+        'comment',
+        'responsible_role',
+        'due_on',
+        'status',
+        'reference',
+        'explanation_requested_at',
+        'explanation_received_at',
+        'explanation',
+        'explained_by',
+        'interpretations',
+        'cause_categories',
+        'reminded_at',
+        'escalated_at',
+        'reported_in',
+    ];
 
     protected function casts(): array
     {

@@ -104,7 +104,7 @@ class EngagementController extends Controller
         abort_unless($request->user()->holds('expert_budget'), 403);
         $data = $request->validate([
             'type' => ['required', 'string', 'max:64'],
-            'fichier' => ['required', 'file', 'max:10240'],
+            'fichier' => ['required', 'file', 'max:10240', 'extensions:'.implode(',', config('ged.extensions')), 'mimes:'.implode(',', config('ged.extensions'))],
         ]);
         $this->workflow->joindrePiece($engagement, $request->user(), $data['type'], $request->file('fichier'));
 
@@ -202,6 +202,7 @@ class EngagementController extends Controller
     private function filtered(Request $request)
     {
         $query = Engagement::query();
+        $request->user()?->restrictOrganizationThrough($query, 'expressionBesoin');
         if ($status = $request->string('statut')->toString()) {
             $query->where('status', $status);
         }

@@ -133,6 +133,29 @@ class BudgetBalanceService
     }
 
     /**
+     * Exécution consolidée de la chaîne, avec les formules de forLines() :
+     * c’est la seule source des tableaux de bord ENG, LIQ, ORD et PAI.
+     * Le voté ne compte que les lignes officielles ; les montants de la chaîne
+     * couvrent toutes les lignes imputées.
+     *
+     * @return array{vote: int, revise: int, engage: int, liquide: int, ordonnance: int, paye: int, reste_a_payer: int}
+     */
+    public function execution(): array
+    {
+        $balances = collect($this->forLines(BudgetLine::query()->pluck('id')));
+
+        return [
+            'vote' => (int) BudgetLine::query()->officielle()->sum('montant_vote'),
+            'revise' => (int) $balances->sum('revise'),
+            'engage' => (int) $balances->sum('engage'),
+            'liquide' => (int) $balances->sum('liquide'),
+            'ordonnance' => (int) $balances->sum('ordonnance'),
+            'paye' => (int) $balances->sum('paye'),
+            'reste_a_payer' => (int) $balances->sum('reste_a_payer'),
+        ];
+    }
+
+    /**
      * @return array{initial: int, revise: int, gele: int, reserve: int, engage: int, liquide: int, ordonnance: int, paye: int, disponible: int, reste_a_engager: int, reste_a_liquider: int, reste_a_ordonnancer: int, reste_a_payer: int, taux_engagement: float, taux_liquidation: float, taux_paiement: float}
      */
     public function forLine(BudgetLine $line): array

@@ -15,9 +15,16 @@ class NeedPolicy
         return $user->holdsAny();
     }
 
+    /**
+     * La fiche applique le même périmètre que la liste ; l’initiateur et
+     * l’acteur attendu à l’étape courante y ont toujours accès.
+     */
     public function view(User $user, ExpressionBesoin $eb): bool
     {
-        return $this->viewAny($user);
+        return $this->viewAny($user)
+            && ($user->seesOrganization($eb->organization_unit_id)
+                || $user->id === $eb->initiator_id
+                || $this->workflow->allows($user, $eb));
     }
 
     public function create(User $user): bool

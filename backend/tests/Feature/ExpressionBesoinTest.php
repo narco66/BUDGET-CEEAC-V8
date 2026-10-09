@@ -36,7 +36,7 @@ class ExpressionBesoinTest extends TestCase
             ->getJson('/api/v1/expressions-besoin');
 
         $response->assertOk()
-            ->assertJsonPath('tableau_de_bord.total', 8)
+            ->assertJsonPath('tableau_de_bord.total', 1)
             ->assertJsonFragment(['reference' => 'EB/2026/DATI/000127']);
     }
 
@@ -151,6 +151,13 @@ class ExpressionBesoinTest extends TestCase
         config(['gesbudep.frontend_url' => 'https://budget.ceeac.example']);
         $clarisse = User::query()->where('email', 'clarisse.ndong@ceeac.int')->firstOrFail();
         $eb = ExpressionBesoin::query()->where('status', 'brouillon')->firstOrFail();
+        DB::table('access_scopes')->insert([
+            'user_id' => $clarisse->id,
+            'scope_type' => 'organization_unit',
+            'scope_value' => (string) $eb->organization_unit_id,
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
         $avant = GeneratedDocument::query()->count();
 
         $pdf = $this->actingAs($clarisse)

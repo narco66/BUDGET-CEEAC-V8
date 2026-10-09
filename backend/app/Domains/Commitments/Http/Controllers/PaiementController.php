@@ -2,14 +2,10 @@
 
 namespace App\Domains\Commitments\Http\Controllers;
 
-use App\Domains\Budget\Models\BudgetLine;
-use App\Domains\Commitments\Enums\EngagementStatus;
+use App\Domains\Budget\Services\BudgetBalanceService;
 use App\Domains\Commitments\Enums\PaiementStatus;
 use App\Domains\Commitments\Exports\PaiementsExport;
 use App\Domains\Commitments\Http\Resources\PaiementResource;
-use App\Domains\Commitments\Models\Engagement;
-use App\Domains\Commitments\Models\Liquidation;
-use App\Domains\Commitments\Models\Ordonnancement;
 use App\Domains\Commitments\Models\Paiement;
 use App\Domains\Commitments\Models\PayLot;
 use App\Domains\Commitments\Services\ChainDocumentPublisher;
@@ -330,6 +326,7 @@ class PaiementController extends Controller
     private function filtered(Request $request): Builder
     {
         return Paiement::query()
+            ->tap(fn (Builder $query) => $request->user()?->restrictOrganizationThrough($query, 'ordonnancement.liquidation.engagement.expressionBesoin'))
             ->when($request->string('statut')->toString(), fn (Builder $query, string $status) => $query->where('status', $status))
             ->when($request->string('mode')->toString(), fn (Builder $query, string $mode) => $query->where('mode', $mode))
             ->when($request->string('q')->toString(), function (Builder $query, string $term) {
@@ -355,8 +352,9 @@ class PaiementController extends Controller
         $rows = Paiement::query()->get();
         $ouvert = $rows->reject(fn (Paiement $row) => in_array($row->status, [PaiementStatus::Rejete, PaiementStatus::RejeteBancaire, PaiementStatus::Cloture], true));
         $aPayer = (int) $ouvert->sum(fn (Paiement $row) => $row->reste());
-        $paye = (int) $rows->sum('montant_paye');
-        $ordonnance = (int) Ordonnancement::query()->whereIn('status', ['signe', 'transmission_erreur', 'transforme_paiement'])->sum('montant');
+        $execution = app(BudgetBalanceService::class)->execution();
+        $paye = $execution['paye'];
+        $ordonnance = $execution['ordonnance'];
         $parStatut = fn (PaiementStatus $status) => $rows->where('status', $status)->count();
 
         return [
@@ -368,9 +366,9 @@ class PaiementController extends Controller
             'montant_paye_aujourdhui' => (int) $rows->filter(fn (Paiement $row) => $row->date_valeur?->isToday())->sum('montant_paye'),
             'taux' => $ordonnance > 0 ? round($paye / $ordonnance * 100, 1) : 0,
             'execution' => [
-                'vote' => (int) BudgetLine::query()->officielle()->sum('montant_vote'),
-                'engage' => (int) Engagement::query()->whereNotIn('status', [EngagementStatus::Rejete->value, EngagementStatus::Annule->value])->sum('montant'),
-                'liquide' => (int) Liquidation::query()->whereNotIn('status', ['rejetee', 'annulee'])->sum('montant_net'),
+                'vote' => $execution['vote'],
+                'engage' => $execution['engage'],
+                'liquide' => $execution['liquide'],
                 'ordonnance' => $ordonnance,
                 'paye' => $paye,
             ],

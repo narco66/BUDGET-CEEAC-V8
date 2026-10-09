@@ -71,6 +71,8 @@ class PeriodeBudgetaireService
                 'statut' => $periode->status,
                 'motif' => $periode->motif,
                 'peut_fermer' => $periode->status === 'ouvert' && $periode->ends_on !== null && $periode->ends_on->lt(now()->startOfDay()),
+                // La réouverture revient au Secrétaire général (contrôlée aussi par rouvrir()).
+                'peut_rouvrir' => $periode->status === 'ferme' && (bool) auth()->user()?->holds('secretaire_general'),
             ])
             ->all();
     }

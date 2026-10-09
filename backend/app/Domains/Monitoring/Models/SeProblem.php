@@ -13,7 +13,18 @@ class SeProblem extends Model
 {
     protected $table = 'se_problems';
 
-    protected $guarded = [];
+    /** Colonnes assignables : liste explicite, jamais d’affectation massive ouverte. */
+    protected $fillable = [
+        'reference',
+        'pap_enrichment_id',
+        'performance_variance_id',
+        'se_risk_id',
+        'nature',
+        'impact',
+        'occurred_on',
+        'status',
+        'created_by',
+    ];
 
     protected function casts(): array
     {

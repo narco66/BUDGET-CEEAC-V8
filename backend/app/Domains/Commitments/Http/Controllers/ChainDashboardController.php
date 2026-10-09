@@ -2,6 +2,7 @@
 
 namespace App\Domains\Commitments\Http\Controllers;
 
+use App\Domains\Budget\Services\BudgetBalanceService;
 use App\Domains\Commitments\Models\Engagement;
 use App\Domains\Commitments\Models\Liquidation;
 use App\Domains\Commitments\Models\Ordonnancement;
@@ -23,8 +24,7 @@ class ChainDashboardController extends Controller
                 'ordonnancements' => Ordonnancement::query()->count(),
                 'paiements' => Paiement::query()->count(),
                 'a_rapprocher' => Paiement::query()->where('status', 'a_rapprocher')->count(),
-                'reste_a_payer' => (int) Paiement::query()->whereNotIn('status', ['cloture', 'rejete'])->sum('montant')
-                    - (int) Paiement::query()->whereNotIn('status', ['cloture', 'rejete'])->sum('montant_paye'),
+                'reste_a_payer' => app(BudgetBalanceService::class)->execution()['reste_a_payer'],
                 'pilotage' => $dashboard->build(),
             ],
         ]);

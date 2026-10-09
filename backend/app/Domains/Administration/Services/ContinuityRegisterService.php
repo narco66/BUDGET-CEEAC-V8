@@ -3,10 +3,15 @@
 namespace App\Domains\Administration\Services;
 
 use App\Domains\Budget\Models\BudgetLine;
+use App\Domains\Budget\Services\BudgetBalanceService;
+use App\Domains\Commitments\Enums\EngagementStatus;
+use App\Domains\Commitments\Enums\LiquidationStatus;
+use App\Domains\Commitments\Enums\OrdonnancementStatus;
 use App\Domains\Commitments\Models\Engagement;
 use App\Domains\Commitments\Models\Liquidation;
 use App\Domains\Commitments\Models\Ordonnancement;
 use App\Domains\Commitments\Models\Paiement;
+use App\Domains\Commitments\Models\PaiementExecution;
 use App\Domains\Needs\Models\ExpressionBesoin;
 use App\Domains\Revenues\Models\RevenueForecast;
 use App\Models\User;
@@ -47,6 +52,8 @@ class ContinuityRegisterService
                 'Des lignes absentes de l’import officiel restent en base parce que leurs journaux sont append-only : '.$codes->implode(', ').'. Elles ne sont pas supprimées.',
             );
         }
+
+        $this->controlesFinanciers();
 
         return DB::table('control_findings')->orderBy('code')->get()
             ->map(fn (object $row): array => $this->presenter($row, $user))
@@ -357,6 +364,84 @@ class ContinuityRegisterService
             ->update(['decision' => 'confirme', 'decided_at' => now(), 'updated_at' => now()]);
         if ($updated === 0) {
             throw ValidationException::withMessages(['revue' => 'Aucun accès en attente pour ce compte.']);
+        }
+    }
+
+    /**
+     * Contrôles de cohérence de la chaîne (CDC §39) : chaque maillon reste dans
+     * la limite du précédent. Les montants sont des entiers XAF ; aucun arrondi.
+     * Un constat est seulement inscrit au registre, rien n’est corrigé en silence.
+     */
+    private function controlesFinanciers(): void
+    {
+        $soldes = app(BudgetBalanceService::class)->forLines(BudgetLine::query()->pluck('id'));
+        $lignes = BudgetLine::query()->pluck('code', 'id');
+        foreach ($soldes as $id => $solde) {
+            if ($solde['disponible'] < 0) {
+                $this->constater(
+                    'DISPONIBLE-NEGATIF-'.$lignes[$id],
+                    'budget',
+                    (string) $lignes[$id],
+                    'majeur',
+                    'Les engagements et réservations de la ligne '.$lignes[$id].' dépassent le crédit révisé de '.(-$solde['disponible']).' FCFA.',
+                );
+            }
+        }
+
+        $actives = [LiquidationStatus::Rejetee->value, LiquidationStatus::Annulee->value];
+        Engagement::query()
+            ->whereNotIn('status', [EngagementStatus::Rejete->value, EngagementStatus::Annule->value])
+            ->withSum(['liquidations as liquide' => fn ($query) => $query->whereNotIn('status', $actives)], 'montant_brut')
+            ->get(['id', 'reference', 'montant', 'montant_degage'])
+            ->each(function (Engagement $engagement): void {
+                $plafond = (int) $engagement->montant - (int) $engagement->montant_degage;
+                if ((int) $engagement->liquide > $plafond) {
+                    $this->constater(
+                        'LIQ-SUP-ENG-'.$engagement->reference,
+                        'liquidations',
+                        $engagement->reference,
+                        'majeur',
+                        'Les liquidations actives de '.$engagement->reference.' ('.(int) $engagement->liquide.' FCFA) dépassent l’engagement net ('.$plafond.' FCFA).',
+                    );
+                }
+            });
+
+        Ordonnancement::query()
+            ->whereNotIn('ordonnancements.status', [OrdonnancementStatus::Rejete->value])
+            ->join('liquidations', 'liquidations.id', '=', 'ordonnancements.liquidation_id')
+            ->whereColumn('ordonnancements.montant', '>', 'liquidations.montant_net')
+            ->get(['ordonnancements.reference', 'ordonnancements.montant', 'liquidations.montant_net'])
+            ->each(fn ($ordre) => $this->constater(
+                'ORD-SUP-LIQ-'.$ordre->reference,
+                'ordonnancements',
+                (string) $ordre->reference,
+                'majeur',
+                'L’ordre '.$ordre->reference.' ('.(int) $ordre->montant.' FCFA) dépasse le net liquidé ('.(int) $ordre->montant_net.' FCFA).',
+            ));
+
+        Paiement::query()
+            ->withSum(['executions as execute' => fn ($query) => $query->where('status', '!=', PaiementExecution::REJETEE)], 'montant')
+            ->get(['id', 'reference', 'montant', 'montant_paye'])
+            ->filter(fn (Paiement $paiement) => (int) $paiement->montant_paye > (int) $paiement->montant || (int) $paiement->execute > (int) $paiement->montant)
+            ->each(fn (Paiement $paiement) => $this->constater(
+                'PAY-SUP-ORD-'.$paiement->reference,
+                'paiements',
+                $paiement->reference,
+                'majeur',
+                'Le payé cumulé de '.$paiement->reference.' ('.max((int) $paiement->montant_paye, (int) $paiement->execute).' FCFA) dépasse le montant ordonnancé ('.(int) $paiement->montant.' FCFA).',
+            ));
+
+        foreach (['engagements' => 'montant', 'liquidations' => 'montant_net', 'ordonnancements' => 'montant', 'paiements' => 'montant_paye'] as $table => $colonne) {
+            $negatifs = DB::table($table)->where($colonne, '<', 0)->pluck('reference');
+            if ($negatifs->isNotEmpty()) {
+                $this->constater(
+                    'MONTANT-NEGATIF-'.strtoupper($table),
+                    $table,
+                    $table,
+                    'majeur',
+                    'Montant négatif ('.$colonne.') sur : '.$negatifs->implode(', ').'.',
+                );
+            }
         }
     }
 

@@ -4,6 +4,7 @@ namespace App\Console\Commands;
 
 use App\Domains\Administration\Models\AdminDelegation;
 use App\Domains\Administration\Services\AdministrationService;
+use App\Domains\Budget\Enums\BudgetNature;
 use App\Domains\Budget\Models\BudgetCampaign;
 use App\Domains\Budget\Models\BudgetLine;
 use App\Domains\Budget\Models\BudgetProposal;
@@ -30,6 +31,7 @@ use App\Domains\Needs\Enums\EbStatus;
 use App\Domains\Needs\Models\ExpressionBesoin;
 use App\Domains\Needs\Services\ExpressionBesoinWorkflow;
 use App\Domains\Organization\Models\OrganizationUnit;
+use App\Domains\Organization\Services\WorkflowActorResolver;
 use App\Domains\PAP\Models\PapEnrichment;
 use App\Domains\PAP\Models\PapTask;
 use App\Domains\Planning\Models\GarVersion;
@@ -111,6 +113,7 @@ class JeuEssai extends Command
         $this->preparation();
 
         $this->newLine();
+        $this->call('actes:emettre');
         $this->info('Jeu d’essai terminé. Le budget voté, l’organigramme et l’exercice 2026 n’ont pas été remplacés. 2027 n’est pas adopté.');
 
         return self::SUCCESS;
@@ -235,6 +238,28 @@ class JeuEssai extends Command
         }
     }
 
+    /**
+     * Un besoin hors PAP s’initie au Service des Moyens généraux (règle du
+     * circuit) ; un besoin PAP, par l’initiateur de la structure de la ligne.
+     */
+    private function initiateurPour(BudgetLine $ligne): ?User
+    {
+        if ($ligne->nature === BudgetNature::HorsPap) {
+            $resolver = app(WorkflowActorResolver::class);
+
+            return User::query()
+                ->where('role', 'initiateur')
+                ->orderBy('id')
+                ->get()
+                ->first(fn (User $user): bool => $resolver->rattacheAuSigle($user, 'DSG-DRHMG-SMG'));
+        }
+
+        return User::query()
+            ->where('role', 'initiateur')
+            ->where('organization_unit_id', $ligne->organization_unit_id)
+            ->first();
+    }
+
     private function besoin(string $code, string $objet, int $montant, string $cible, ?User $initiateur = null): ?ExpressionBesoin
     {
         $existant = ExpressionBesoin::query()->where('objet', $objet)->first();
@@ -265,12 +290,9 @@ class JeuEssai extends Command
             return null;
         }
 
-        $auteur = $initiateur ?? User::query()
-            ->where('role', 'initiateur')
-            ->where('organization_unit_id', $ligne->organization_unit_id)
-            ->first();
+        $auteur = $initiateur ?? $this->initiateurPour($ligne);
         if ($auteur === null) {
-            $this->warn('Aucun initiateur sur la structure de la ligne '.$code);
+            $this->warn($ligne->nature === BudgetNature::HorsPap ? 'Aucun initiateur au Service des Moyens généraux (hors PAP), ligne '.$code : 'Aucun initiateur sur la structure de la ligne '.$code);
 
             return null;
         }

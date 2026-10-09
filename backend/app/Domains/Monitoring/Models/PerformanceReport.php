@@ -26,7 +26,25 @@ class PerformanceReport extends Model
         'publier' => ['from' => ['valide'], 'to' => 'publie'],
     ];
 
-    protected $guarded = [];
+    /** Colonnes assignables : liste explicite, jamais d’affectation massive ouverte. */
+    protected $fillable = [
+        'reference',
+        'version',
+        'kind',
+        'title',
+        'monitoring_period_id',
+        'situation_au',
+        'status',
+        'snapshot',
+        'commentaire',
+        'return_motif',
+        'generated_by',
+        'reviewed_by',
+        'validated_by',
+        'validated_at',
+        'published_at',
+        'supersedes_id',
+    ];
 
     protected function casts(): array
     {

@@ -59,6 +59,7 @@ class MeasurementEntryService
                 'responsable_id' => $indicator->responsible_user_id,
                 'responsable' => $indicator->responsible?->name,
                 'peut_designer' => $user->holds('directeur', 'directeur_budget', 'responsable_se', 'administrateur_fonctionnel', 'commissaire', 'secretaire_general'),
+                'peut_cibler' => true,
             ],
             'periode' => $period ? [
                 'id' => $period->id,

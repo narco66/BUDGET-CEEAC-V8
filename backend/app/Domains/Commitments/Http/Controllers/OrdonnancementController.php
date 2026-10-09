@@ -2,17 +2,13 @@
 
 namespace App\Domains\Commitments\Http\Controllers;
 
-use App\Domains\Budget\Models\BudgetLine;
-use App\Domains\Commitments\Enums\EngagementStatus;
+use App\Domains\Budget\Services\BudgetBalanceService;
 use App\Domains\Commitments\Enums\OrdonnancementStatus;
 use App\Domains\Commitments\Exports\OrdonnancementsExport;
 use App\Domains\Commitments\Http\Resources\OrdonnancementResource;
-use App\Domains\Commitments\Models\Engagement;
-use App\Domains\Commitments\Models\Liquidation;
 use App\Domains\Commitments\Models\OrdDelegation;
 use App\Domains\Commitments\Models\Ordonnancement;
 use App\Domains\Commitments\Models\OrdSuppleance;
-use App\Domains\Commitments\Models\Paiement;
 use App\Domains\Commitments\Services\ChainDocumentPublisher;
 use App\Domains\Commitments\Services\OrdonnancementWorkflow;
 use App\Http\Controllers\Controller;
@@ -258,6 +254,7 @@ class OrdonnancementController extends Controller
     private function filtered(Request $request): Builder
     {
         return Ordonnancement::query()
+            ->tap(fn (Builder $query) => $request->user()?->restrictOrganizationThrough($query, 'liquidation.engagement.expressionBesoin'))
             ->when($request->string('statut')->toString(), fn (Builder $query, string $status) => $query->where('status', $status))
             ->when($request->string('q')->toString(), function (Builder $query, string $term) {
                 $query->where(function (Builder $inner) use ($term) {
@@ -291,14 +288,13 @@ class OrdonnancementController extends Controller
     {
         $rows = Ordonnancement::query()->with(['liquidation', 'paiement'])->get();
         $signed = $rows->filter(fn (Ordonnancement $row) => $row->status?->signed() === true);
-        $liquide = (int) Liquidation::query()
-            ->whereNotIn('status', ['rejetee', 'annulee'])
-            ->sum('montant_net');
-        $ordonnance = (int) $signed->sum('montant');
+        $execution = app(BudgetBalanceService::class)->execution();
+        $liquide = $execution['liquide'];
+        $ordonnance = $execution['ordonnance'];
         $signedRoles = $signed->groupBy(fn (Ordonnancement $row) => (string) $row->ordonnateur_role);
-        $vote = (int) BudgetLine::query()->officielle()->sum('montant_vote');
-        $engage = (int) Engagement::query()->whereNotIn('status', [EngagementStatus::Rejete->value, EngagementStatus::Annule->value])->sum('montant');
-        $paye = (int) Paiement::query()->sum('montant');
+        $vote = $execution['vote'];
+        $engage = $execution['engage'];
+        $paye = $execution['paye'];
         $attente = $rows->where('status', OrdonnancementStatus::ASigner);
         $avecVisa = $rows->filter(fn (Ordonnancement $row) => $row->signed_at !== null && $row->liquidation?->vised_at !== null);
         $delaiVisa = $avecVisa->isEmpty() ? null : $avecVisa->avg(fn (Ordonnancement $row) => abs($row->liquidation->vised_at->diffInHours($row->signed_at)) / 24);

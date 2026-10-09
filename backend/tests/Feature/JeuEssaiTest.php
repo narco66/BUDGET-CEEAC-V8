@@ -73,6 +73,8 @@ class JeuEssaiTest extends TestCase
             ['Initiateur DSI', 'dsi.initiateur@ceeac.int', 'initiateur', 'DSG-DSI'],
             ['Directeur DSI', 'dsi.directeur@ceeac.int', 'directeur', 'DSG-DSI'],
             ['Initiateur DRH', 'drh.initiateur@ceeac.int', 'initiateur', 'DSG-DRHMG'],
+            // Les besoins hors PAP s’initient au Service des Moyens généraux.
+            ['Initiateur Moyens généraux', 'dpl.initiateur@ceeac.int', 'initiateur', 'DSG-DRHMG-SMG'],
             ['Directeur DRH', 'drh.directeur@ceeac.int', 'directeur', 'DSG-DRHMG'],
         ];
         foreach ($fiches as [$nom, $email, $role, $sigle]) {

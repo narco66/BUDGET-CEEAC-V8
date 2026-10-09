@@ -8,6 +8,7 @@ use App\Domains\Administration\Models\SystemSetting;
 use App\Domains\Administration\Services\HabilitationCatalogue;
 use App\Domains\Needs\Models\ExpressionBesoin;
 use App\Domains\Organization\Models\OrganizationUnit;
+use App\Domains\Organization\Services\OrganizationScopeService;
 use App\Shared\Auth\Notifications\ReinitialisationMotDePasse;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
@@ -19,6 +20,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Laravel\Sanctum\HasApiTokens;
 
@@ -31,6 +33,20 @@ use Laravel\Sanctum\HasApiTokens;
 #[Hidden(['password', 'remember_token', 'totp_secret'])]
 class User extends Authenticatable
 {
+    /**
+     * Les fonctions officielles du référentiel organisationnel sont reliées à
+     * leur rôle applicatif historique afin qu’un titulaire puisse agir sans
+     * devoir cumuler deux rôles techniques.
+     *
+     * @var array<string, list<string>>
+     */
+    private const ROLE_ALIASES = [
+        'president' => ['president', 'ordonnateur'],
+        'agent_comptable_central' => ['agent_comptable_central', 'agent_comptable'],
+        'auditeur_interne' => ['auditeur_interne', 'auditeur'],
+        'controleur_financier_central' => ['controleur_financier_central', 'controleur_financier'],
+    ];
+
     /** @use HasFactory<UserFactory> */
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -38,6 +54,11 @@ class User extends Authenticatable
     private ?array $heldRoleCodesCache = null;
 
     private ?string $heldRoleStamp = null;
+
+    private ?bool $cataloguePoseCache = null;
+
+    /** @var array<string, Collection<int, mixed>> */
+    private array $niveauxPermissionCache = [];
 
     private bool $organizationScopeResolved = false;
 
@@ -77,7 +98,7 @@ class User extends Authenticatable
             return false;
         }
 
-        $pose = SystemSetting::query()
+        $pose = $this->cataloguePoseCache ??= SystemSetting::query()
             ->where('key', 'habilitations.catalogue_initial')
             ->exists();
         if (! $pose) {
@@ -91,7 +112,9 @@ class User extends Authenticatable
             return false;
         }
 
-        $niveaux = DB::table('role_permission')
+        // Niveaux lus une fois par permission et par requête : une liste qui
+        // évalue la même permission sur chaque rangée ne relit pas la matrice.
+        $niveaux = $this->niveauxPermissionCache[$permission] ??= DB::table('role_permission')
             ->join('roles', 'roles.id', '=', 'role_permission.role_id')
             ->join('permissions', 'permissions.id', '=', 'role_permission.permission_id')
             ->where('permissions.code', $permission)
@@ -128,6 +151,9 @@ class User extends Authenticatable
             return false;
         }
         $held = $this->heldRoleCodes();
+        if (in_array('super_admin', $held, true)) {
+            return true;
+        }
         foreach ($roles as $role) {
             if ($role !== '' && in_array($role, $held, true)) {
                 return true;
@@ -196,7 +222,28 @@ class User extends Authenticatable
             }
         }
 
+        $codes = $this->withAliases($codes);
+
+        if (in_array('super_admin', $codes, true)) {
+            $codes = array_merge($codes, Role::query()->pluck('code')->all());
+        }
+
         return $this->heldRoleCodesCache = array_values(array_unique($codes));
+    }
+
+    /**
+     * @param  list<string>  $codes
+     * @return list<string>
+     */
+    private function withAliases(array $codes): array
+    {
+        foreach ($codes as $code) {
+            foreach (self::ROLE_ALIASES[$code] ?? [] as $alias) {
+                $codes[] = $alias;
+            }
+        }
+
+        return $codes;
     }
 
     /**
@@ -208,29 +255,22 @@ class User extends Authenticatable
             return $this->organizationScopeCache;
         }
         $this->organizationScopeResolved = true;
-        $values = DB::table('access_scopes')
-            ->where('user_id', $this->id)
-            ->where('scope_type', 'organization_unit')
-            ->pluck('scope_value');
-        if ($values->isEmpty()) {
-            return $this->organizationScopeCache = null;
-        }
 
-        return $this->organizationScopeCache = $values
-            ->map(fn (mixed $value): int => (int) $value)
-            ->unique()
-            ->values()
-            ->all();
+        return $this->organizationScopeCache = app(OrganizationScopeService::class)->forUser($this);
     }
 
     public function seesOrganization(?int $unitId): bool
     {
+        if ($unitId === null) {
+            return false;
+        }
+
         $ids = $this->organizationScopeIds();
         if ($ids === null) {
             return true;
         }
 
-        return $unitId !== null && in_array($unitId, $ids, true);
+        return in_array($unitId, $ids, true);
     }
 
     private function rolePrincipalActif(): bool
@@ -258,6 +298,22 @@ class User extends Authenticatable
             return;
         }
         $query->whereIn($column, $ids);
+    }
+
+    /**
+     * Même périmètre que restrictOrganization, appliqué à travers une relation
+     * (ex. « expressionBesoin » pour un engagement) : une liste ne montre que ce
+     * que la fiche accepterait d’ouvrir.
+     *
+     * @param  Builder<*>  $query
+     */
+    public function restrictOrganizationThrough(Builder $query, string $relation, string $column = 'organization_unit_id'): void
+    {
+        $ids = $this->organizationScopeIds();
+        if ($ids === null) {
+            return;
+        }
+        $query->whereHas($relation, fn (Builder $inner) => $inner->whereIn($column, $ids));
     }
 
     /**

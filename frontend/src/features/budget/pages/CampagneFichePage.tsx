@@ -2,7 +2,7 @@ import { FormEvent, useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import api from '../../../api/httpClient';
 import { Button, DataTable, EmptyState, ErrorMessage, FormField, ICON, PageHeader, SectionCard, useDialogs, useToast, type Column } from '../../../components/ui';
-import { errorsOf } from '../../../utils/format';
+import { errorsOf, fcfa } from '../../../utils/format';
 import { PreparationNav, Retard, StatutPrep } from '../preparation/shell';
 
 const ETAPE = { ordre: '1', label: '', description: '', debut: '', echeance: '', acteurs: '', structures: '', prerequis: '', livrables: '' };
@@ -10,12 +10,13 @@ const ETAPE = { ordre: '1', label: '', description: '', debut: '', echeance: '',
 export default function CampagneFichePage() {
     const { id } = useParams();
     const toast = useToast();
-    const { confirm } = useDialogs();
+    const { confirm, prompt } = useDialogs();
     const [fiche, setFiche] = useState<any>(null);
     const [etape, setEtape] = useState(ETAPE);
     const [edition, setEdition] = useState<number | null>(null);
     const [prolongation, setProlongation] = useState('');
     const [version, setVersion] = useState('');
+    const [comparaison, setComparaison] = useState<{ gauche: string; droite: string; resultat: any | null }>({ gauche: '', droite: '', resultat: null });
     const [error, setError] = useState('');
     const [pending, setPending] = useState<string | null>(null);
 
@@ -65,6 +66,11 @@ export default function CampagneFichePage() {
                         {fiche.statut === 'brouillon' && <Button variant="primary" icon={ICON.check} loading={pending === 'ouvrir'} onClick={() => action('ouvrir', () => api.post(`/preparation/campagnes/${id}/ouvrir`), 'Campagne ouverte.')}>Ouvrir la campagne</Button>}
                         {fiche.statut === 'ouverte' && <Button loading={pending === 'suspendre'} onClick={() => action('suspendre', () => api.post(`/preparation/campagnes/${id}/suspendre`), 'Campagne suspendue.')}>Suspendre</Button>}
                         {['ouverte', 'suspendue'].includes(fiche.statut) && <Button loading={pending === 'cloturer'} onClick={() => action('cloturer', () => api.post(`/preparation/campagnes/${id}/cloturer`), 'Campagne clôturée.')}>Clôturer</Button>}
+                        {fiche.statut === 'cloturee' && <Button icon={ICON.archive} loading={pending === 'archiver'} onClick={async () => {
+                            const ok = await confirm({ title: 'Archiver la campagne', description: 'Une campagne archivée n’est plus modifiable ; ses dossiers et versions restent consultables.', confirmLabel: 'Archiver', tone: 'warning', icon: ICON.archive });
+                            if (ok) await action('archiver', () => api.post(`/preparation/campagnes/${id}/archiver`), 'Campagne archivée.');
+                        }}>Archiver</Button>}
+                        <Button icon={ICON.pdf} href={`/api/v1/preparation/campagnes/${id}/export.pdf`} target="_blank" rel="noreferrer">PDF</Button>
                         <Button to={`/preparation/campagnes/${id}/cadrage`} icon={ICON.budget}>Cadrage</Button>
                         <Button to={`/preparation/campagnes/${id}/consolidation`} icon={ICON.report}>Consolidation</Button>
                         <Button icon={ICON.download} loading={pending === 'excel'} onClick={() => action('excel', async () => {
@@ -158,6 +164,10 @@ export default function CampagneFichePage() {
                             <span className="cluster">
                                 {['travail', 'retournee'].includes(row.statut) && <Button size="sm" onClick={() => action(`vs${row.id}`, () => api.post(`/preparation/versions/${row.id}/soumettre`), 'Version soumise.')}>Soumettre</Button>}
                                 {row.statut === 'soumise' && <Button size="sm" onClick={() => action(`vv${row.id}`, () => api.post(`/preparation/versions/${row.id}/valider`), 'Version validée.')}>Valider</Button>}
+                                {row.statut === 'soumise' && <Button size="sm" variant="warning" onClick={async () => {
+                                    const values = await prompt({ title: `Retourner la version ${row.numero ?? ''}`, description: 'La version repasse en travail ; l’auteur reçoit le motif.', confirmLabel: 'Retourner', tone: 'warning', fields: [{ name: 'motif', label: 'Motif du retour', type: 'textarea', required: true }] });
+                                    if (values) await action(`vr${row.id}`, () => api.post(`/preparation/versions/${row.id}/retourner`, values), 'Version retournée.');
+                                }}>Retourner</Button>}
                                 {row.statut === 'validee' && <Button size="sm" variant="primary" onClick={async () => {
                                     const ok = await confirm({ title: 'Adopter cette version', description: 'Les lignes retenues sont transmises au module Budget et l’exercice devient exécutoire.', confirmLabel: 'Adopter', tone: 'danger', icon: ICON.validate });
                                     if (ok) {
@@ -165,6 +175,10 @@ export default function CampagneFichePage() {
                                     }
                                 }}>Adopter</Button>}
                                 {row.statut === 'adoptee' && <Button size="sm" onClick={() => action(`vp${row.id}`, () => api.post(`/preparation/versions/${row.id}/publier`), 'Version publiée.')}>Publier</Button>}
+                                {['travail', 'retournee', 'soumise'].includes(row.statut) && <Button size="sm" variant="danger-outline" onClick={async () => {
+                                    const ok = await confirm({ title: `Archiver la version ${row.numero ?? ''}`, description: 'Une version archivée reste consultable ; elle ne peut plus être soumise.', confirmLabel: 'Archiver', tone: 'warning', icon: ICON.archive });
+                                    if (ok) await action(`var${row.id}`, () => api.post(`/preparation/versions/${row.id}/archiver`), 'Version archivée.');
+                                }}>Archiver</Button>}
                             </span>
                         ) },
                     ] as Column<any>[]}
@@ -173,6 +187,46 @@ export default function CampagneFichePage() {
                     empty={<EmptyState icon={ICON.report} title="Aucune version" compact />}
                 />
             </SectionCard>
+            {(fiche.versions ?? []).length >= 2 && (
+                <SectionCard title="Comparer deux versions" icon={ICON.report} subtitle="Écarts de montant retenu, ligne par ligne.">
+                    <form className="cluster" style={{ alignItems: 'flex-end' }} onSubmit={(event) => {
+                        event.preventDefault();
+                        void action('comparer', async () => {
+                            const response = await api.get('/preparation/versions/comparer', { params: { gauche: comparaison.gauche, droite: comparaison.droite } });
+                            setComparaison((courant) => ({ ...courant, resultat: response.data }));
+                        }, 'Comparaison établie.');
+                    }}>
+                        {(['gauche', 'droite'] as const).map((cote) => (
+                            <FormField key={cote} label={cote === 'gauche' ? 'Version de référence' : 'Version comparée'} required style={{ flex: '1 1 240px' }}>
+                                <select className="inp" required value={comparaison[cote]} onChange={(event) => setComparaison({ ...comparaison, [cote]: event.target.value, resultat: null })}>
+                                    <option value="">Choisir</option>
+                                    {(fiche.versions ?? []).map((row: any) => <option key={row.id} value={row.id}>v{row.numero} · {row.libelle}</option>)}
+                                </select>
+                            </FormField>
+                        ))}
+                        <Button type="submit" icon={ICON.report} loading={pending === 'comparer'} disabled={!comparaison.gauche || !comparaison.droite || comparaison.gauche === comparaison.droite}>Comparer</Button>
+                    </form>
+                    {comparaison.resultat && (
+                        <div className="stack" style={{ marginTop: 12 }}>
+                            <p className="subtle">
+                                Dépenses : {fcfa(comparaison.resultat.gauche.depenses)} → {fcfa(comparaison.resultat.droite.depenses)} FCFA · recettes : {fcfa(comparaison.resultat.gauche.recettes)} → {fcfa(comparaison.resultat.droite.recettes)} FCFA
+                            </p>
+                            <DataTable
+                                columns={[
+                                    { key: 'code', header: 'Ligne', className: 'mono', render: (row: any) => row.code },
+                                    { key: 'avant', header: 'Référence (FCFA)', align: 'right', className: 'cell-amount', render: (row: any) => fcfa(row.avant) },
+                                    { key: 'apres', header: 'Comparée (FCFA)', align: 'right', className: 'cell-amount', render: (row: any) => fcfa(row.apres) },
+                                    { key: 'variation', header: 'Variation', align: 'right', className: 'cell-amount', render: (row: any) => <span className={row.variation < 0 ? 'text-warning' : undefined}>{row.variation > 0 ? '+' : ''}{fcfa(row.variation)}</span> },
+                                ] as Column<any>[]}
+                                rows={comparaison.resultat.ecarts ?? []}
+                                rowKey={(row: any) => row.code}
+                                compact
+                                empty={<EmptyState icon={ICON.success} title="Aucun écart" compact>Les deux versions retiennent les mêmes montants.</EmptyState>}
+                            />
+                        </div>
+                    )}
+                </SectionCard>
+            )}
         </main>
     );
 }

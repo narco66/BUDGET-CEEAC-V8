@@ -9,11 +9,14 @@ class AdminGate
 {
     public static function allows(?User $user, string $ability): bool
     {
+        if ($user?->holds('super_admin') ?? false) {
+            return true;
+        }
+
         $role = $user?->role;
-        $readers = ['administrateur_habilitations', 'administrateur_fonctionnel', 'auditeur'];
 
         return match ($ability) {
-            'consulter' => in_array($role, $readers, true),
+            'consulter' => $user?->holds('administrateur_habilitations', 'administrateur_fonctionnel', 'auditeur') ?? false,
             'habilitations' => $role === 'administrateur_habilitations',
             'parametrage' => $role === 'administrateur_fonctionnel',
             default => false,

@@ -60,6 +60,70 @@ class AdministrationService
         return $user;
     }
 
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    public function updateUser(User $actor, User $user, array $data): User
+    {
+        if ($actor->id === $user->id && (string) $data['role'] !== $user->role) {
+            throw ValidationException::withMessages(['role' => 'Un administrateur ne change pas le rôle principal de son propre compte.']);
+        }
+
+        if ((string) $data['role'] !== $user->role) {
+            $autres = $user->roles()
+                ->where('roles.code', '!=', $user->role)
+                ->wherePivot('status', 'active')
+                ->pluck('code');
+            foreach ($autres as $autre) {
+                $this->assertCompatible((string) $data['role'], (string) $autre);
+            }
+        }
+
+        $avant = [
+            'name' => $user->name,
+            'email' => $user->email,
+            'matricule' => $user->matricule,
+            'phone' => $user->phone,
+            'organization_unit_id' => $user->organization_unit_id,
+            'function_title' => $user->function_title,
+            'role' => $user->role,
+            'initials' => $user->initials,
+            'mfa_required' => $user->mfa_required,
+        ];
+
+        $user->forceFill([
+            'name' => trim($data['nom']),
+            'email' => $data['email'],
+            'matricule' => $data['matricule'] ?? null,
+            'phone' => $data['telephone'] ?? null,
+            'organization_unit_id' => $data['organization_unit_id'],
+            'function_title' => $data['fonction'],
+            'role' => $data['role'],
+            'initials' => $data['initiales'],
+            'mfa_required' => (bool) ($data['mfa_required'] ?? false),
+        ])->save();
+
+        $role = Role::query()->where('code', $data['role'])->first();
+        if ($role !== null) {
+            $user->roles()->syncWithoutDetaching([$role->id]);
+        }
+
+        $apres = [
+            'name' => $user->name,
+            'email' => $user->email,
+            'matricule' => $user->matricule,
+            'phone' => $user->phone,
+            'organization_unit_id' => $user->organization_unit_id,
+            'function_title' => $user->function_title,
+            'role' => $user->role,
+            'initials' => $user->initials,
+            'mfa_required' => $user->mfa_required,
+        ];
+        $this->audit($actor, 'utilisateur.modifier', 'user', (string) $user->id, $avant, $apres);
+
+        return $user->fresh();
+    }
+
     public function deactivate(User $actor, User $user, string $motif): User
     {
         if ($actor->id === $user->id) {

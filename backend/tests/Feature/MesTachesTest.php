@@ -122,7 +122,12 @@ class MesTachesTest extends TestCase
         $before = DB::table('notifications')->count();
         DB::beginTransaction();
         $task->delete();
-        $eb->forceFill(['due_on' => now()->subDay()->toDateString()])->save();
+        // Échéance dépassée, distincte de celle du jeu de démonstration : le test ne dépend pas du jour où il s’exécute.
+        $retard = now()->subDay();
+        if ($eb->due_on !== null && $retard->isSameDay($eb->due_on)) {
+            $retard = $retard->subDay();
+        }
+        $eb->forceFill(['due_on' => $retard->toDateString()])->save();
         $this->assertGreaterThan($before, DB::table('notifications')->count());
         DB::rollBack();
         $this->assertSame($before, DB::table('notifications')->count());

@@ -9,6 +9,8 @@ class DatabaseSeeder extends Seeder
     public function run(): void
     {
         $this->call(AdministrationSeeder::class);
+        $this->call(ReferentielOrganisationRolesSeeder::class);
+        $this->call(CloisonnementSodSeeder::class);
 
         if (app()->environment('production')) {
             return;

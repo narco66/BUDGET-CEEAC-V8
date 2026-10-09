@@ -65,6 +65,7 @@ const TiersPage = lazy(() => import('../../features/suppliers/pages/TiersPage'))
 const Activite360Page = lazy(() => import('../../features/monitoring/pages/Activite360Page'));
 const EcartPage = lazy(() => import('../../features/monitoring/pages/EcartPage'));
 const GanttPage = lazy(() => import('../../features/monitoring/pages/GanttPage'));
+const GanttGlobalPage = lazy(() => import('../../features/monitoring/pages/GanttGlobalPage'));
 const SaisiePage = lazy(() => import('../../features/monitoring/pages/SaisiePage'));
 const SaisieIndicateurPage = lazy(() => import('../../features/monitoring/pages/SaisieIndicateurPage'));
 const SuiviDashboardPage = lazy(() => import('../../features/monitoring/pages/SuiviDashboardPage'));
@@ -172,7 +173,7 @@ export default function AppRouter() {
                     <Route path="/tiers" element={<TiersPage />} />
                     <Route path="/planification" element={<PlanificationPage />} />
                     <Route path="/suivi" element={<SuiviDashboardPage />} />
-                    <Route path="/suivi/gantt" element={<GanttPage />} />
+                    <Route path="/suivi/gantt" element={<GanttGlobalPage />} />
                     <Route path="/suivi/saisie" element={<SaisiePage />} />
                     <Route path="/suivi/ecarts" element={<EcartPage />} />
                     <Route path="/suivi/ecarts/:id" element={<EcartPage />} />

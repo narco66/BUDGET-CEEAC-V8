@@ -8,7 +8,16 @@ class SeReferential extends Model
 {
     protected $table = 'se_referentials';
 
-    protected $guarded = [];
+    /** Colonnes assignables : liste explicite, jamais d’affectation massive ouverte. */
+    protected $fillable = [
+        'kind',
+        'code',
+        'label',
+        'weight',
+        'formula_version',
+        'effective_on',
+        'active',
+    ];
 
     protected function casts(): array
     {

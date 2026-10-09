@@ -14,7 +14,18 @@ class SePlanningRevision extends Model
 {
     protected $table = 'se_planning_revisions';
 
-    protected $guarded = [];
+    /** Colonnes assignables : liste explicite, jamais d’affectation massive ouverte. */
+    protected $fillable = [
+        'pap_enrichment_id',
+        'version',
+        'status',
+        'motif',
+        'tasks',
+        'proposed_by',
+        'decided_by',
+        'decided_at',
+        'decision_motif',
+    ];
 
     protected function casts(): array
     {

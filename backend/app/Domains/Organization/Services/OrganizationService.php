@@ -164,10 +164,16 @@ class OrganizationService
     public function codeFonctionDuRole(string $role): ?string
     {
         return match ($role) {
-            'directeur', 'directeur_budget' => 'directeur',
+            'president' => 'president',
+            'vice_president' => 'vice_president',
+            'directeur', 'directeur_budget', 'directeur_cabinet' => 'directeur',
             'commissaire' => 'commissaire',
             'secretaire_general' => 'secretaire_general',
-            'expert_budget' => 'expert',
+            'chef_cabinet' => 'chef_cabinet',
+            'chef_service', 'chef_budget' => 'chef_service',
+            'chef_bureau' => 'chef_bureau',
+            'expert_budget', 'expert' => 'expert',
+            'agent' => 'agent',
             default => null,
         };
     }

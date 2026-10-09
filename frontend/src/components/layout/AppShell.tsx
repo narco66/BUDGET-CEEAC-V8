@@ -7,9 +7,10 @@ import CeeacMark from '../brand/CeeacMark';
 import { NoticeLigne } from '../../features/notifications/NoticeLigne';
 import { ouvrirNotification, basculerLecture, type Notice } from '../../features/notifications/ouvrir';
 import { errorsOf } from '../../utils/format';
-import { findNavigation, navigationFor, type NavGroup, type NavItem } from '../../app/navigation';
+import { findNavigation, navigationFor, navigationForKeys, type NavGroup, type NavItem } from '../../app/navigation';
 import { useDismiss } from '../ui/ActionMenu';
-import { EmptyState, PageSkeleton } from '../ui/Feedback';
+import Button from '../ui/Button';
+import { Alert, EmptyState, PageSkeleton } from '../ui/Feedback';
 import { ICON } from '../ui/icons';
 import Modal from '../ui/Modal';
 
@@ -34,7 +35,9 @@ function writePreference(key: string, value: string): void {
 
 export default function AppShell() {
     const [session, setSession] = useState<Session | null>(null);
-    const [tasks, setTasks] = useState(0);
+    const [sessionError, setSessionError] = useState<string | null>(null);
+    const [allowedKeys, setAllowedKeys] = useState<Set<string> | null>(null);
+    const [navigationBadges, setNavigationBadges] = useState<Record<string, number>>({});
     const [collapsed, setCollapsed] = useState(() => readPreference('gesbudep.sidebar', 'open') === 'collapsed');
     const [closedGroups, setClosedGroups] = useState<string[]>(() => readPreference('gesbudep.groups', '').split(',').filter(Boolean));
     const [mobileOpen, setMobileOpen] = useState(false);
@@ -42,12 +45,51 @@ export default function AppShell() {
     const { pathname: path, hash } = useLocation();
     const current = findNavigation(path);
 
-    useEffect(() => {
-        api.get('/acteurs').then((response) => setSession(response.data)).catch(() => setSession(null));
+    const chargerSession = useCallback(() => {
+        setSessionError(null);
+        api.get('/acteurs')
+            .then((response) => setSession(response.data))
+            .catch((caught) => {
+                setSession(null);
+                // 401/419 : l’intercepteur renvoie déjà vers la connexion.
+                const status = caught?.response?.status;
+                if (status === 401 || status === 419) {
+                    return;
+                }
+                setSessionError(!caught?.response || status >= 500
+                    ? 'Le serveur de l’application ne répond pas : votre compte et vos données ne peuvent pas être chargés.'
+                    : errorsOf(caught));
+            });
     }, []);
 
     useEffect(() => {
-        api.get('/taches/compteur').then((count) => setTasks(count.data.nombre)).catch(() => setTasks(0));
+        chargerSession();
+    }, [chargerSession]);
+
+    useEffect(() => {
+        if (!session?.courant?.id) {
+            return;
+        }
+        api.get('/navigation')
+            .then((response) => {
+                const keys = new Set<string>();
+                for (const group of response.data.groups ?? []) {
+                    for (const item of group.items ?? []) {
+                        if (typeof item.key === 'string') {
+                            keys.add(item.key);
+                        }
+                    }
+                }
+                setAllowedKeys(keys);
+                setNavigationBadges(response.data.badges ?? {});
+            })
+            .catch(() => {
+                setAllowedKeys(null);
+                setNavigationBadges({});
+            });
+    }, [session?.courant?.id, path]);
+
+    useEffect(() => {
         setMobileOpen(false);
         window.scrollTo({ top: 0 });
     }, [path]);
@@ -98,7 +140,10 @@ export default function AppShell() {
     }
 
     const actor = session?.courant;
-    const navigation = useMemo(() => navigationFor(actor?.role), [actor?.role]);
+    const navigation = useMemo(
+        () => (allowedKeys ? navigationForKeys(allowedKeys) : navigationFor(actor?.role)),
+        [allowedKeys, actor?.role],
+    );
     const cible = `${path}${hash}`;
     const ancreCourante = navigation.some((group) => group.items.some((item) => item.to === cible));
 
@@ -127,14 +172,14 @@ export default function AppShell() {
                                     <span>{group.label}</span>
                                     <FontAwesomeIcon icon={faChevronDown} className="chev" />
                                 </button>
-                                {(open || collapsed) && group.items.map((item, index) => {
-                                    const section = item.section;
-                                    const showSection = section !== undefined && section !== group.items[index - 1]?.section;
-
+                                {(open || collapsed) && group.items.map((item) => {
                                     return (
                                         <Fragment key={item.to}>
-                                            {showSection && <div className="nav-subhead">{section}</div>}
-                                            <SidebarLink item={item} active={item.to === cible || (!ancreCourante && item.match(path))} count={item.badge === 'taches' ? tasks : undefined} />
+                                            <SidebarLink
+                                                item={item}
+                                                active={item.to === cible || (!ancreCourante && item.match(path))}
+                                                count={item.badge ? navigationBadges[item.badge] : undefined}
+                                            />
                                         </Fragment>
                                     );
                                 })}
@@ -170,6 +215,16 @@ export default function AppShell() {
                     </div>
                 </header>
                 <div id="contenu" tabIndex={-1} style={{ outline: 'none' }}>
+                    {sessionError && (
+                        <div className="app-content" style={{ paddingBottom: 0 }}>
+                            <Alert tone="danger" title="Connexion au serveur impossible">
+                                <div className="cluster" style={{ justifyContent: 'space-between' }}>
+                                    <span>{sessionError} Vérifiez que le serveur est démarré, puis réessayez.</span>
+                                    <Button size="sm" icon={ICON.retry} onClick={chargerSession}>Réessayer</Button>
+                                </div>
+                            </Alert>
+                        </div>
+                    )}
                     <Suspense fallback={<PageSkeleton />}>
                         <Outlet />
                     </Suspense>
@@ -190,7 +245,7 @@ function SidebarLink({ item, active, count }: { item: NavItem; active: boolean; 
         >
             <FontAwesomeIcon icon={item.icon} className="nav-icon" />
             <span className="nav-label">{item.label}</span>
-            {count !== undefined && count > 0 && <span className="nav-count" aria-label={`${count} tâche(s) en attente`}>{count > 99 ? '99+' : count}</span>}
+            {count !== undefined && count > 0 && <span className="nav-count" aria-label={`${count} en attente`}>{count > 99 ? '99+' : count}</span>}
         </Link>
     );
 }
